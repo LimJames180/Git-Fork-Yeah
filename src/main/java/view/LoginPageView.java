@@ -20,11 +20,12 @@ public class LoginPageView extends JFrame {
     private JPasswordField passwordField;
     private JButton loginButton;
     private JButton signupButton;
+    private JButton guestButton; // New guest button
     private LoginController controller;
     private LoginViewModel viewModel;
     private SignupController signupController;
 
-    public LoginPageView(LoginController controller, LoginViewModel viewModel, SignupController signupController) {
+    public LoginPageView(LoginController controller, LoginViewModel viewModel) {
         this.controller = controller;
         this.viewModel = viewModel;
         this.signupController = signupController;
@@ -74,6 +75,12 @@ public class LoginPageView extends JFrame {
         gbc.gridy = 2;
         add(signupButton, gbc);
 
+        guestButton = new JButton("Continue as Guest"); // Initialize the guest button
+        gbc.gridx = 0;
+        gbc.gridy = 3; // Place it below the signup button
+        gbc.gridwidth = 2; // Span across both columns
+        add(guestButton, gbc);
+
         setVisible(true);
     }
 
@@ -81,14 +88,22 @@ public class LoginPageView extends JFrame {
         loginButton.addActionListener(e -> {
             String username = usernameField.getText();
             String password = new String(passwordField.getPassword());
-            controller.handleLogin(username, password);
+//            controller.handleLogin(username, password);
+            new LoggedInPageView("randomusername");
         });
 
         signupButton.addActionListener(e -> {
             String username = usernameField.getText();
             String password = new String(passwordField.getPassword());
-            signupController.handleSignup(username, password);
-//            JOptionPane.showMessageDialog(this, "Signup functionality is not yet implemented.", "Signup", JOptionPane.INFORMATION_MESSAGE);
+//            signupController.handleSignup(username, password);
+            new LoggedInPageView("randomusername");
+        });
+
+        guestButton.addActionListener(e -> {
+            // Logic for continuing as a guest
+//            JOptionPane.showMessageDialog(this, "Continuing as guest...", "Guest Access", JOptionPane.INFORMATION_MESSAGE);
+            // You can add additional logic here to navigate to the guest view
+            new IngredientSearchView();
         });
     }
 
@@ -104,16 +119,17 @@ public class LoginPageView extends JFrame {
         });
     }
 
-//    public static void main(String[] args) {
-//        UserDataAccess userDataAccess = new MongoUserDataAccessImpl();
-//        LoginOutputBoundary outputBoundary = new LoginPresenter(new LoginViewModel());
-//        LoginInputBoundary interactor = new LoginInteractor(userDataAccess, outputBoundary);
-//        LoginController controller = new LoginController(interactor);
-//        LoginViewModel viewModel = new LoginViewModel();
-//
-//        SignupInputBoundary interactor2 = new
+    public static void main(String[] args) {
+        UserDataAccess userDataAccess = new MongoUserDataAccessImpl();
+        LoginOutputBoundary outputBoundary = new LoginPresenter(new LoginViewModel());
+        LoginInputBoundary interactor = new LoginInteractor(userDataAccess, outputBoundary);
+        LoginController controller = new LoginController(interactor);
+        LoginViewModel viewModel = new LoginViewModel();
+
+//        SignupInputBoundary interactor2 = new;
 //        SignupController signupController1 = new SignupController(interactor2);
-//
-//        SwingUtilities.invokeLater(() -> new LoginPageView(controller, viewModel));
-//    }
+
+        SwingUtilities.invokeLater(() -> new LoginPageView(controller, viewModel));
+
+    }
 }
