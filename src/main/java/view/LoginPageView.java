@@ -4,17 +4,37 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import interface_adapter.login.LoginController;
+import interface_adapter.login.LoginViewModel;
+import interface_adapter.login.LoginPresenter;
+import data_access.UserDataAccess;
+import data_access.MongoUserDataAccessImpl;
+import interface_adapter.login.SignupController;
+import use_case.note.LoginInputBoundary;
+import use_case.note.LoginOutputBoundary;
+import use_case.note.LoginInteractor;
+import use_case.note.SignupInputBoundary;
 
 public class LoginPageView extends JFrame {
-    // UI Components
     private JTextField usernameField;
     private JPasswordField passwordField;
     private JButton loginButton;
     private JButton signupButton;
-    private JButton guestButton;
+    private LoginController controller;
+    private LoginViewModel viewModel;
+    private SignupController signupController;
 
-    public LoginPageView() {
-        // Setting up the frame
+    public LoginPageView(LoginController controller, LoginViewModel viewModel, SignupController signupController) {
+        this.controller = controller;
+        this.viewModel = viewModel;
+        this.signupController = signupController;
+
+        setupUI();
+        setupListeners();
+        setupViewModel();
+    }
+
+    private void setupUI() {
         setTitle("Recipe Finder - Login");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400, 250);
@@ -30,7 +50,6 @@ public class LoginPageView extends JFrame {
 
         usernameField = new JTextField(15);
         gbc.gridx = 1;
-        gbc.gridy = 0;
         add(usernameField, gbc);
 
         // Password Label and Field
@@ -41,92 +60,60 @@ public class LoginPageView extends JFrame {
 
         passwordField = new JPasswordField(15);
         gbc.gridx = 1;
-        gbc.gridy = 1;
         add(passwordField, gbc);
 
-        // Buttons Panel (for Login and Signup)
-        JPanel buttonPanel = new JPanel(new FlowLayout());
+        // Login Button
         loginButton = new JButton("Login");
-        signupButton = new JButton("Signup");
-        buttonPanel.add(loginButton);
-        buttonPanel.add(signupButton);
-
         gbc.gridx = 0;
         gbc.gridy = 2;
-        gbc.gridwidth = 2;
-        add(buttonPanel, gbc);
+        add(loginButton, gbc);
 
-        // Continue as Guest Button (placed at the bottom)
-        guestButton = new JButton("Continue as Guest");
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        gbc.gridwidth = 2;
-        add(guestButton, gbc);
-
-        // Event Listeners (Placeholder Actions)
-        loginButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String username = usernameField.getText();
-                String password = new String(passwordField.getPassword());
-
-                // Check for missing fields
-                if (username.isEmpty() || password.isEmpty()) {
-                    JOptionPane.showMessageDialog(LoginPageView.this, "Error: Please fill in both username and password.", "Login Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
-                // Placeholder for database check (assess whether username and password match)
-                boolean isValidUser = false; // Replace with actual database check
-                if (isValidUser) {
-                    JOptionPane.showMessageDialog(LoginPageView.this, "Login successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
-                    dispose(); // Close the login window
-                    new LoggedInPageView(username); // Navigate to LoggedInPageView
-                } else {
-                    JOptionPane.showMessageDialog(LoginPageView.this, "Error: Invalid username or password.", "Login Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        });
-
-        signupButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String username = usernameField.getText();
-                String password = new String(passwordField.getPassword());
-
-                // Check for missing fields
-                if (username.isEmpty() || password.isEmpty()) {
-                    JOptionPane.showMessageDialog(LoginPageView.this, "Error: Please fill in both username and password.", "Signup Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
-                // Placeholder for database check (assess whether username already exists)
-                boolean userExists = false; // Replace with actual database check
-                if (userExists) {
-                    JOptionPane.showMessageDialog(LoginPageView.this, "Error: Username already exists. Please choose another.", "Signup Error", JOptionPane.ERROR_MESSAGE);
-                } else {
-                    // Placeholder for storing new user in database
-                    // Replace with actual database storage logic
-                    JOptionPane.showMessageDialog(LoginPageView.this, "Signup successful! Welcome, " + username + "!", "Success", JOptionPane.INFORMATION_MESSAGE);
-                    dispose(); // Close the signup window
-                    new LoggedInPageView(username); // Navigate to LoggedInPageView
-                }
-            }
-        });
-
-        guestButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Action to proceed as guest
-                // JOptionPane.showMessageDialog(LoginPageView.this, "Continuing as Guest...");
-                new SearchRecipeView();
-            }
-        });
+        // Signup Button
+        signupButton = new JButton("Signup");
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        add(signupButton, gbc);
 
         setVisible(true);
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(LoginPageView::new);
+    private void setupListeners() {
+        loginButton.addActionListener(e -> {
+            String username = usernameField.getText();
+            String password = new String(passwordField.getPassword());
+            controller.handleLogin(username, password);
+        });
+
+        signupButton.addActionListener(e -> {
+            String username = usernameField.getText();
+            String password = new String(passwordField.getPassword());
+            signupController.handleSignup(username, password);
+//            JOptionPane.showMessageDialog(this, "Signup functionality is not yet implemented.", "Signup", JOptionPane.INFORMATION_MESSAGE);
+        });
     }
+
+    private void setupViewModel() {
+        viewModel.addPropertyChangeListener(evt -> {
+            if ("message".equals(evt.getPropertyName())) {
+                JOptionPane.showMessageDialog(this, viewModel.getMessage(), "Success", JOptionPane.INFORMATION_MESSAGE);
+                dispose();
+                new LoggedInPageView(viewModel.getMessage());
+            } else if ("error".equals(evt.getPropertyName())) {
+                JOptionPane.showMessageDialog(this, viewModel.getError(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+    }
+
+//    public static void main(String[] args) {
+//        UserDataAccess userDataAccess = new MongoUserDataAccessImpl();
+//        LoginOutputBoundary outputBoundary = new LoginPresenter(new LoginViewModel());
+//        LoginInputBoundary interactor = new LoginInteractor(userDataAccess, outputBoundary);
+//        LoginController controller = new LoginController(interactor);
+//        LoginViewModel viewModel = new LoginViewModel();
+//
+//        SignupInputBoundary interactor2 = new
+//        SignupController signupController1 = new SignupController(interactor2);
+//
+//        SwingUtilities.invokeLater(() -> new LoginPageView(controller, viewModel));
+//    }
 }
