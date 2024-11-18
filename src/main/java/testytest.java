@@ -4,5 +4,6 @@ public class testytest {
             RecipeFinderSwing app = new RecipeFinderSwing();
             app.setVisible(true);
         });
+
     }
 }
