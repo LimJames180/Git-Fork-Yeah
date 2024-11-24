@@ -4,7 +4,7 @@ import data_access.DBNoteDataAccessObject;
 import use_case.note.NoteDataAccessInterface;
 
 /**
- * An application wherex we can view and add to a note stored by a user.
+ * An application where we can view and add to a note stored by a user.
  * <p>
  * This is a minimal example of using the password-protected user API from lab 5,
  * but demonstrating the endpoint allowing you to store an arbitrary JSON object.
