@@ -8,14 +8,13 @@ import java.util.List;
 public class AddListener implements ActionListener {
     String ingredientName;
     List<String> ingredientsList;
-    private DefaultListModel<String> ingredientListModel;
-    private JLabel ingredientNameLabel;
-    private JLabel ingredientImageLabel;
-    private JButton addButton;
+    final private DefaultListModel<String> ingredientListModel;
+    final private JLabel ingredientNameLabel;
+    final private JLabel ingredientImageLabel;
+    final private JButton addButton;
 
-    public AddListener(String ingredientName, DefaultListModel<String> ingredientListModel, List<String> ingredientList, JLabel ingredientNameLabel,
+    public AddListener(DefaultListModel<String> ingredientListModel, List<String> ingredientList, JLabel ingredientNameLabel,
                        JLabel ingredientImageLabel, JButton addButton) {
-        this.ingredientName = ingredientName;
         this.ingredientListModel = ingredientListModel;
         this.ingredientsList = ingredientList;
         this.ingredientNameLabel = ingredientNameLabel;
@@ -27,7 +26,7 @@ public class AddListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String ingredientName = ingredientNameLabel.getText();
+        this.ingredientName = ingredientNameLabel.getText();
         if (!ingredientName.isEmpty()) {
             ingredientsList.add(ingredientName);
             ingredientListModel.addElement(ingredientName);

@@ -8,6 +8,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import view.ActionListeners.AddListener;
@@ -26,9 +28,6 @@ public class IngredientSearchView extends JFrame {
     private JButton searchRecipesButton;
     private JButton exploreAllRecipesButton;
 
-    // Temporary storage for ingredients
-    private List<String> ingredientsList = new ArrayList<>();
-
     // Spoonacular API Details
     private static final String SPOONACULAR_API_KEY = "62fb1e66d4be4351b17b5f5043ede6db"; // Replace with your actual API key
     private static final String SPOONACULAR_SEARCH_URL = "https://api.spoonacular.com/food/ingredients/search?query=%s&apiKey=%s";
@@ -38,7 +37,8 @@ public class IngredientSearchView extends JFrame {
      * @param ingredients the list of ingredients, empty if from previous screen.
      */
     public IngredientSearchView(List<String> ingredients) {
-        ingredientsList = ingredients;
+        List<String> ingredientsList = Objects.requireNonNullElseGet(ingredients, ArrayList::new);
+        // list of ingredients
 
         // Setting up the frame
         setTitle("Ingredient Search");
@@ -91,11 +91,11 @@ public class IngredientSearchView extends JFrame {
         add(mainPanel, BorderLayout.EAST);
 
         // Event Listeners
-        searchRecipesButton.addActionListener(new SearchListener());
+        searchRecipesButton.addActionListener(new SearchListener(ingredientsList));
         exploreAllRecipesButton.addActionListener(e -> new SearchRecipeView());
         searchButton.addActionListener(new IngredientsListener(ingredientInputField.getText().trim(), this));
-        addButton.addActionListener(new AddListener(ingredientNameLabel.getText(), ingredientListModel, ingredientsList,
-                ingredientNameLabel, ingredientImageLabel, addButton));
+        addButton.addActionListener(new AddListener(ingredientListModel, ingredientsList, ingredientNameLabel,
+                ingredientImageLabel, addButton));
 
         setVisible(true);
     }
