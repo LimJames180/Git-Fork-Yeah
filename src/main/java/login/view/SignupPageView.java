@@ -1,28 +1,18 @@
 package login.view;
 
-
 import javax.swing.*;
 import java.awt.*;
-import login.interface_adapter.LoginController;
-import login.interface_adapter.LoginViewModel;
 import login.interface_adapter.SignupController;
-import login.interface_adapter.SignupPresenter;
-import login.interface_adapter.*;
-import login.use_case.SignupInteractor;
-import login.data_access.MongoUserDataAccessImpl;
-import view.LoggedInPageView;
+import login.interface_adapter.SignupViewModel;
 
-
-
-public class LoginPageView extends JFrame {
+public class SignupPageView extends JFrame {
     private JTextField usernameField;
     private JPasswordField passwordField;
-    private JButton loginButton;
     private JButton signupButton;
-    private LoginController controller;
-    private LoginViewModel viewModel;
+    private SignupController controller;
+    private SignupViewModel viewModel;
 
-    public LoginPageView(LoginController controller, LoginViewModel viewModel) {
+    public SignupPageView(SignupController controller, SignupViewModel viewModel) {
         this.controller = controller;
         this.viewModel = viewModel;
 
@@ -32,9 +22,9 @@ public class LoginPageView extends JFrame {
     }
 
     private void setupUI() {
-        setTitle("Recipe Finder - Login");
+        setTitle("Recipe Finder - Signup");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(400, 250);
+        setSize(400, 300);
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
@@ -57,38 +47,25 @@ public class LoginPageView extends JFrame {
         gbc.gridx = 1;
         add(passwordField, gbc);
 
-        loginButton = new JButton("Login");
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        add(loginButton, gbc);
-
         signupButton = new JButton("Signup");
-        gbc.gridx = 1;
+        gbc.gridx = 0;
+        gbc.gridy = 3;
         add(signupButton, gbc);
 
         setVisible(true);
     }
 
     private void setupListeners() {
-        loginButton.addActionListener(e -> {
+        signupButton.addActionListener(e -> {
             String username = usernameField.getText();
             String password = new String(passwordField.getPassword());
 
-            // Validate inputs
             if (username.isEmpty() || password.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Please input both username and password.", "Input Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            // Handle login
-            controller.handleLogin(username, password);
-        });
-
-        signupButton.addActionListener(e -> {
-            // Navigate to signup page
-            SignupPageView signupPageView = new SignupPageView(new SignupController(new SignupInteractor(new MongoUserDataAccessImpl(), new SignupPresenter(new SignupViewModel()))), new SignupViewModel());
-            signupPageView.setVisible(true);
-            dispose(); // Close the login page
+            controller.handleSignup(username, password);
         });
     }
 
@@ -97,7 +74,7 @@ public class LoginPageView extends JFrame {
             if ("message".equals(evt.getPropertyName())) {
                 JOptionPane.showMessageDialog(this, viewModel.getMessage(), "Success", JOptionPane.INFORMATION_MESSAGE);
                 dispose();
-                new LoggedInPageView(viewModel.getMessage());
+                // Optionally navigate to login or another view
             } else if ("error".equals(evt.getPropertyName())) {
                 JOptionPane.showMessageDialog(this, viewModel.getError(), "Error", JOptionPane.ERROR_MESSAGE);
             }
