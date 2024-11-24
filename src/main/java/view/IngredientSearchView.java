@@ -2,16 +2,19 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+import view.ActionListeners.AddListener;
+import view.ActionListeners.IngredientsListener;
+import view.ActionListeners.SearchListener;
 
 public class IngredientSearchView extends JFrame {
     // UI Components
@@ -25,16 +28,17 @@ public class IngredientSearchView extends JFrame {
     private JButton searchRecipesButton;
     private JButton exploreAllRecipesButton;
 
-    // Temporary storage for ingredients
-    private List<String> temporaryIngredients;
-
     // Spoonacular API Details
     private static final String SPOONACULAR_API_KEY = "62fb1e66d4be4351b17b5f5043ede6db"; // Replace with your actual API key
     private static final String SPOONACULAR_SEARCH_URL = "https://api.spoonacular.com/food/ingredients/search?query=%s&apiKey=%s";
 
-    public IngredientSearchView() {
-        // Initialize temporary storage
-        temporaryIngredients = new ArrayList<>();
+    /**
+     * This class sets up the window.
+     * @param ingredients the list of ingredients, empty if from previous screen.
+     */
+    public IngredientSearchView(List<String> ingredients) {
+        List<String> ingredientsList = Objects.requireNonNullElseGet(ingredients, ArrayList::new);
+        // list of ingredients
 
         // Setting up the frame
         setTitle("Ingredient Search");
@@ -75,10 +79,7 @@ public class IngredientSearchView extends JFrame {
         // Buttons for Searching Recipes and Exploring All Recipes
         JPanel buttonPanel = new JPanel(new FlowLayout());
         searchRecipesButton = new JButton("Search Recipes");
-        searchRecipesButton.addActionListener(e -> new SearchRecipeView());
-
         exploreAllRecipesButton = new JButton("Explore All Recipes");
-        exploreAllRecipesButton.addActionListener(e -> new SearchRecipeView());
 
         buttonPanel.add(searchRecipesButton);
         buttonPanel.add(exploreAllRecipesButton);
@@ -90,30 +91,20 @@ public class IngredientSearchView extends JFrame {
         add(mainPanel, BorderLayout.EAST);
 
         // Event Listeners
-        searchButton.addActionListener(e -> {
-            String query = ingredientInputField.getText().trim();
-            if (!query.isEmpty()) {
-                fetchIngredientData(query);
-            } else {
-                JOptionPane.showMessageDialog(IngredientSearchView.this, "Please enter an ingredient to search.", "Input Error", JOptionPane.ERROR_MESSAGE);
-            }
-        });
-
-        addButton.addActionListener(e -> {
-            String ingredientName = ingredientNameLabel.getText();
-            if (!ingredientName.isEmpty()) {
-                temporaryIngredients.add(ingredientName);
-                ingredientListModel.addElement(ingredientName);
-                ingredientNameLabel.setText(""); // Clear displayed ingredient
-                ingredientImageLabel.setIcon(null); // Clear displayed image
-                addButton.setEnabled(false); // Disable add button
-            }
-        });
+        searchRecipesButton.addActionListener(new SearchListener(ingredientsList));
+        exploreAllRecipesButton.addActionListener(e -> new SearchRecipeView());
+        searchButton.addActionListener(new IngredientsListener(ingredientInputField.getText().trim(), this));
+        addButton.addActionListener(new AddListener(ingredientListModel, ingredientsList, ingredientNameLabel,
+                ingredientImageLabel, addButton));
 
         setVisible(true);
     }
 
-    private void fetchIngredientData(String query) {
+    /**
+     * Access the API for the ingredients.
+     * @param query the given ingredient to search.
+     */
+    public void fetchIngredientData(String query) {
         try {
             // Construct the API URL
             String urlString = String.format(SPOONACULAR_SEARCH_URL, query, SPOONACULAR_API_KEY);
@@ -155,6 +146,7 @@ public class IngredientSearchView extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(IngredientSearchView::new);
+        IngredientSearchView isv = new IngredientSearchView(null);
+        SwingUtilities.invokeLater((Runnable) isv);
     }
 }
