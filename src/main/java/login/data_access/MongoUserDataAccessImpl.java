@@ -31,7 +31,7 @@ public class MongoUserDataAccessImpl implements UserDataAccess {
     @Override
     public void saveUser(User user) {
         Document newUser = new Document("username", user.getUsername())
-                .append("password", user.getPassword()); // Note: Hash password in real applications
+                .append("password", user.getPassword());
         userCollection.insertOne(newUser);
     }
 }

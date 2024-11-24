@@ -16,23 +16,19 @@ public class MainForkYeahApplication {
     public static void main(String[] args) {
         MongoUserDataAccessImpl userDataAccess = new MongoUserDataAccessImpl();
 
-        // Setup for Login
         LoginViewModel loginViewModel = new LoginViewModel();
         LoginPresenter loginPresenter = new LoginPresenter(loginViewModel);
         LoginInteractor loginInteractor = new LoginInteractor(userDataAccess, loginPresenter);
         LoginController loginController = new LoginController(loginInteractor);
 
-        // Setup for Signup
         SignupViewModel signupViewModel = new SignupViewModel();
         SignupPresenter signupPresenter = new SignupPresenter(signupViewModel);
         SignupInteractor signupInteractor = new SignupInteractor(userDataAccess, signupPresenter);
         SignupController signupController = new SignupController(signupInteractor);
 
-        // Create and show the Login Page
         LoginPageView loginPageView = new LoginPageView(loginController, loginViewModel);
         //SignupPageView signupPageView = new SignupPageView(signupController, signupViewModel);
 
-        // Optionally, you can set the initial view to be either login or signup
         loginPageView.setVisible(true);
     }
 }
