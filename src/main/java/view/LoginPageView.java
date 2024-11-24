@@ -103,7 +103,7 @@ public class LoginPageView extends JFrame {
             // Logic for continuing as a guest
 //            JOptionPane.showMessageDialog(this, "Continuing as guest...", "Guest Access", JOptionPane.INFORMATION_MESSAGE);
             // You can add additional logic here to navigate to the guest view
-            new IngredientSearchView();
+            new IngredientSearchView(null);
         });
     }
 

@@ -43,7 +43,7 @@ public class LoggedInPageView extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 // Logic to navigate to recipe exploration view
 //                JOptionPane.showMessageDialog(LoggedInPageView.this, "Navigating to Explore Recipes...");
-                new IngredientSearchView();
+                new IngredientSearchView(null);
             }
         });
         add(exploreRecipesButton, BorderLayout.SOUTH);
