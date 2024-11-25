@@ -6,16 +6,21 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * This ActionListener takes the input and checks if it is valid.
+ */
 public class IngredientsListener implements ActionListener {
-    final private String query;
-    final private IngredientSearchView isv;
+    private String query;
+    private final IngredientSearchView isv;
+    private JTextField searchField;
 
-    public IngredientsListener(String query, IngredientSearchView isv) {
-        this.query = query;
+    public IngredientsListener(JTextField ingredient, IngredientSearchView isv) {
         this.isv = isv;
+        this.searchField = ingredient;
     }
 
     public void actionPerformed(ActionEvent e) {
+        query = searchField.getText().trim();
         if (!query.isEmpty()) {
             isv.fetchIngredientData(query);
         }
