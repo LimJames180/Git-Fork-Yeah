@@ -1,7 +1,13 @@
+package interface_adapter;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import entity.ApiKey;
+import entity.Ingredient;
+import entity.Nutrients;
+import entity.Recipe;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -104,20 +110,22 @@ public class RecipeController {
         return recipeList;
     }
 
-//    public static List<Recipe> Random_recipe() throws IOException {
-//        String apiKey = ApiKey.getApiKeys();
-//        OkHttpClient client = new OkHttpClient();
-//
-//        Request request = new Request.Builder()
-//                .url("https://api.spoonacular.com/recipes/random?apiKey=" + apiKey + "&number=20")
-//                .get()
-//                .build();
-//
-//        Response response = client.newCall(request).execute();
-//        String jsonData = response.body().string();
-//        JsonElement root = new JsonParser().parse(jsonData);
-//        List<Recipe> recipeList = Recipe_List(root.getAsJsonObject().get("recipes").getAsJsonArray());
-//        return recipeList;
-//    }
+
+
+    public static List<Recipe> Random_recipe() throws IOException {
+        String apiKey = ApiKey.getApiKeys();
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url("https://api.spoonacular.com/recipes/random?apiKey=" + apiKey + "&number=1")
+                .get()
+                .build();
+
+        Response response = client.newCall(request).execute();
+        String jsonData = response.body().string();
+        JsonElement root = new JsonParser().parse(jsonData);
+        List<Recipe> recipeList = Recipe_List(root.getAsJsonObject().get("recipes").getAsJsonArray());
+        return recipeList;
+    }
 }
 

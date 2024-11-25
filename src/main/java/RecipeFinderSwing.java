@@ -7,7 +7,7 @@ public class RecipeFinderSwing extends JFrame {
     private JTextArea resultArea;
 
     public RecipeFinderSwing() {
-        setTitle("Recipe Finder");
+        setTitle("entity.Recipe Finder");
         setSize(400, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
@@ -17,7 +17,7 @@ public class RecipeFinderSwing extends JFrame {
         inputPanel.setLayout(new FlowLayout());
         ingredientField = new JTextField(20);
         searchButton = new JButton("Find Recipes");
-        inputPanel.add(new JLabel("Ingredient:"));
+        inputPanel.add(new JLabel("entity.Ingredient:"));
         inputPanel.add(ingredientField);
         inputPanel.add(searchButton);
 

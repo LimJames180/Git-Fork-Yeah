@@ -14,7 +14,7 @@ public class LoggedInPageView extends JFrame {
 
     public LoggedInPageView(String username) {
         // Setting up the frame
-        setTitle("Recipe Finder - Welcome");
+        setTitle("entity.Recipe Finder - Welcome");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(500, 300);
         setLayout(new BorderLayout());
@@ -27,8 +27,8 @@ public class LoggedInPageView extends JFrame {
         // Saved Recipes List
         savedRecipesModel = new DefaultListModel<>();
         // Placeholder for saved recipes fetched from Spoonacular API (using example data)
-        savedRecipesModel.addElement("Tomato Pasta - Recipe ID: 12345");
-        savedRecipesModel.addElement("Another Saved Recipe - Recipe ID: 67890"); // Example placeholder
+        savedRecipesModel.addElement("Tomato Pasta - entity.Recipe ID: 12345");
+        savedRecipesModel.addElement("Another Saved entity.Recipe - entity.Recipe ID: 67890"); // Example placeholder
 
         savedRecipesList = new JList<>(savedRecipesModel);
         savedRecipesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

@@ -101,6 +101,6 @@ public class test {
                 .append("recipeId", recipeId)
                 .append("savedAt", new java.util.Date());
         savedRecipesCollection.insertOne(savedRecipe);
-        System.out.println("Recipe " + recipeId + " saved successfully for user " + username + ".");
+        System.out.println("entity.Recipe " + recipeId + " saved successfully for user " + username + ".");
     }
 }
