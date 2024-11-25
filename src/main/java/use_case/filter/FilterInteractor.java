@@ -56,7 +56,4 @@ public class FilterInteractor implements FilterInputBoundary {
         return recipeList;
     }
 
-    public StringBuilder getResults() {
-        return resultBuilder;
-    }
 }

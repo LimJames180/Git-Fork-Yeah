@@ -11,16 +11,10 @@ import java.util.List;
 
 public class FilterView extends JFrame{
     private JButton filterbutton;
-    private ToggleButtonsView toggleButtonsExample;
-    private FilterController controller;
-    private List<String> ingredients = List.of("tomato", "pepper");
     private JPanel inputPanel = new JPanel();
 
 
     public FilterView(List<String> ingredients, FilterController controller, ToggleButtonsView toggleButtonsExample) {
-        this.controller = controller;
-        this.ingredients = ingredients;
-        this.toggleButtonsExample = toggleButtonsExample;
         setTitle("Filters");
         setSize(600, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -15,13 +15,9 @@ import java.util.List;
 
 public class ToggleButtonsView extends JFrame {
     private Map<String, Boolean> variables = new HashMap<>();
-    private FilterController controller;
-    private List<String> ingredients;
 
 
     public ToggleButtonsView(List<String> ingredients, FilterController controller) {
-        this.controller = controller;
-        this.ingredients = ingredients;
         setTitle("Multiple Toggle Buttons Example");
         setSize(400, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
