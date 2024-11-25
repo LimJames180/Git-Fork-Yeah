@@ -16,8 +16,9 @@ public class FilterView extends JFrame{
     private JPanel inputPanel = new JPanel();
 
 
-    public FilterView(FilterController controller, ToggleButtonsView toggleButtonsExample) {
+    public FilterView(List<String> ingredients,FilterController controller, ToggleButtonsView toggleButtonsExample) {
         this.controller = controller;
+        this.ingredients = ingredients;
         this.toggleButtonsExample = toggleButtonsExample;
         setTitle("Filters");
         setSize(400, 700);
