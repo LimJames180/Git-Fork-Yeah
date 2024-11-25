@@ -12,7 +12,7 @@ import java.util.Objects;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import view.ActionListeners.AddListener;
+import view.ActionListeners.AddIngredientListener;
 import view.ActionListeners.ExploreListener;
 import view.ActionListeners.IngredientsListener;
 import view.ActionListeners.SearchListener;
@@ -95,7 +95,7 @@ public class IngredientSearchView extends JFrame {
         searchRecipesButton.addActionListener(new SearchListener(ingredientsList, this));
         exploreAllRecipesButton.addActionListener(new ExploreListener(this));
         searchButton.addActionListener(new IngredientsListener(ingredientInputField, this));
-        addButton.addActionListener(new AddListener(ingredientListModel, ingredientsList, ingredientNameLabel,
+        addButton.addActionListener(new AddIngredientListener(ingredientListModel, ingredientsList, ingredientNameLabel,
                 ingredientImageLabel, addButton));
 
         setVisible(true);

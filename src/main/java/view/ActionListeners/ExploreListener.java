@@ -16,6 +16,8 @@ public class ExploreListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         this.isv.dispose();
+
+
         new SearchRecipeView();
     }
 }
