@@ -56,7 +56,7 @@ public class FilterButton implements ActionListener {
                         if (restrictions.get("Dairy-free") == recipeInfo.get("dairyFree").getAsBoolean() || !restrictions.get("Dairy-free")) {
                             if (restrictions.get("Gluten-free") == recipeInfo.get("glutenFree").getAsBoolean() || !restrictions.get("Gluten-free")) {
                                 if (restrictions.get("Vegan") == recipeInfo.get("vegan").getAsBoolean() || !restrictions.get("Vegan")) {
-                                    resultBuilder.append("Recipe: ").append(title).append("\n\n");
+                                    resultBuilder.append("entity.Recipe: ").append(title).append("\n\n");
                                     recipes1.add(response1);
                                 }
                             }

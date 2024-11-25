@@ -1,3 +1,8 @@
+package entity;
+
+import entity.Nutrients;
+import interface_adapter.RecipeController;
+
 import java.io.IOException;
 import java.util.List;
 

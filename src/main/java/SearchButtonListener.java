@@ -46,7 +46,7 @@ public class SearchButtonListener implements ActionListener {
                 StringBuilder resultBuilder = new StringBuilder();
                 recipes.forEach(recipe -> {
                     String title = recipe.getAsJsonObject().get("title").getAsString();
-                    resultBuilder.append("Recipe: ").append(title).append("\n\n");
+                    resultBuilder.append("entity.Recipe: ").append(title).append("\n\n");
                 });
                 app.displayResults(resultBuilder.toString());
             } else {

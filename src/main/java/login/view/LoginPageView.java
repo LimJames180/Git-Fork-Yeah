@@ -32,7 +32,7 @@ public class LoginPageView extends JFrame {
     }
 
     private void setupUI() {
-        setTitle("Recipe Finder - Login");
+        setTitle("entity.Recipe Finder - Login");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400, 250);
         setLayout(new GridBagLayout());

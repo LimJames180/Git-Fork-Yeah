@@ -1,3 +1,5 @@
+package entity;
+
 public class Nutrients {
 
     private  int amount;

@@ -42,12 +42,12 @@ public class IngredientSearchView extends JFrame {
         // list of ingredients
 
         // Setting up the frame
-        setTitle("Ingredient Search");
+        setTitle("entity.Ingredient Search");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400, 600);
         setLayout(new BorderLayout());
 
-        // Top Panel for Ingredient Input
+        // Top Panel for entity.Ingredient Input
         JPanel inputPanel = new JPanel(new FlowLayout());
         ingredientInputField = new JTextField(15);
         searchButton = new JButton("Search");
