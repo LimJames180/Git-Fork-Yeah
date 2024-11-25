@@ -44,7 +44,7 @@ public class ToggleButtonsView extends JFrame {
         JButton switchButton = new JButton("Done");
         switchButton.addActionListener(e -> {
             dispose();
-            FilterView filterSwing = new FilterView(ingredients, controller,ToggleButtonsView.this);
+            FilterView filterSwing = new FilterView(controller,ToggleButtonsView.this);
             filterSwing.setVisible(true);
         });
         add(switchButton);

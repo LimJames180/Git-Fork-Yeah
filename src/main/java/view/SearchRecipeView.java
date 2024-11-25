@@ -60,7 +60,7 @@ public class SearchRecipeView extends JFrame {
         myIngredientsButton = new JButton("My Ingredients");
         myIngredientsButton.addActionListener(e -> {
             // Logic to navigate to recipe exploration view
-            new IngredientSearchView();
+            new IngredientSearchView(null);
         });
         add(myIngredientsButton, BorderLayout.SOUTH);
 

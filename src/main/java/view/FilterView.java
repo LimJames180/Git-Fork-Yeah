@@ -9,16 +9,15 @@ import java.util.List;
 
 public class FilterView extends JFrame{
     private JButton filterbutton;
-    private JTextArea resultArea;
     private ToggleButtonsView toggleButtonsExample;
     private FilterController controller;
     private List<String> ingredients = List.of("tomato", "pepper");
     private JPanel inputPanel = new JPanel();
 
 
-    public FilterView(List<String> ingredients,FilterController controller, ToggleButtonsView toggleButtonsExample) {
+    public FilterView(FilterController controller, ToggleButtonsView toggleButtonsExample) {
         this.controller = controller;
-        this.ingredients = ingredients;
+        //this.ingredients = ingredients;
         this.toggleButtonsExample = toggleButtonsExample;
         setTitle("Filters");
         setSize(400, 700);
@@ -27,19 +26,12 @@ public class FilterView extends JFrame{
 
 
         // Input panel
-        inputPanel.setLayout(new FlowLayout());
+        inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.Y_AXIS));
         filterbutton = new JButton("Find Recipes");
         inputPanel.add(filterbutton);
 
 
-        // Result area
-        resultArea = new JTextArea();
-        resultArea.setEditable(true);
-        JScrollPane scrollPane = new JScrollPane(resultArea);
-
-
         add(inputPanel, BorderLayout.NORTH);
-        add(scrollPane, BorderLayout.CENTER);
 
 
         // Button action
@@ -54,18 +46,11 @@ public class FilterView extends JFrame{
         String[] recipe = results.toString().split("Recipe: ");
         inputPanel.removeAll();
         for (int i = 1; i < recipe.length; i++) {
-            JButton recipeButton = new JButton(recipe[i]);
-            recipeButton.setText(recipe[i]);
-            recipeButton.addActionListener(e -> resultArea.setText(results));
+            String r = recipe[i];
+            JButton recipeButton = new JButton(r);
+            recipeButton.setText(r);
+            recipeButton.addActionListener(e -> System.out.println("Recipe: " + r));
             inputPanel.add(recipeButton);
         }
-
-
     }
-
-
-
-
-
-
 }
