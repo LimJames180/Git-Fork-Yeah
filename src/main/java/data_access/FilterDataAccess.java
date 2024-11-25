@@ -16,7 +16,7 @@ import java.util.logging.Filter;
 
 
 public class FilterDataAccess implements FilterDataAccessInterface {
-    private static final String API_KEY = "a3181a44255f4cd39e16cb8b37e3f115";
+    private static final String API_KEY = "62fb1e66d4be4351b17b5f5043ede6db";
     private static final String BASE_URL = "https://api.spoonacular.com/recipes/findByIngredients";
     private static final String BASE_URL2 = "https://api.spoonacular.com/recipes/";
     private final OkHttpClient client = new OkHttpClient();
