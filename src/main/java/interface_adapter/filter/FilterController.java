@@ -1,5 +1,6 @@
 package interface_adapter.filter;
 
+import entity.Recipe;
 import use_case.filter.FilterInput;
 import use_case.filter.FilterInteractor;
 
@@ -13,13 +14,10 @@ public class FilterController {
         this.interactor = interactor;
     }
 
-    public StringBuilder handlefilter(List<String> ingrients, Map<String, Boolean> restrictions) {
+    public List<Recipe> handlefilter(List<String> ingrients, Map<String, Boolean> restrictions) {
         FilterInput input = new FilterInput(ingrients, restrictions);
         interactor.filterRecipes(input);
-        return interactor.getResults();
-    }
+        return interactor.getRecipeList();
 
-    public StringBuilder getResults() {
-        return interactor.getResults();
     }
 }

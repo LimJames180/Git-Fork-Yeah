@@ -15,20 +15,16 @@ import java.util.List;
 
 public class ToggleButtonsView extends JFrame {
     private Map<String, Boolean> variables = new HashMap<>();
-    private FilterController controller;
-    private List<String> ingredients;
 
 
     public ToggleButtonsView(List<String> ingredients, FilterController controller) {
-        this.controller = controller;
-        this.ingredients = ingredients;
         setTitle("Multiple Toggle Buttons Example");
         setSize(400, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new FlowLayout());
 
 
-        String[] buttonNames = {"Gluten-free", "Dairy-free", "Vegan"};
+        String[] buttonNames = {"glutenfree", "vegetarian", "vegan"};
         for (String name : buttonNames) {
             variables.put(name, false);
             JButton toggleButton = new JButton(name);
@@ -44,7 +40,7 @@ public class ToggleButtonsView extends JFrame {
         JButton switchButton = new JButton("Done");
         switchButton.addActionListener(e -> {
             dispose();
-            FilterView filterSwing = new FilterView(controller,ToggleButtonsView.this);
+            FilterView filterSwing = new FilterView(ingredients, controller,ToggleButtonsView.this);
             filterSwing.setVisible(true);
         });
         add(switchButton);

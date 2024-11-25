@@ -1,9 +1,7 @@
 package use_case.filter;
 
-
 import java.util.List;
 import java.util.Map;
-
 
 public class FilterInput {
     private List<String> ingredients;
@@ -14,7 +12,6 @@ public class FilterInput {
         this.ingredients = ingredients;
         this.restrictions = restrictions;
     }
-
 
     public List<String> getIngredients() {
         return ingredients;

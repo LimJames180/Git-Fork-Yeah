@@ -5,9 +5,11 @@ import data_access.FilterDataAccess;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import data_access.FilterDataAccessInterface;
+import entity.Recipe;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +17,9 @@ import java.util.Map;
 public class FilterInteractor implements FilterInputBoundary {
     private final FilterDataAccessInterface filterDataAccess;
     StringBuilder resultBuilder = new StringBuilder();
+    private List<String> complexsearch = new ArrayList<>();
+    private List<Recipe> recipeList;
+
 
 
     public FilterInteractor(FilterDataAccess filterDataAccess) {
@@ -26,33 +31,29 @@ public class FilterInteractor implements FilterInputBoundary {
     public void filterRecipes(FilterInput input) {
         List<String> ingredients = input.getIngredients();
         Map<String, Boolean> restrictions = input.getRestrictions();
-
-
-        JsonArray recipes = null;
+        String ingredientsString = String.join(",", ingredients);
+        List<String> some_list = new ArrayList<>();
+        for (String key : restrictions.keySet()) {
+            if (restrictions.get(key)) {
+                some_list.add(key);
+            }
+        }
+        String restrictionsString = String.join(",", some_list);
+        if (!restrictionsString.equals("")) {
+            complexsearch.add("restrictions="+restrictionsString);
+        }
+        if (!ingredientsString.equals("")) {
+            complexsearch.add("ingredients=" + ingredientsString);
+        }
         try {
-            recipes = filterDataAccess.fetchRecipes(ingredients);
+            recipeList = filterDataAccess.fetchComplexSearch(complexsearch);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        recipes.forEach(recipe -> {
-            String title = recipe.getAsJsonObject().get("title").getAsString();
-            int id = recipe.getAsJsonObject().get("id").getAsInt();
-            JsonObject recipeInfo = null;
-            try {
-                recipeInfo = filterDataAccess.fetchRecipe2(id);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            if (restrictions.get("Dairy-free") == recipeInfo.get("dairyFree").getAsBoolean() || !restrictions.get("Dairy-free")) {
-                if (restrictions.get("Gluten-free") == recipeInfo.get("glutenFree").getAsBoolean() || !restrictions.get("Gluten-free")) {
-                    if (restrictions.get("Vegan") == recipeInfo.get("vegan").getAsBoolean() || !restrictions.get("Vegan")) {
-                        resultBuilder.append("Recipe: ").append(title).append("\n\n");
-                    }
-                }
-            }
-        });
     }
-    public StringBuilder getResults() {
-        return resultBuilder;
+
+    public List<Recipe> getRecipeList() {
+        return recipeList;
     }
+
 }
