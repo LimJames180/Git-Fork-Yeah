@@ -3,6 +3,7 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.URL;
 
 import entity.Recipe;
 import interface_adapter.filter.FilterController;
@@ -30,7 +31,7 @@ public class FilterView extends JFrame{
 
         // Button action
         filterbutton.addActionListener(e -> {
-            List<Recipe> results = controller.handlefilter(ingredients, toggleButtonsExample.getVariables());
+            List<Recipe> results = controller.handlefilter(ingredients, toggleButtonsExample.getVariables(), toggleButtonsExample.getVariables2());
             displayResults(results);
         });
     }
@@ -41,6 +42,20 @@ public class FilterView extends JFrame{
         for (Recipe r : results) {
             String rName = r.getTitle();
             JButton recipeButton = new JButton(rName);
+            if (r.getImage() != null && !r.getImage().isEmpty()) {
+                try {
+                    URL imageUrl = new URL(r.getImage());
+                    ImageIcon icon = new ImageIcon(
+                            new ImageIcon(imageUrl)
+                                    .getImage()
+                                    .getScaledInstance(50, 50, Image.SCALE_SMOOTH)
+                    );
+                    recipeButton.setIcon(icon);
+                } catch (Exception e) {
+                    System.out.println("Error loading image for recipe: " + rName);
+                    e.printStackTrace();
+                }
+            }
             recipeButton.addActionListener(e -> System.out.println("Recipe: " + rName));
             inputPanel.add(recipeButton);
         }
