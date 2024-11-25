@@ -2,6 +2,8 @@ package data_access;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import entity.Recipe;
+import interface_adapter.RecipeController;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -51,4 +53,9 @@ public class FilterDataAccess implements FilterDataAccessInterface {
             return gson.fromJson(response.body().string(), JsonObject.class);
         }
     }
-}
+
+
+    public List<Recipe> fetchComplexSearch(List<String> params) throws IOException {
+        return RecipeController.complex_search(params);
+        }
+    }

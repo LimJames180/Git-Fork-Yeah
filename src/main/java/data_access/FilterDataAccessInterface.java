@@ -3,6 +3,7 @@ package data_access;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import entity.Recipe;
 
 
 import java.io.IOException;
@@ -14,4 +15,6 @@ public interface FilterDataAccessInterface {
 
 
     JsonObject fetchRecipe2(int id) throws IOException;
+
+    List<Recipe> fetchComplexSearch(List<String> params) throws IOException;
 }

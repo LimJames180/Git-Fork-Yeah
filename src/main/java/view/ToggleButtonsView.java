@@ -28,7 +28,7 @@ public class ToggleButtonsView extends JFrame {
         setLayout(new FlowLayout());
 
 
-        String[] buttonNames = {"Gluten-free", "Dairy-free", "Vegan"};
+        String[] buttonNames = {"glutenfree", "vegetarian", "vegan"};
         for (String name : buttonNames) {
             variables.put(name, false);
             JButton toggleButton = new JButton(name);
@@ -44,7 +44,7 @@ public class ToggleButtonsView extends JFrame {
         JButton switchButton = new JButton("Done");
         switchButton.addActionListener(e -> {
             dispose();
-            FilterView filterSwing = new FilterView(controller,ToggleButtonsView.this);
+            FilterView filterSwing = new FilterView(ingredients, controller,ToggleButtonsView.this);
             filterSwing.setVisible(true);
         });
         add(switchButton);
