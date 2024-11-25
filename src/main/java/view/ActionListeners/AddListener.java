@@ -5,6 +5,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+/**
+ * This class adds the inputted ingredient to the relevant lists.
+ */
 public class AddListener implements ActionListener {
     String ingredientName;
     List<String> ingredientsList;
@@ -20,7 +23,6 @@ public class AddListener implements ActionListener {
         this.ingredientNameLabel = ingredientNameLabel;
         this.ingredientImageLabel = ingredientImageLabel;
         this.addButton = addButton;
-
 
     }
 
