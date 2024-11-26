@@ -2,8 +2,6 @@ package use_case.filter;
 
 
 import data_access.FilterDataAccess;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import data_access.FilterDataAccessInterface;
 import entity.Recipe;
 
@@ -16,7 +14,6 @@ import java.util.Map;
 
 public class FilterInteractor implements FilterInputBoundary {
     private final FilterDataAccessInterface filterDataAccess;
-    StringBuilder resultBuilder = new StringBuilder();
     private List<String> complexsearch = new ArrayList<>();
     private List<Recipe> recipeList;
 
@@ -31,20 +28,36 @@ public class FilterInteractor implements FilterInputBoundary {
     public void filterRecipes(FilterInput input) {
         List<String> ingredients = input.getIngredients();
         Map<String, Boolean> restrictions = input.getRestrictions();
-        String ingredientsString = String.join(",", ingredients);
+        Map<String, Boolean> intolerances = input.getIntolerances();
         List<String> some_list = new ArrayList<>();
+        List<String> some_list2 = new ArrayList<>();
+
         for (String key : restrictions.keySet()) {
             if (restrictions.get(key)) {
                 some_list.add(key);
             }
         }
+
+        for (String key : intolerances.keySet()) {
+            if (intolerances.get(key)) {
+                some_list2.add(key);
+            }
+        }
+
+        String ingredientsString = String.join(",", ingredients);
         String restrictionsString = String.join(",", some_list);
+        String intolerancesString = String.join(",", some_list2);
+
+        if (!intolerancesString.equals("")) {
+            complexsearch.add("intolerances="+intolerancesString);
+        }
         if (!restrictionsString.equals("")) {
-            complexsearch.add("restrictions="+restrictionsString);
+            complexsearch.add("diet="+restrictionsString);
         }
         if (!ingredientsString.equals("")) {
             complexsearch.add("ingredients=" + ingredientsString);
         }
+
         try {
             recipeList = filterDataAccess.fetchComplexSearch(complexsearch);
         } catch (IOException e) {

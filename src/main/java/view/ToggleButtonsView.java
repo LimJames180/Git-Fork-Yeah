@@ -15,6 +15,7 @@ import java.util.List;
 
 public class ToggleButtonsView extends JFrame {
     private Map<String, Boolean> variables = new HashMap<>();
+    private Map<String, Boolean> variables2 = new HashMap<>();
 
 
     public ToggleButtonsView(List<String> ingredients, FilterController controller) {
@@ -24,14 +25,26 @@ public class ToggleButtonsView extends JFrame {
         setLayout(new FlowLayout());
 
 
-        String[] buttonNames = {"glutenfree", "vegetarian", "vegan"};
+        String[] buttonNames = {"glutenfree", "vegetarian", "vegan", "ketogenic"};
         for (String name : buttonNames) {
             variables.put(name, false);
-            JButton toggleButton = new JButton(name);
+            JButton toggleButton = new JButton(name.substring(0, 1).toUpperCase() + name.substring(1));
             toggleButton.addActionListener(e -> {
                 variables.put(name, !variables.get(name));
-                toggleButton.setText(name + " (" + (variables.get(name) ? "ON" : "OFF") + ")");
+                toggleButton.setText(name.substring(0, 1).toUpperCase() + name.substring(1) + " (" + (variables.get(name) ? "ON" : "OFF") + ")");
                 System.out.println(name + " is now: " + variables.get(name));
+            });
+            add(toggleButton);
+        }
+
+        String[] buttonNames2 = {"dairy", "egg", "peanut", "seafood"};
+        for (String name : buttonNames2) {
+            variables2.put(name, false);
+            JButton toggleButton = new JButton(name.substring(0, 1).toUpperCase() + name.substring(1)+ " Free");
+            toggleButton.addActionListener(e -> {
+                variables2.put(name, !variables2.get(name));
+                toggleButton.setText(name.substring(0, 1).toUpperCase() + name.substring(1)+ " Free" + " (" + (variables2.get(name) ? "ON" : "OFF") + ")");
+                System.out.println(name + " is now: " + variables2.get(name));
             });
             add(toggleButton);
         }
@@ -49,6 +62,10 @@ public class ToggleButtonsView extends JFrame {
 
     public Map<String, Boolean> getVariables() {
         return variables;
+    }
+
+    public Map<String, Boolean> getVariables2() {
+        return variables2;
     }
 
 
