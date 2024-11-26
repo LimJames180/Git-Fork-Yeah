@@ -9,16 +9,19 @@ import view.FilterView;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.URL;
 
 public class InstructionsView extends JFrame {
     private InstructionsController instructionsController;
     private JButton backButton;
     private InstructionsViewModel instructionsViewModel;
     private int id;
+    private String image;
 
 
-    public InstructionsView(int id, FilterView filterView) {
+    public InstructionsView(int id, String image, FilterView filterView) {
         this.id = id;
+        this.image = image;
         initializeView();
         setupUI(filterView);
 //        setupListeners();
@@ -39,12 +42,6 @@ public class InstructionsView extends JFrame {
         setSize(1200, 600);
         setLayout(new FlowLayout());
 
-        // Top panel for recipe image
-        ImageIcon recipeIcon = new ImageIcon(""); //URL of image from API
-        JLabel imageLabel = new JLabel(recipeIcon);
-        imageLabel.setIcon(recipeIcon);
-        JPanel imagePanel = new JPanel();
-        imagePanel.add(imageLabel);
 
         // Middle panel for ingredients list from API
 //        JPanel ingredientsPanel = new JPanel();
@@ -70,6 +67,28 @@ public class InstructionsView extends JFrame {
         JLabel instructionsLabel = new JLabel("Instructions:");
         instructionsLabel.setFont(new Font("Arial", Font.BOLD, 16));
 
+        // Top panel for recipe image
+        ImageIcon recipeIcon = new ImageIcon(""); //URL of image from API
+        JLabel imageLabel = new JLabel(recipeIcon);
+//        imageLabel.setIcon(recipeIcon);
+        JPanel imagePanel = new JPanel();
+
+        if (image != null && !image.isEmpty()) {
+            try {
+                URL imageUrl = new URL(image);
+                ImageIcon icon = new ImageIcon(
+                        new ImageIcon(imageUrl)
+                                .getImage()
+                                .getScaledInstance(150, 150, Image.SCALE_SMOOTH)
+                );
+                imageLabel.setIcon(icon);
+                imagePanel.add(imageLabel);
+            } catch (Exception e) {
+                System.out.println("Error loading image for recipe");
+                e.printStackTrace();
+            }
+        }
+
         instructionsPanel.add(instructionsLabel, BorderLayout.NORTH);
         instructionsPanel.add(instructionsTextArea, BorderLayout.CENTER);
 
@@ -94,6 +113,7 @@ public class InstructionsView extends JFrame {
         mainPanel.add(imagePanel);
 //        mainPanel.add(ingredientsPanel);
         mainPanel.add(instructionsPanel);
+        mainPanel.add(imagePanel);
         add(mainPanel);
 
 //        frame.add(imagePanel);

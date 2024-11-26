@@ -70,7 +70,7 @@ public class FilterView extends JFrame{
                 }
             }
             recipeButton.addActionListener(e -> {
-                InstructionsView instructionsView = new InstructionsView(r.getId(), FilterView.this);
+                InstructionsView instructionsView = new InstructionsView(r.getId(), r.getImage(), FilterView.this);
                 instructionsView.setVisible(true);
                 setVisible(false);
 
