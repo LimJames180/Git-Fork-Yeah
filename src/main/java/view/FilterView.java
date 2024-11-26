@@ -13,6 +13,7 @@ import java.util.List;
 
 public class FilterView extends JFrame{
     private JButton filterbutton;
+    private JButton backButton;
     private JPanel inputPanel = new JPanel();
 
 
@@ -29,6 +30,17 @@ public class FilterView extends JFrame{
         inputPanel.add(filterbutton);
         add(inputPanel, BorderLayout.NORTH);
 
+        // Back button
+        JPanel buttonPanel = new JPanel(new FlowLayout());
+        backButton = new JButton("Back");
+        buttonPanel.add(backButton);
+        buttonPanel.add(filterbutton);
+        inputPanel.add(buttonPanel);
+
+        backButton.addActionListener(e -> {
+            dispose();
+            toggleButtonsExample.setVisible(true);
+        });
 
         // Button action
         filterbutton.addActionListener(e -> {
@@ -58,7 +70,7 @@ public class FilterView extends JFrame{
                 }
             }
             recipeButton.addActionListener(e -> {
-                InstructionsView instructionsView = new InstructionsView(r.getId());
+                InstructionsView instructionsView = new InstructionsView(r.getId(), FilterView.this);
                 instructionsView.setVisible(true);
                 setVisible(false);
 
