@@ -51,5 +51,9 @@ public class Recipe {
         return image;
     }
 
+    public int getId() {
+        int num = Integer.parseInt(id);
+        return num;
+    }
 
 }
