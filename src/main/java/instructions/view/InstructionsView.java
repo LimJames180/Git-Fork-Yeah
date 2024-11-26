@@ -5,6 +5,7 @@ import instructions.interface_adapter.InstructionsController;
 import instructions.interface_adapter.InstructionsPresenter;
 import instructions.interface_adapter.InstructionsViewModel;
 import instructions.use_case.InstructionsInteractor;
+import view.FilterView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,10 +17,10 @@ public class InstructionsView extends JFrame {
     private int id;
 
 
-    public InstructionsView(int id) {
+    public InstructionsView(int id, FilterView filterView) {
         this.id = id;
         initializeView();
-        setupUI();
+        setupUI(filterView);
 //        setupListeners();
     }
 
@@ -31,7 +32,7 @@ public class InstructionsView extends JFrame {
         this.instructionsController = new InstructionsController(instructionsInteractor);
     }
 
-    private void setupUI() {
+    private void setupUI(FilterView filterView) {
         instructionsController.handleInstructions(id);
         setTitle("Recipe Instructions"); // set as name of recipe
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -81,9 +82,10 @@ public class InstructionsView extends JFrame {
         // Back button logic
         backButton.addActionListener(e -> {
             dispose(); // Disposes the current JFrame
-
+            filterView.setVisible(true);
             // You can show the previous window here
             // Example: new PreviousPage();  // Assuming you have a PreviousPage class
+            
         });
 
 
