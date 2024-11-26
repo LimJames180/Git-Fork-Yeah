@@ -1,18 +1,20 @@
+package login.data_access;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import login.entities.ApiKey;
+import login.use_case.InstructionsOutputData;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
 import java.io.IOException;
 
-public class instructions {
-
-    public static void getInstructions(int id) {
-
+public class InstructionsDataAccess implements InstructionsDataAccessInterface {
+    @Override
+    public String getInstructions(int id) {
         final String API_KEY = ApiKey.getApiKeys();
         final String BASE_URL = "https://api.spoonacular.com/recipes/";
 
@@ -44,13 +46,15 @@ public class instructions {
                         n++;
                     }
                 }
-                System.out.println(resultBuilder.toString());
+                System.out.println(resultBuilder);
+                return resultBuilder.toString();
+
             } else {
-                System.out.println("Request failed: " + response.code() + " " + response.message());
+                return ("Request failed: " + response.code() + " " + response.message());
             }
         } catch (IOException ex) {
             ex.printStackTrace();
-            System.out.println("Error: " + ex.getMessage());
+            return ("Error: " + ex.getMessage());
         }
     }
 }

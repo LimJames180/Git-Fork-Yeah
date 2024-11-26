@@ -2,6 +2,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import login.entities.ApiKey;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -105,7 +106,7 @@ public class RecipeController {
     }
 
 //    public static List<Recipe> Random_recipe() throws IOException {
-//        String apiKey = ApiKey.getApiKeys();
+//        String apiKey = login.entities.ApiKey.getApiKeys();
 //        OkHttpClient client = new OkHttpClient();
 //
 //        Request request = new Request.Builder()
@@ -120,4 +121,5 @@ public class RecipeController {
 //        return recipeList;
 //    }
 }
+
 
