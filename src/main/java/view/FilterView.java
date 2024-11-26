@@ -6,6 +6,7 @@ import java.awt.*;
 import java.net.URL;
 
 import entity.Recipe;
+import instructions.view.InstructionsView;
 import interface_adapter.filter.FilterController;
 import java.util.List;
 
@@ -56,7 +57,13 @@ public class FilterView extends JFrame{
                     e.printStackTrace();
                 }
             }
-            recipeButton.addActionListener(e -> System.out.println("Recipe: " + rName));
+            recipeButton.addActionListener(e -> {
+                InstructionsView instructionsView = new InstructionsView(r.getId());
+                instructionsView.setVisible(true);
+                setVisible(false);
+
+            });
+
             inputPanel.add(recipeButton);
         }
         inputPanel.revalidate();

@@ -10,12 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class InstructionsView extends JFrame {
-    private JButton instructions;
     private InstructionsController instructionsController;
-    private DefaultListModel<String> ingredientsListModel;
-    private JList<String> ingredientsList;
-    private DefaultListModel<String> instructionsListModel;
-    private JList<String> instructionsList;
     private JButton backButton;
     private InstructionsViewModel instructionsViewModel;
     private int id;
@@ -40,7 +35,7 @@ public class InstructionsView extends JFrame {
         instructionsController.handleInstructions(id);
         setTitle("Recipe Instructions"); // set as name of recipe
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(400, 600);
+        setSize(1200, 600);
         setLayout(new FlowLayout());
 
         // Top panel for recipe image
