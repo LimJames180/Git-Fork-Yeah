@@ -14,7 +14,6 @@ import java.util.Map;
 
 public class FilterInteractor implements FilterInputBoundary {
     private final FilterDataAccessInterface filterDataAccess;
-    private List<String> complexsearch = new ArrayList<>();
     private List<Recipe> recipeList;
 
 
@@ -26,6 +25,7 @@ public class FilterInteractor implements FilterInputBoundary {
 
     @Override
     public void filterRecipes(FilterInput input) {
+        List<String> complexsearch = new ArrayList<>();
         List<String> ingredients = input.getIngredients();
         Map<String, Boolean> restrictions = input.getRestrictions();
         Map<String, Boolean> intolerances = input.getIntolerances();
@@ -55,9 +55,8 @@ public class FilterInteractor implements FilterInputBoundary {
             complexsearch.add("diet="+restrictionsString);
         }
         if (!ingredientsString.equals("")) {
-            complexsearch.add("ingredients=" + ingredientsString);
+            complexsearch.add("includeIngredients=" + ingredientsString);
         }
-
         try {
             recipeList = filterDataAccess.fetchComplexSearch(complexsearch);
         } catch (IOException e) {

@@ -27,4 +27,5 @@ public class FilterInput {
     public Map<String, Boolean> getIntolerances() {
         return intolerances;
     }
+
 }
