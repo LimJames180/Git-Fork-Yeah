@@ -10,8 +10,6 @@ import login.interface_adapter.SignupPresenter;
 import login.interface_adapter.*;
 import login.use_case.SignupInteractor;
 import login.data_access.MongoUserDataAccessImpl;
-import view.LoggedInPageView;
-
 
 
 public class LoginPageView extends JFrame {
@@ -97,7 +95,8 @@ public class LoginPageView extends JFrame {
             if ("message".equals(evt.getPropertyName())) {
                 JOptionPane.showMessageDialog(this, viewModel.getMessage(), "Success", JOptionPane.INFORMATION_MESSAGE);
                 dispose();
-                new LoggedInPageView(viewModel.getMessage());
+                //new LoggedInPageView(viewModel.getMessage());
+                new UserPageView(viewModel.getMessage());
             } else if ("error".equals(evt.getPropertyName())) {
                 JOptionPane.showMessageDialog(this, viewModel.getError(), "Error", JOptionPane.ERROR_MESSAGE);
             }

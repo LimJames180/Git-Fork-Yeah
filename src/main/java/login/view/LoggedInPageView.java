@@ -1,4 +1,6 @@
-package view;
+package login.view;
+
+import view.IngredientSearchView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -50,6 +52,7 @@ public class LoggedInPageView extends JFrame {
 
         setVisible(true);
     }
+
 
     public static void main(String[] args) {
         // Example invocation with a sample username

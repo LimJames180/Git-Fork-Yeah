@@ -3,7 +3,7 @@ package login.interface_adapter;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class SignupViewModel {
+public class  SignupViewModel {
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
     private String message;
     private String error;
