@@ -1,6 +1,10 @@
 package instructions.use_case;
 
+import entity.Ingredient;
 import instructions.data_access.InstructionsDataAccessInterface;
+
+import java.io.IOException;
+import java.util.List;
 
 public class InstructionsInteractor implements InstructionsInputBoundary {
     private final InstructionsDataAccessInterface instructionsDataAccess;
@@ -12,12 +16,16 @@ public class InstructionsInteractor implements InstructionsInputBoundary {
     }
 
     @Override
-    public void execute(InstructionsInputData instructionsInputData) {
+    public void execute(InstructionsInputData instructionsInputData){
         final int id = instructionsInputData.getId();
 
-        String output = instructionsDataAccess.getInstructions(id);
-        InstructionsOutputData instructionsOutputData = new InstructionsOutputData(output);
+        String instructionsOutput = instructionsDataAccess.getInstructions(id);
+        String ingredients = instructionsDataAccess.getIngredients(id);
+        String image = instructionsDataAccess.getImage(id);
+        InstructionsOutputData instructionsOutputData = new InstructionsOutputData(instructionsOutput, ingredients, image);
         instructionsOutputBoundary.setInstructionsViewModel(instructionsOutputData);
+
+
         }
     }
 

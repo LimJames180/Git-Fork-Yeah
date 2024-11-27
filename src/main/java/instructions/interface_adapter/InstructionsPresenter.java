@@ -9,6 +9,8 @@ public class InstructionsPresenter implements InstructionsOutputBoundary {
     public InstructionsPresenter(InstructionsViewModel instructionsViewModel) {this.instructionsViewModel = instructionsViewModel;}
 
     public void setInstructionsViewModel(InstructionsOutputData instructionsOutputData) {
-        instructionsViewModel.setInstructions(instructionsOutputData.getMessage());
+        instructionsViewModel.setInstructions(instructionsOutputData.getInstructions());
+        instructionsViewModel.setImage(instructionsOutputData.getImage());
+        instructionsViewModel.setIngredients(instructionsOutputData.getIngredients());
     }
 }

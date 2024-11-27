@@ -8,7 +8,9 @@ import instructions.use_case.InstructionsInteractor;
 import view.FilterView;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
+import java.io.IOException;
 import java.net.URL;
 
 public class InstructionsView extends JFrame {
@@ -17,12 +19,10 @@ public class InstructionsView extends JFrame {
     private JButton saveButton;
     private InstructionsViewModel instructionsViewModel;
     private int id;
-    private String image;
 
 
-    public InstructionsView(int id, String image, FilterView filterView) {
+    public InstructionsView(int id, FilterView filterView) throws IOException {
         this.id = id;
-        this.image = image;
         initializeView();
         setupUI(filterView);
     }
@@ -44,22 +44,24 @@ public class InstructionsView extends JFrame {
 
 
         // Middle panel for ingredients list from API
-//        JPanel ingredientsPanel = new JPanel();
-//        ingredientsListModel = new DefaultListModel<>();
-//        ingredientsList = new JList<>(ingredientsListModel);
-//        JScrollPane ingredientsScrollPane = new JScrollPane(ingredientsList);
-//        JTextArea ingredientsTextArea = new JTextArea(ingredientsViewModel.getIngredients()); // URL of ingredients
-//        ingredientsPanel.add(new JLabel("Needed ingredients:"), BorderLayout.NORTH);
-//        ingredientsPanel.add(ingredientsScrollPane, BorderLayout.CENTER);
-//        ingredientsPanel.add(ingredientsTextArea, BorderLayout.SOUTH);
-
+        JPanel ingredientsPanel = new JPanel();
+        ingredientsPanel.setLayout(new BorderLayout());
+        JTextArea ingredientsTextArea = new JTextArea(instructionsViewModel.getIngredients());
+        ingredientsTextArea.setLineWrap(true);
+        ingredientsTextArea.setWrapStyleWord(true);
+        ingredientsTextArea.setSize(600, 200);
+        ingredientsTextArea.setMargin(new Insets(10, 10, 10, 10));
+        JLabel ingredientsLabel = new JLabel("Ingredients:");
+        ingredientsLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        ingredientsPanel.add(ingredientsLabel, BorderLayout.NORTH);
+        ingredientsPanel.add(ingredientsTextArea, BorderLayout.CENTER);
         // Another panel showing nutritional information??
 
 
         // Bottom panel for instructions from API
         JPanel instructionsPanel = new JPanel();
         instructionsPanel.setLayout(new BorderLayout());
-        JTextArea instructionsTextArea = new JTextArea(instructionsViewModel.getInstructions()); // URL of instructions
+        JTextArea instructionsTextArea = new JTextArea(instructionsViewModel.getInstructions());
         instructionsTextArea.setLineWrap(true);
         instructionsTextArea.setWrapStyleWord(true);
         instructionsTextArea.setSize(600, 200);
@@ -68,26 +70,23 @@ public class InstructionsView extends JFrame {
         instructionsLabel.setFont(new Font("Arial", Font.BOLD, 16));
 
         // Top panel for recipe image
-        ImageIcon recipeIcon = new ImageIcon(""); //URL of image from API
-        JLabel imageLabel = new JLabel(recipeIcon);
+        JLabel imageLabel = new JLabel();
         JPanel imagePanel = new JPanel();
 
-        if (image != null && !image.isEmpty()) {
-            try {
-                URL imageUrl = new URL(image);
-                ImageIcon icon = new ImageIcon(
-                        new ImageIcon(imageUrl)
-                                .getImage()
-                                .getScaledInstance(150, 150, Image.SCALE_SMOOTH)
-                );
-                imageLabel.setIcon(icon);
-                imagePanel.add(imageLabel);
-            } catch (Exception e) {
-                System.out.println("Error loading image for recipe");
-                e.printStackTrace();
-            }
+        try {
+            URL imageUrl = new URL(instructionsViewModel.getImage());
+            ImageIcon icon = new ImageIcon(
+                    new ImageIcon(imageUrl)
+                            .getImage()
+                            .getScaledInstance(150, 150, Image.SCALE_SMOOTH)
+            );
+            imageLabel.setIcon(icon);
+            imagePanel.add(imageLabel);
+        } catch (Exception e) {
+            System.out.println("Error loading image for recipe");
+            e.printStackTrace();
         }
-
+        System.out.println(instructionsViewModel.getImage());
         // Panel for back button
         backButton = new JButton("Back");
         JPanel backButtonPanel = new JPanel();
@@ -113,13 +112,16 @@ public class InstructionsView extends JFrame {
 
         });
 
+        JPanel buttonPanel = new JPanel(new BorderLayout());
+        buttonPanel.add(backButton, BorderLayout.WEST);
+        buttonPanel.add(saveButton, BorderLayout.EAST);
+
         // Add everything to one panel
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
-//        mainPanel.add(ingredientsPanel);
-        mainPanel.add(instructionsPanel, BorderLayout.NORTH);
-        mainPanel.add(backButtonPanel, BorderLayout.WEST);
-        mainPanel.add(saveButtonPanel, BorderLayout.EAST);
+        mainPanel.add(ingredientsPanel, BorderLayout.NORTH);
+        mainPanel.add(instructionsPanel, BorderLayout.CENTER);
+        mainPanel.add(buttonPanel, BorderLayout.SOUTH);
         add(mainPanel);
 
         setVisible(true);
