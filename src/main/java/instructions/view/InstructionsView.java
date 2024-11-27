@@ -14,6 +14,7 @@ import java.net.URL;
 public class InstructionsView extends JFrame {
     private InstructionsController instructionsController;
     private JButton backButton;
+    private JButton saveButton;
     private InstructionsViewModel instructionsViewModel;
     private int id;
     private String image;
@@ -24,7 +25,6 @@ public class InstructionsView extends JFrame {
         this.image = image;
         initializeView();
         setupUI(filterView);
-//        setupListeners();
     }
 
     private void initializeView() {
@@ -70,7 +70,6 @@ public class InstructionsView extends JFrame {
         // Top panel for recipe image
         ImageIcon recipeIcon = new ImageIcon(""); //URL of image from API
         JLabel imageLabel = new JLabel(recipeIcon);
-//        imageLabel.setIcon(recipeIcon);
         JPanel imagePanel = new JPanel();
 
         if (image != null && !image.isEmpty()) {
@@ -89,41 +88,40 @@ public class InstructionsView extends JFrame {
             }
         }
 
-        instructionsPanel.add(instructionsLabel, BorderLayout.NORTH);
-        instructionsPanel.add(instructionsTextArea, BorderLayout.CENTER);
-
         // Panel for back button
         backButton = new JButton("Back");
         JPanel backButtonPanel = new JPanel();
         backButtonPanel.add(backButton);
-        instructionsPanel.add(backButtonPanel, BorderLayout.SOUTH);
+
+        instructionsPanel.add(instructionsLabel, BorderLayout.NORTH);
+        instructionsPanel.add(instructionsTextArea, BorderLayout.CENTER);
+        instructionsPanel.add(imagePanel, BorderLayout.EAST);
 
         // Back button logic
         backButton.addActionListener(e -> {
             dispose(); // Disposes the current JFrame
             filterView.setVisible(true);
-            // You can show the previous window here
-            // Example: new PreviousPage();  // Assuming you have a PreviousPage class
-            
         });
 
+        // Panel for save button
+        saveButton = new JButton("Save Recipe!");
+        JPanel saveButtonPanel = new JPanel();
+        saveButtonPanel.add(saveButton);
+
+        // Save button logic
+        saveButton.addActionListener(e -> {
+
+        });
 
         // Add everything to one panel
         JPanel mainPanel = new JPanel();
-        mainPanel.add(imagePanel);
+        mainPanel.setLayout(new BorderLayout());
 //        mainPanel.add(ingredientsPanel);
-        mainPanel.add(instructionsPanel);
-        mainPanel.add(imagePanel);
+        mainPanel.add(instructionsPanel, BorderLayout.NORTH);
+        mainPanel.add(backButtonPanel, BorderLayout.WEST);
+        mainPanel.add(saveButtonPanel, BorderLayout.EAST);
         add(mainPanel);
 
-//        frame.add(imagePanel);
-////      frame.add(ingredientsPanel);
-//        frame.add(instructionsPanel);
         setVisible(true);
     }
-//    private void setupListeners() {
-//        backButton.addActionListener(new backButtonListener());
-//
-//        setVisible(true);
-//    }
 }
