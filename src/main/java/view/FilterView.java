@@ -3,6 +3,7 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.net.URL;
 
 import entity.Recipe;
@@ -73,7 +74,12 @@ public class FilterView extends JFrame{
                 }
             }
             recipeButton.addActionListener(e -> {
-                InstructionsView instructionsView = new InstructionsView(r.getId(), FilterView.this);
+                InstructionsView instructionsView = null;
+                try {
+                    instructionsView = new InstructionsView(r.getId(), FilterView.this);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
                 instructionsView.setVisible(true);
                 setVisible(false);
 
