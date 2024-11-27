@@ -3,69 +3,85 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.URL;
+
+import entity.Recipe;
+import instructions.view.InstructionsView;
 import interface_adapter.filter.FilterController;
 import java.util.List;
 
 
 public class FilterView extends JFrame{
     private JButton filterbutton;
-    private JTextArea resultArea;
-    private ToggleButtonsView toggleButtonsExample;
-    private FilterController controller;
-    private List<String> ingredients = List.of("tomato", "pepper");
+    private JButton backButton;
     private JPanel inputPanel = new JPanel();
 
 
-    public FilterView(List<String> ingredients,FilterController controller, ToggleButtonsView toggleButtonsExample) {
-        this.controller = controller;
-        this.ingredients = ingredients;
-        this.toggleButtonsExample = toggleButtonsExample;
+    public FilterView(List<String> ingredients, FilterController controller, ToggleButtonsView toggleButtonsExample) {
         setTitle("Filters");
-        setSize(400, 700);
+        setSize(600, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
 
         // Input panel
-        inputPanel.setLayout(new FlowLayout());
+        inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.Y_AXIS));
         filterbutton = new JButton("Find Recipes");
         inputPanel.add(filterbutton);
-
-
-        // Result area
-        resultArea = new JTextArea();
-        resultArea.setEditable(true);
-        JScrollPane scrollPane = new JScrollPane(resultArea);
-
-
         add(inputPanel, BorderLayout.NORTH);
-        add(scrollPane, BorderLayout.CENTER);
 
+        // Back button
+        JPanel buttonPanel = new JPanel(new FlowLayout());
+        backButton = new JButton("Back");
+        buttonPanel.add(backButton);
+        buttonPanel.add(filterbutton);
+        inputPanel.add(buttonPanel);
+
+        backButton.addActionListener(e -> {
+            dispose();
+            toggleButtonsExample.setVisible(true);
+        });
 
         // Button action
         filterbutton.addActionListener(e -> {
-            StringBuilder results = controller.handlefilter(ingredients, toggleButtonsExample.getVariables());
-            displayResults(results.toString());
+            List<Recipe> results = controller.handlefilter(ingredients, toggleButtonsExample.getVariables(), toggleButtonsExample.getVariables2());
+            displayResults(results);
         });
     }
 
 
-    public void displayResults(String results) {
-        String[] recipe = results.toString().split("Recipe: ");
-        inputPanel.removeAll();
-        for (int i = 1; i < recipe.length; i++) {
-            JButton recipeButton = new JButton(recipe[i]);
-            recipeButton.setText(recipe[i]);
-            recipeButton.addActionListener(e -> resultArea.setText(results));
+    public void displayResults(List<Recipe> results) {
+        if (results.isEmpty()){
+            System.out.println("No results found");
+            return;
+        }
+        for (Recipe r : results) {
+            String rName = r.getTitle();
+            JButton recipeButton = new JButton(rName);
+            if (r.getImage() != null && !r.getImage().isEmpty()) {
+                try {
+                    URL imageUrl = new URL(r.getImage());
+                    ImageIcon icon = new ImageIcon(
+                            new ImageIcon(imageUrl)
+                                    .getImage()
+                                    .getScaledInstance(50, 50, Image.SCALE_SMOOTH)
+                    );
+                    recipeButton.setIcon(icon);
+                } catch (Exception e) {
+                    System.out.println("Error loading image for recipe: " + rName);
+                    e.printStackTrace();
+                }
+            }
+            recipeButton.addActionListener(e -> {
+                InstructionsView instructionsView = new InstructionsView(r.getId(), FilterView.this);
+                instructionsView.setVisible(true);
+                setVisible(false);
+
+            });
+
             inputPanel.add(recipeButton);
         }
-
-
+        inputPanel.revalidate();
+        inputPanel.repaint();
     }
-
-
-
-
-
-
 }

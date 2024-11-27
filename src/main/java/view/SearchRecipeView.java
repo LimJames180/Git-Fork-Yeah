@@ -17,7 +17,7 @@ public class SearchRecipeView extends JFrame {
 
     public SearchRecipeView() {
         // Setting up the frame
-        setTitle("Recipe Finder - Search Recipes");
+        setTitle("entity.Recipe Finder - Search Recipes");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(500, 600);
         setLayout(new BorderLayout());
@@ -73,7 +73,7 @@ public class SearchRecipeView extends JFrame {
         recipePanel.setLayout(new BorderLayout());
         recipePanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-        // Recipe Image
+        // entity.Recipe Image
         try {
             URL imageUrl = new URL(recipe.getImageUrl());
             ImageIcon imageIcon = new ImageIcon(imageUrl);
@@ -90,7 +90,7 @@ public class SearchRecipeView extends JFrame {
             recipePanel.add(imageLabel, BorderLayout.WEST);
         }
 
-        // Recipe Name
+        // entity.Recipe Name
         JLabel nameLabel = new JLabel(recipe.getName());
         nameLabel.setFont(new Font("Arial", Font.BOLD, 14));
         recipePanel.add(nameLabel, BorderLayout.CENTER);
@@ -108,7 +108,7 @@ public class SearchRecipeView extends JFrame {
         SwingUtilities.invokeLater(SearchRecipeView::new);
     }
 
-    // Inner class to represent a Recipe (replace with your data structure)
+    // Inner class to represent a entity.Recipe (replace with your data structure)
     class Recipe {
         private String name;
         private String imageUrl;

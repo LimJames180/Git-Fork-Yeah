@@ -1,3 +1,8 @@
+package entity;
+
+import entity.Nutrients;
+import interface_adapter.RecipeController;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -46,5 +51,9 @@ public class Recipe {
         return image;
     }
 
+    public int getId() {
+        int num = Integer.parseInt(id);
+        return num;
+    }
 
 }
