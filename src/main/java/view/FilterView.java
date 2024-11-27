@@ -51,6 +51,10 @@ public class FilterView extends JFrame{
 
 
     public void displayResults(List<Recipe> results) {
+        if (results.isEmpty()){
+            System.out.println("No results found");
+            return;
+        }
         for (Recipe r : results) {
             String rName = r.getTitle();
             JButton recipeButton = new JButton(rName);

@@ -16,6 +16,7 @@ import java.util.List;
 public class ToggleButtonsView extends JFrame {
     private Map<String, Boolean> variables = new HashMap<>();
     private Map<String, Boolean> variables2 = new HashMap<>();
+    private JButton backButton;
 
 
     public ToggleButtonsView(List<String> ingredients, FilterController controller) {
@@ -57,6 +58,18 @@ public class ToggleButtonsView extends JFrame {
             filterSwing.setVisible(true);
         });
         add(switchButton);
+
+//        // Back button
+//        JPanel buttonPanel = new JPanel(new FlowLayout());
+//        backButton = new JButton("Back");
+//        buttonPanel.add(backButton);
+//        add(buttonPanel);
+//
+//        backButton.addActionListener(e -> {
+//            dispose();
+//            .setVisible(true);
+//        });
+
     }
 
 
@@ -71,7 +84,7 @@ public class ToggleButtonsView extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            List<String> ingredients = List.of("tomato", "pepper");
+            List<String> ingredients = List.of("chicken");
             FilterDataAccess dataAccess = new FilterDataAccess();
             FilterInteractor interactor = new FilterInteractor(dataAccess);
             FilterController controller = new FilterController(interactor);
