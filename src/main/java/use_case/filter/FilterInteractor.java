@@ -29,6 +29,8 @@ public class FilterInteractor implements FilterInputBoundary {
         List<String> ingredients = input.getIngredients();
         Map<String, Boolean> restrictions = input.getRestrictions();
         Map<String, Boolean> intolerances = input.getIntolerances();
+        int offset = input.getOffset();
+
         List<String> some_list = new ArrayList<>();
         List<String> some_list2 = new ArrayList<>();
 
@@ -48,6 +50,10 @@ public class FilterInteractor implements FilterInputBoundary {
         String restrictionsString = String.join(",", some_list);
         String intolerancesString = String.join(",", some_list2);
 
+
+        if (offset > 0) {
+            complexsearch.add("offset=" + offset);
+        }
         if (!intolerancesString.equals("")) {
             complexsearch.add("intolerances="+intolerancesString);
         }

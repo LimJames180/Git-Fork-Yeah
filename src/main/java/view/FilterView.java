@@ -10,15 +10,26 @@ import entity.Recipe;
 import instructions.view.InstructionsView;
 import interface_adapter.filter.FilterController;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class FilterView extends JFrame{
     private JButton filterbutton;
     private JButton backButton;
     private JPanel inputPanel = new JPanel();
+    private JButton prevButton;
+    private JButton nextButton;
+    private int offset;
+    private FilterController controller;
+    private List<String> ingredients;
+    private ToggleButtonsView toggleButtonsExample;
+
 
 
     public FilterView(List<String> ingredients, FilterController controller, ToggleButtonsView toggleButtonsExample) {
+        this.controller = controller;
+        this.ingredients = ingredients;
+        this.toggleButtonsExample = toggleButtonsExample;
         setTitle("Filters");
         setSize(600, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -43,11 +54,15 @@ public class FilterView extends JFrame{
             toggleButtonsExample.setVisible(true);
         });
 
+
         // Button action
         filterbutton.addActionListener(e -> {
-            List<Recipe> results = controller.handlefilter(ingredients, toggleButtonsExample.getVariables(), toggleButtonsExample.getVariables2());
+            List<Recipe> results = controller.handlefilter(ingredients, toggleButtonsExample.getVariables(), toggleButtonsExample.getVariables2(),0);
             displayResults(results);
         });
+
+
+
     }
 
 
@@ -89,5 +104,36 @@ public class FilterView extends JFrame{
         }
         inputPanel.revalidate();
         inputPanel.repaint();
+
+
+        JPanel nextPrevPanel = new JPanel(new FlowLayout());
+        prevButton = new JButton("Previous");
+        nextButton = new JButton("Next");
+        nextPrevPanel.add(prevButton);
+        nextPrevPanel.add(nextButton);
+        inputPanel.add(nextPrevPanel);
+
+        prevButton.addActionListener(e -> {
+            offset -= 10;
+            for (int i = 11; i >= 1; i--) {
+                inputPanel.remove(i);
+            }
+//            for (int i = 1; i >= 10; i++) {
+//                inputPanel.remove(i);
+//            }
+            List<Recipe> result = controller.handlefilter(ingredients, toggleButtonsExample.getVariables(), toggleButtonsExample.getVariables2(), offset);
+            displayResults(result);
+        });
+
+        nextButton.addActionListener(e -> {
+            offset += 10;
+            List<Recipe> result = controller.handlefilter(ingredients, toggleButtonsExample.getVariables(), toggleButtonsExample.getVariables2(), offset);
+            //inputPanel.remove();
+            for (int i = 11; i >= 1; i--) {
+                inputPanel.remove(i);
+            }
+
+            displayResults(result);
+        });
     }
 }
