@@ -11,8 +11,10 @@ import entity.Recipe;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -126,6 +128,57 @@ public class RecipeController {
         JsonElement root = new JsonParser().parse(jsonData);
         List<Recipe> recipeList = Recipe_List(root.getAsJsonObject().get("recipes").getAsJsonArray());
         return recipeList;
+    }
+
+    public String get_Name(Recipe recipe) {
+        String apiKey = ApiKey.getApiKeys();
+        OkHttpClient client = new OkHttpClient();
+
+        StringBuilder parameter = new StringBuilder("https://api.spoonacular.com/recipes/" + recipe.getId() + "/information?apiKey=" + apiKey);
+        Request request = new Request.Builder()
+                .url(parameter.toString())
+                .get()
+                .build();
+
+        try {
+            Response response = client.newCall(request).execute();
+            if (response.isSuccessful() && response.body() != null) {
+                JSONObject jsonResponse = new JSONObject(response.body().string());
+                return jsonResponse.getString("title");
+            } else {
+                // Handle unsuccessful response or null body
+                return "Title not found";
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "Error fetching title";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Unexpected error";
+        }
+    }
+
+    public static String get_recipe_instructions(String id) throws IOException {
+        String apiKey = ApiKey.getApiKeys();
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url("https://api.spoonacular.com/recipes/" + id + "/analyzedInstructions?apiKey=" + apiKey)
+                .get()
+                .build();
+
+        Response response = client.newCall(request).execute();
+        String jsonData = response.body().string();
+        JsonElement root = new JsonParser().parse(jsonData);
+        JsonArray instructions = root.getAsJsonArray();
+        StringBuilder instruction = new StringBuilder();
+        for (JsonElement step : instructions) {
+            JsonArray steps = step.getAsJsonObject().get("steps").getAsJsonArray();
+            for (JsonElement s : steps) {
+                instruction.append(s.getAsJsonObject().get("step").getAsString()).append("\n");
+            }
+        }
+        return instruction.toString();
     }
 }
 

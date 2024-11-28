@@ -1,36 +1,65 @@
-# Note Application
+Git Fork Yeah! 🍴
 
-This is a minimal example demonstrating usage of the
-password-protected user part of the API used in lab 5.
+Git Fork Yeah! is a recipe app designed to make cooking fun, organized, and shareable. Whether you’re a novice in the kitchen or a seasoned chef, this app is your perfect companion for discovering, creating, and managing recipes effortlessly.
 
-You can find more information about the API endpoints in
-[the documentation](https://www.postman.com/cloudy-astronaut-813156/csc207-grade-apis-demo/documentation/fg3zkjm/5-password-protected-user).
+Features
 
-If your team is considering an application for which it would be convenient to
-store data in something like a database, you may find that the API calls demonstrated
-here will be useful in your project, as this will allow you to store
-an arbitrary JSON object associated with a username and password.
+	•	Browse Recipes: Explore a diverse range of recipes from global cuisines.
+	•	Create Your Recipes: Document your culinary masterpieces with ease.
+	•	Edit and Manage: Update and refine your recipes anytime.
+	•	Search Functionality: Find recipes by name, ingredients, or cuisine.
+	•	Favorites List: Bookmark your favorite recipes for quick access.
+	•	Share Recipes: Let others in on your culinary genius with shareable recipes.
 
-In this application, a single note has a name (the "username" in terms of the API) and the note
-can be read by anyone who knows the name — but only edited by someone who
-knows the password for it.
+Project Structure
 
-You can see the documentation in the various files for more information.
+	•	src/main/java: Contains the main source code for the application.
+	•	LICENSE: Project license information.
+	•	README.md: The file you’re currently reading, summarizing the app.
 
-## Testing
+Getting Started
 
-The repo also includes an example of a use case interactor test, as well as
-an example of an end-to-end test which automates button clicks and inspects
-the contents of the actual views. This is something we discussed in the lectures
-about testing in CA but had not provided a code example of before. Note, one
-could also inspect the contents of the ViewModel objects instead when testing
-CA to make a similar test which would be less dependent on the details of the
-specific UI implementation.
+Prerequisites
 
-## Project Starter Code
+	•	Java: Ensure you have Java installed.
+	•	Maven: Required for dependency management and project building.
 
-Your team may choose to use this repo as starter code for your project. You could
-also use the lab 5 code — or start from an empty repo if your team prefers.
+Installation
 
-If you choose to use one of the repositories we have provided, you can either make
-a fork of it or copy the subset of code you want into a completely new repository.
+	1.	Clone this repository:
+
+git clone <repository-url>
+
+
+	2.	Navigate to the project directory:
+
+cd git-fork-yeah
+
+
+	3.	Build the project:
+
+mvn clean install
+
+Running Git Fork Yeah!
+
+Start the application by executing:
+
+mvn exec:java -Dexec.mainClass="com.gitforkyeah.Main"
+
+Testing
+
+Run the tests with:
+
+mvn test
+
+License
+
+This project is licensed under the terms specified in the LICENSE file.
+
+Why “Git Fork Yeah!”?
+
+The name represents the fun and utility of the app — whether you’re “forking” recipes to make them your own or enjoying every “fork-full” bite!
+
+Enjoy using Git Fork Yeah! to elevate your culinary journey. Fork your way to deliciousness! 🍽️
+
+commit farm7
