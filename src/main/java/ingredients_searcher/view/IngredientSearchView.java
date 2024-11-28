@@ -42,7 +42,7 @@ public class IngredientSearchView extends JFrame {
         // Setting up the frame
         setTitle("entity.Ingredient Search");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(400, 600);
+        setSize(650, 700);
         setLayout(new BorderLayout());
 
         // Top Panel for entity.Ingredient Input
