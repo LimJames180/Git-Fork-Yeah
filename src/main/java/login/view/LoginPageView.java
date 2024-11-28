@@ -99,8 +99,10 @@ public class LoginPageView extends JFrame {
             }
 
             // Handle login
-            controller.handleLogin(username, password);
             currentSession.setUsername(username);
+
+            controller.handleLogin(username, password);
+
         });
 
         signupButton.addActionListener(e -> {

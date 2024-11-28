@@ -26,12 +26,13 @@ public class MongoUserDataAccessImpl implements UserDataAccess {
     public User findUser(String username) {
         Document userDoc = userCollection.find(Filters.eq("username", username)).first();
         if (userDoc != null) {
-            User user = new User(userDoc.getString("username"), userDoc.getString("password"));
-            List<Recipe> recipes = getUserRecipes(username);
-            for (Recipe recipe : recipes) {
-                user.addRecipe(recipe);
-            }
-            return user;
+            return new User(userDoc.getString("username"), userDoc.getString("password"));
+//            User user = new User(userDoc.getString("username"), userDoc.getString("password"));
+//            List<Recipe> recipes = getUserRecipes(username);
+//            for (Recipe recipe : recipes) {
+//                user.addRecipe(recipe);
+//            }
+//            return user;
         }
         return null;
     }
@@ -40,26 +41,34 @@ public class MongoUserDataAccessImpl implements UserDataAccess {
     public void saveUser(User user) {
         Document userDoc = new Document("username", user.getUsername())
                 .append("password", user.getPassword())
-                .append("savedRecipes", user.getSavedRecipes());
+                .append("savedRecipes", getUserRecipes(user.getUsername()));
         userCollection.insertOne(userDoc);
+        //user.getSavedRecipes()
     }
 
     @Override
     public void saveRecipeForUser(String username, Recipe recipe) {
         userCollection.updateOne(Filters.eq("username", username),
-                new Document("$push", new Document("savedRecipes", recipe.getId())));
+                new Document("$push", new Document("savedRecipes", Integer.toString(recipe.getId()))));
     }
 
     @Override
     public List<Recipe> getUserRecipes(String username) {
+        System.out.println("Searching for user: " + username); // Debugging output
+
         List<Recipe> recipes = new ArrayList<>();
         Document userDoc = userCollection.find(Filters.eq("username", username)).first();
+        System.out.println(userDoc);
+
         if (userDoc != null) {
             List<String> recipeIds = (List<String>) userDoc.get("savedRecipes");
+            System.out.println(recipeIds);
             for (String recipeId : recipeIds) {
                 recipes.add(new Recipe(recipeId)); // Replace with actual title fetching logic
             }
         }
+        //System.out.println(recipes.get(0).getId());
+        System.out.println(recipes.size() + "here");
         return recipes;
     }
 

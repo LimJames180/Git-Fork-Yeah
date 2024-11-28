@@ -90,7 +90,7 @@ public class ToggleButtonsView extends JFrame {
             FilterInteractor interactor = new FilterInteractor(dataAccess);
             FilterController controller = new FilterController(interactor);
             SessionService test = new SessionService();
-            test.setUsername("nov22");
+            test.setUsername("callon");
             ToggleButtonsView example = new ToggleButtonsView(ingredients, controller, test);
             example.setVisible(true);
         });
