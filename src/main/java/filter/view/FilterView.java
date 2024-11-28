@@ -19,7 +19,7 @@ import login.app.SessionService;
 import java.util.List;
 
 
-public class FilterView extends JFrame{
+public class FilterView extends JFrame implements BaseView{
     private JButton filterbutton;
     private JButton backButton;
     private JPanel inputPanel = new JPanel();
@@ -116,7 +116,7 @@ public class FilterView extends JFrame{
             recipeButton.addActionListener(e -> {
                 InstructionsView instructionsView = null;
                 try {
-                    instructionsView = new InstructionsView(r.getId(), (BaseView) FilterView.this, currentSession);
+                    instructionsView = new InstructionsView(r.getId(), FilterView.this, currentSession);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
