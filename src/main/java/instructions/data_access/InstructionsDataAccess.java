@@ -2,14 +2,10 @@ package instructions.data_access;
 
 import com.google.gson.*;
 import entity.ApiKey;
-import entity.Ingredient;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class InstructionsDataAccess implements InstructionsDataAccessInterface {
     final String API_KEY = ApiKey.getApiKeys();
@@ -33,16 +29,23 @@ public class InstructionsDataAccess implements InstructionsDataAccessInterface {
                 Gson gson = new Gson();
                 JsonArray recipes = gson.fromJson(jsonData, JsonArray.class);
 
-                // Extract and append instructions to form a large string
                 StringBuilder resultBuilder = new StringBuilder();
                 int n = 1;
+                boolean firstStep = true;
+
                 for (JsonElement recipeElement : recipes) {
                     JsonArray stepsArray = recipeElement.getAsJsonObject().getAsJsonArray("steps");
                     for (JsonElement stepElement : stepsArray) {
                         JsonObject stepObject = stepElement.getAsJsonObject();
                         String stepInstruction = stepObject.get("step").getAsString();
-                        resultBuilder.append(n).append(". ").append(stepInstruction).append("\n");
+
+                        if (!firstStep) {
+                            resultBuilder.append("\n");
+                        }
+
+                        resultBuilder.append(n).append(". ").append(stepInstruction);
                         n++;
+                        firstStep = false;
                     }
                 }
 
@@ -75,20 +78,25 @@ public class InstructionsDataAccess implements InstructionsDataAccessInterface {
                 JsonArray recipes = gson.fromJson(jsonData, JsonArray.class);
 
                 StringBuilder resultBuilder = new StringBuilder();
-                int n = 1;
                 resultBuilder.append("Ingredients needed: ");
+                boolean firstIngredient = true;
+
                 for (JsonElement recipeElement : recipes) {
                     JsonArray stepsArray = recipeElement.getAsJsonObject().getAsJsonArray("steps");
                     for (JsonElement stepElement : stepsArray) {
                         JsonObject stepObject = stepElement.getAsJsonObject();
 
-                        // Extract and append ingredients to form a large string
                         JsonArray ingredientsArray = stepObject.getAsJsonArray("ingredients");
                         if (ingredientsArray != null) {
                             for (JsonElement ingredientElement : ingredientsArray) {
                                 JsonObject ingredientObject = ingredientElement.getAsJsonObject();
                                 String ingredientName = ingredientObject.get("name").getAsString();
-                                resultBuilder.append(ingredientName).append(", ");
+
+                                if (!firstIngredient) {
+                                    resultBuilder.append(", ");
+                                }
+                                resultBuilder.append(ingredientName);
+                                firstIngredient = false;
                             }
                         }
                     }

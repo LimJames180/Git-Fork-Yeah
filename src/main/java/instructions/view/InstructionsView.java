@@ -24,6 +24,7 @@ public class InstructionsView extends JFrame {
         this.id = id;
         initializeView();
         setupUI(filterView);
+
     }
 
     private void initializeView() {
@@ -41,7 +42,7 @@ public class InstructionsView extends JFrame {
         setSize(1200, 600);
         setLayout(new FlowLayout());
 
-
+        System.out.println(id);
         // Middle panel for ingredients list from API
         JPanel ingredientsPanel = new JPanel();
         ingredientsPanel.setLayout(new BorderLayout());
@@ -54,8 +55,7 @@ public class InstructionsView extends JFrame {
         ingredientsLabel.setFont(new Font("Arial", Font.BOLD, 16));
         ingredientsPanel.add(ingredientsLabel, BorderLayout.NORTH);
         ingredientsPanel.add(ingredientsTextArea, BorderLayout.CENTER);
-        // Another panel showing nutritional information??
-
+        System.out.println(ingredientsTextArea.getText());
 
         // Bottom panel for instructions from API
         JPanel instructionsPanel = new JPanel();
@@ -67,6 +67,7 @@ public class InstructionsView extends JFrame {
         instructionsTextArea.setMargin(new Insets(10, 10, 10, 10));
         JLabel instructionsLabel = new JLabel("Instructions:");
         instructionsLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        System.out.println(instructionsTextArea.getText());
 
         // Top panel for recipe image
         JLabel imageLabel = new JLabel();
