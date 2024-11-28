@@ -13,7 +13,6 @@ import login.app.SessionService;
 import login.data_access.MongoUserDataAccessImpl;
 import login.data_access.UserDataAccess;
 import login.entities.User;
-import view.FilterView;
 import view.LoggedInPageView;
 
 import javax.swing.*;
@@ -32,12 +31,11 @@ public class InstructionsView extends JFrame {
     private UserDataAccess userDataAccess;
 
 
-    public InstructionsView(int id, FilterView filterView, SessionService currentSession) throws IOException {
+    public InstructionsView(int id, BaseView filterView, SessionService currentSession) throws IOException {
         this.id = id;
         this.currentSession = currentSession;
         initializeView();
         setupUI(filterView);
-
     }
 
     public InstructionsView(int id, LoggedInPageView loggedInPageView, SessionService currentSession) {

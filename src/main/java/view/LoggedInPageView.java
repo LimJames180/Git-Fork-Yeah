@@ -2,6 +2,7 @@ package view;
 
 import ingredients_searcher.view.IngredientSearchView;
 import entity.Recipe;
+import ingredients_searcher.view.IngredientSearchView;
 import instructions.view.BaseView;
 import instructions.view.InstructionsView;
 import login.app.SessionService;
@@ -57,7 +58,7 @@ public class LoggedInPageView extends JFrame implements BaseView {
         exploreRecipesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new IngredientSearchView(null);
+                new IngredientSearchView(null, currentSession);
             }
         });
         add(exploreRecipesButton, BorderLayout.SOUTH);
