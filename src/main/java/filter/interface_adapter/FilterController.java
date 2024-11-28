@@ -4,6 +4,7 @@ import entity.Recipe;
 import filter.use_case.FilterInput;
 import filter.use_case.FilterInteractor;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +15,7 @@ public class FilterController {
         this.interactor = interactor;
     }
 
-    public void handlefilter(List<String> ingrients, Map<String, Boolean> restrictions, Map<String, Boolean> intolerances, int offset) {
+    public void handlefilter(List<String> ingrients, Map<String, Boolean> restrictions, Map<String, Boolean> intolerances, int offset) throws IOException {
         FilterInput input = new FilterInput(ingrients, restrictions, intolerances, offset);
         interactor.filterRecipes(input);
         //return interactor.getRecipeList();
