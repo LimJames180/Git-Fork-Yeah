@@ -27,7 +27,7 @@ public class FilterInteractorTest {
         Map<String, Boolean> map = Map.of("glutenfree", false, "vegetarian", false, "vegan", false, "ketogenic", false);
         Map<String, Boolean> map2 = Map.of("dairy", false, "egg", false, "peanut", false, "seafood", false);
 
-        FilterInput input = new FilterInput(List.of("chicken", "rice"), map, map2);
+        FilterInput input = new FilterInput(List.of("chicken", "rice"), map, map2,0);
 
         filterInteractor.filterRecipes(input);
 
@@ -43,7 +43,7 @@ public class FilterInteractorTest {
         Map<String, Boolean> map = Map.of("glutenfree", false, "vegetarian", false, "vegan", false, "ketogenic", false);
         Map<String, Boolean> map2 = Map.of("dairy", false, "egg", false, "peanut", false, "seafood", false);
 
-        FilterInput input = new FilterInput(list,map,map2);
+        FilterInput input = new FilterInput(list,map,map2,0);
         filterInteractor.filterRecipes(input);
 
         List<Recipe> recipes = filterInteractor.getRecipeList();
@@ -58,7 +58,7 @@ public class FilterInteractorTest {
         Map<String, Boolean> map = Map.of("glutenfree", false, "vegetarian", false, "vegan", false, "ketogenic", false);
         Map<String, Boolean> map2 = Map.of("dairy", false, "egg", false, "peanut", false, "seafood", false);
 
-        FilterInput input = new FilterInput(list,map,map2);
+        FilterInput input = new FilterInput(list,map,map2,0);
         filterInteractor.filterRecipes(input);
 
         List<Recipe> recipes = filterInteractor.getRecipeList();
@@ -73,7 +73,7 @@ public class FilterInteractorTest {
         Map<String, Boolean> map = Map.of("glutenfree", true, "vegetarian", true, "vegan", true, "ketogenic", true);
         Map<String, Boolean> map2 = Map.of("dairy", true, "egg", true, "peanut", true, "seafood", true);
 
-        FilterInput input = new FilterInput(list,map,map2);
+        FilterInput input = new FilterInput(list,map,map2,0);
         filterInteractor.filterRecipes(input);
 
         List<Recipe> recipes = filterInteractor.getRecipeList();
