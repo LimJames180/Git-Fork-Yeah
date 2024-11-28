@@ -15,6 +15,8 @@ import ingredients_searcher.view.action_listeners.AddIngredientListener;
 import ingredients_searcher.view.action_listeners.IngredientsListener;
 import ingredients_searcher.view.action_listeners.ToFiltersListener;
 import login.app.SessionService;
+import login.data_access.MongoUserDataAccessImpl;
+import login.data_access.UserDataAccess;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -147,7 +149,8 @@ public class IngredientSearchView extends JFrame {
     }
 
     public static void main(String[] args) {
-        SessionService test = new SessionService();
+        MongoUserDataAccessImpl testDataAccess = new MongoUserDataAccessImpl();
+        SessionService test = new SessionService(testDataAccess);
         IngredientSearchView isv = new IngredientSearchView(null, test);
         // SwingUtilities.invokeLater((Runnable) isv);
         SwingUtilities.invokeLater(() -> isv.setVisible(true));
