@@ -1,9 +1,5 @@
 package instructions.interface_adapter;
 
-import entity.Ingredient;
-
-import java.util.List;
-
 public class InstructionsViewModel {
     private String instructions;
     private String ingredients;
