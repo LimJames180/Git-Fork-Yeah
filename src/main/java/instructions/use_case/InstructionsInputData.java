@@ -1,7 +1,7 @@
 package instructions.use_case;
 
 public class InstructionsInputData {
-    private int id;
+    private final int id;
 
     public InstructionsInputData(int id) {
         this.id = id;
