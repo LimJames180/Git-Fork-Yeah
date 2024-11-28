@@ -1,4 +1,4 @@
-package ingredients_searcher.view;
+package view;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,11 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import ingredients_searcher.view.action_listeners.AddIngredientListener;
-import ingredients_searcher.view.action_listeners.IngredientsListener;
-import ingredients_searcher.view.action_listeners.ToFiltersListener;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import view.ActionListeners.AddListener;
+import view.ActionListeners.ExploreListener;
+import view.ActionListeners.IngredientsListener;
+import view.ActionListeners.SearchListener;
 
 public class IngredientSearchView extends JFrame {
     // UI Components
@@ -25,7 +26,8 @@ public class IngredientSearchView extends JFrame {
     private JButton addButton;
     private DefaultListModel<String> ingredientListModel;
     private JList<String> ingredientList;
-    private JButton toFiltersButton;
+    private JButton searchRecipesButton;
+    private JButton exploreAllRecipesButton;
 
     // Spoonacular API Details
     private static final String SPOONACULAR_API_KEY = "62fb1e66d4be4351b17b5f5043ede6db"; // Replace with your actual API key
@@ -77,9 +79,11 @@ public class IngredientSearchView extends JFrame {
 
         // Buttons for Searching Recipes and Exploring All Recipes
         JPanel buttonPanel = new JPanel(new FlowLayout());
-        toFiltersButton = new JButton("Set Filters");
+        searchRecipesButton = new JButton("Search Recipes");
+        exploreAllRecipesButton = new JButton("Explore All Recipes");
 
-        buttonPanel.add(toFiltersButton);
+        buttonPanel.add(searchRecipesButton);
+        buttonPanel.add(exploreAllRecipesButton);
 
         // Combine Panels
         JPanel mainPanel = new JPanel(new BorderLayout());
@@ -88,9 +92,10 @@ public class IngredientSearchView extends JFrame {
         add(mainPanel, BorderLayout.EAST);
 
         // Event Listeners
-        toFiltersButton.addActionListener(new ToFiltersListener(ingredientsList, this));
+        searchRecipesButton.addActionListener(new SearchListener(ingredientsList, this));
+        exploreAllRecipesButton.addActionListener(new ExploreListener(this));
         searchButton.addActionListener(new IngredientsListener(ingredientInputField, this));
-        addButton.addActionListener(new AddIngredientListener(ingredientListModel, ingredientsList, ingredientNameLabel,
+        addButton.addActionListener(new AddListener(ingredientListModel, ingredientsList, ingredientNameLabel,
                 ingredientImageLabel, addButton));
 
         setVisible(true);

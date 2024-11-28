@@ -1,4 +1,4 @@
-package ingredients_searcher.view.action_listeners;
+package view.ActionListeners;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * This class adds the inputted ingredient to the relevant lists.
  */
-public class AddIngredientListener implements ActionListener {
+public class AddListener implements ActionListener {
     String ingredientName;
     List<String> ingredientsList;
     final private DefaultListModel<String> ingredientListModel;
@@ -16,8 +16,8 @@ public class AddIngredientListener implements ActionListener {
     final private JLabel ingredientImageLabel;
     final private JButton addButton;
 
-    public AddIngredientListener(DefaultListModel<String> ingredientListModel, List<String> ingredientList, JLabel ingredientNameLabel,
-                                 JLabel ingredientImageLabel, JButton addButton) {
+    public AddListener(DefaultListModel<String> ingredientListModel, List<String> ingredientList, JLabel ingredientNameLabel,
+                       JLabel ingredientImageLabel, JButton addButton) {
         this.ingredientListModel = ingredientListModel;
         this.ingredientsList = ingredientList;
         this.ingredientNameLabel = ingredientNameLabel;
