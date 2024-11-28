@@ -4,6 +4,7 @@ public class InstructionsViewModel {
     private String instructions;
     private String ingredients;
     private String image;
+    private String nutrients;
 
     public String getInstructions() {
         return instructions;
@@ -12,8 +13,11 @@ public class InstructionsViewModel {
     public String getIngredients() {return ingredients;}
 
     public String getImage() {
-        System.out.println(image);
         return image;
+    }
+
+    public String getNutrients() {
+        return nutrients;
     }
 
     public void setInstructions(String instructions) {
@@ -23,4 +27,6 @@ public class InstructionsViewModel {
     public void setIngredients(String ingredients) {this.ingredients = ingredients;}
 
     public void setImage(String image) {this.image = image;}
+
+    public void setNutrients(String nutrients) {this.nutrients = nutrients;}
 }

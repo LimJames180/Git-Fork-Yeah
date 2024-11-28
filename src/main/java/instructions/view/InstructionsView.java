@@ -61,9 +61,8 @@ public class InstructionsView extends JFrame {
         instructionsController.handleInstructions(id);
         setTitle("Recipe Instructions"); // set as name of recipe
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1200, 600);
+        setSize(1200, 1000);
         setLayout(new FlowLayout());
-
 
         // Middle panel for ingredients list from API
         JPanel ingredientsPanel = new JPanel();
@@ -71,14 +70,12 @@ public class InstructionsView extends JFrame {
         JTextArea ingredientsTextArea = new JTextArea(instructionsViewModel.getIngredients());
         ingredientsTextArea.setLineWrap(true);
         ingredientsTextArea.setWrapStyleWord(true);
-        ingredientsTextArea.setSize(600, 200);
+        ingredientsTextArea.setSize(800, 200);
         ingredientsTextArea.setMargin(new Insets(10, 10, 10, 10));
         JLabel ingredientsLabel = new JLabel("Ingredients:");
         ingredientsLabel.setFont(new Font("Arial", Font.BOLD, 16));
         ingredientsPanel.add(ingredientsLabel, BorderLayout.NORTH);
         ingredientsPanel.add(ingredientsTextArea, BorderLayout.CENTER);
-        // Another panel showing nutritional information??
-
 
         // Bottom panel for instructions from API
         JPanel instructionsPanel = new JPanel();
@@ -86,7 +83,7 @@ public class InstructionsView extends JFrame {
         JTextArea instructionsTextArea = new JTextArea(instructionsViewModel.getInstructions());
         instructionsTextArea.setLineWrap(true);
         instructionsTextArea.setWrapStyleWord(true);
-        instructionsTextArea.setSize(600, 200);
+        instructionsTextArea.setSize(800, 200);
         instructionsTextArea.setMargin(new Insets(10, 10, 10, 10));
         JLabel instructionsLabel = new JLabel("Instructions:");
         instructionsLabel.setFont(new Font("Arial", Font.BOLD, 16));
@@ -108,14 +105,28 @@ public class InstructionsView extends JFrame {
             System.out.println("Error loading image for recipe");
             e.printStackTrace();
         }
-        System.out.println(instructionsViewModel.getImage());
+
         // Panel for back button
         backButton = new JButton("Back");
         JPanel backButtonPanel = new JPanel();
         backButtonPanel.add(backButton);
 
+        // Panel for nutritional information
+        JPanel nutritionPanel = new JPanel();
+        nutritionPanel.setLayout(new BorderLayout());
+        JTextArea nutritionTextArea = new JTextArea(instructionsViewModel.getNutrients());
+        nutritionTextArea.setLineWrap(true);
+        nutritionTextArea.setWrapStyleWord(true);
+        nutritionTextArea.setSize(800, 200);
+        nutritionTextArea.setMargin(new Insets(10, 10, 10, 10));
+        JLabel nutritionLabel = new JLabel("Nutritional information:");
+        nutritionLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        nutritionPanel.add(nutritionLabel);
+        nutritionPanel.add(nutritionTextArea);
+
         instructionsPanel.add(instructionsLabel, BorderLayout.NORTH);
         instructionsPanel.add(instructionsTextArea, BorderLayout.CENTER);
+        instructionsPanel.add(nutritionPanel, BorderLayout.SOUTH);
         instructionsPanel.add(imagePanel, BorderLayout.EAST);
 
         // Back button logic
