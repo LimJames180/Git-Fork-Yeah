@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import entity.ApiKey;
 import ingredients_searcher.view.action_listeners.AddIngredientListener;
 import ingredients_searcher.view.action_listeners.IngredientsListener;
 import ingredients_searcher.view.action_listeners.ToFiltersListener;
@@ -29,7 +30,8 @@ public class IngredientSearchView extends JFrame {
     private JButton toFiltersButton;
 
     // Spoonacular API Details
-    private static final String SPOONACULAR_API_KEY = "62fb1e66d4be4351b17b5f5043ede6db"; // Replace with your actual API key
+//    private static final String SPOONACULAR_API_KEY = "8c539f487cf6406b908cb2c2a1078285"; // Replace with your actual API key
+    private static final String SPOONACULAR_API_KEY = ApiKey.getApiKeys(); // Replace with your actual API key
     private static final String SPOONACULAR_SEARCH_URL = "https://api.spoonacular.com/food/ingredients/search?query=%s&apiKey=%s";
 
     /**
@@ -89,7 +91,7 @@ public class IngredientSearchView extends JFrame {
         add(mainPanel, BorderLayout.EAST);
 
         // Event Listeners
-        toFiltersButton.addActionListener(new ToFiltersListener(ingredientsList, this));
+        toFiltersButton.addActionListener(new ToFiltersListener(ingredientsList, this, currentUser));
         searchButton.addActionListener(new IngredientsListener(ingredientInputField, this));
         addButton.addActionListener(new AddIngredientListener(ingredientListModel, ingredientsList, ingredientNameLabel,
                 ingredientImageLabel, addButton));
@@ -103,8 +105,10 @@ public class IngredientSearchView extends JFrame {
      */
     public void fetchIngredientData(String query) {
         try {
+            System.out.println(query + "overharereare"); //onion
             // Construct the API URL
             String urlString = String.format(SPOONACULAR_SEARCH_URL, query, SPOONACULAR_API_KEY);
+            System.out.println(urlString);
             URL url = new URL(urlString);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");

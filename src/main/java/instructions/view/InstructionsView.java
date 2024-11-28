@@ -144,8 +144,11 @@ public class InstructionsView extends JFrame {
 
         // Save button logic
         saveButton.addActionListener(e -> {
-
+            //System.out.println("savinggggg");
             userDataAccess.saveRecipeForUser(currentSession.getUsername(), new Recipe(Integer.toString(id)));
+            System.out.println(currentSession.getUsername());
+            System.out.println((new Recipe(Integer.toString(id)).getId()));
+
             JOptionPane.showMessageDialog(this, "Recipe saved successfully!");
 //            Recipe recipeToSave = new Recipe(String.valueOf(id));
 //            savedRecipeController.saveRecipe(currentSession.getUsername(), recipeToSave);
