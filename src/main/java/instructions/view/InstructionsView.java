@@ -64,6 +64,7 @@ public class InstructionsView extends JFrame {
         setSize(1200, 1000);
         setLayout(new FlowLayout());
 
+
         // Middle panel for ingredients list from API
         JPanel ingredientsPanel = new JPanel();
         ingredientsPanel.setLayout(new BorderLayout());
@@ -76,6 +77,7 @@ public class InstructionsView extends JFrame {
         ingredientsLabel.setFont(new Font("Arial", Font.BOLD, 16));
         ingredientsPanel.add(ingredientsLabel, BorderLayout.NORTH);
         ingredientsPanel.add(ingredientsTextArea, BorderLayout.CENTER);
+
 
         // Bottom panel for instructions from API
         JPanel instructionsPanel = new JPanel();
@@ -97,7 +99,7 @@ public class InstructionsView extends JFrame {
             ImageIcon icon = new ImageIcon(
                     new ImageIcon(imageUrl)
                             .getImage()
-                            .getScaledInstance(150, 150, Image.SCALE_SMOOTH)
+                            .getScaledInstance(125, 125, Image.SCALE_SMOOTH)
             );
             imageLabel.setIcon(icon);
             imagePanel.add(imageLabel);
