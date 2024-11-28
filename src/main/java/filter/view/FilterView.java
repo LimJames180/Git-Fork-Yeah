@@ -7,6 +7,10 @@ import java.io.IOException;
 import java.net.URL;
 
 import entity.Recipe;
+import filter.data_access.FilterDataAccess;
+import filter.interface_adapter.FilterPresenter;
+import filter.interface_adapter.FilterViewModel;
+import filter.use_case.FilterInteractor;
 import instructions.view.InstructionsView;
 import filter.interface_adapter.FilterController;
 
@@ -23,13 +27,24 @@ public class FilterView extends JFrame{
     private FilterController controller;
     private List<String> ingredients;
     private ToggleButtonsView toggleButtonsExample;
+    private FilterViewModel filterviewmodel;
 
 
-
-    public FilterView(List<String> ingredients, FilterController controller, ToggleButtonsView toggleButtonsExample) {
-        this.controller = controller;
+    public FilterView(List<String> ingredients, ToggleButtonsView toggleButtonsExample) {
         this.ingredients = ingredients;
         this.toggleButtonsExample = toggleButtonsExample;
+
+        FilterDataAccess dataAccess = new FilterDataAccess();
+        this.filterviewmodel = new FilterViewModel();
+        FilterPresenter filterPresenter = new FilterPresenter(filterviewmodel);
+        FilterInteractor interactor = new FilterInteractor(dataAccess, filterPresenter);
+        FilterController controller = new FilterController(interactor);
+        this.controller = controller;
+       // this.filterviewmodel = new FilterViewModel();
+        //FilterDataAccess filterDataAccess = new FilterDataAccess();
+        //FilterPresenter filterPresenter = new FilterPresenter(filterviewmodel);
+        //FilterInteractor filterInteractor = new FilterInteractor(filterPresenter);
+
         setTitle("Filters");
         setSize(600, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -57,7 +72,9 @@ public class FilterView extends JFrame{
 
         // Button action
         filterbutton.addActionListener(e -> {
-            List<Recipe> results = controller.handlefilter(ingredients, toggleButtonsExample.getVariables(), toggleButtonsExample.getVariables2(),0);
+            this.controller.handlefilter(ingredients, this.toggleButtonsExample.getVariables(), this.toggleButtonsExample.getVariables2(),0);
+            List<Recipe> results = filterviewmodel.getRecipeList();
+
             displayResults(results);
         });
 
@@ -121,13 +138,16 @@ public class FilterView extends JFrame{
 //            for (int i = 1; i >= 10; i++) {
 //                inputPanel.remove(i);
 //            }
-            List<Recipe> result = controller.handlefilter(ingredients, toggleButtonsExample.getVariables(), toggleButtonsExample.getVariables2(), offset);
+            this.controller.handlefilter(ingredients, this.toggleButtonsExample.getVariables(), this.toggleButtonsExample.getVariables2(), offset);
+            List<Recipe> result = filterviewmodel.getRecipeList();
+
             displayResults(result);
         });
 
         nextButton.addActionListener(e -> {
             offset += 10;
-            List<Recipe> result = controller.handlefilter(ingredients, toggleButtonsExample.getVariables(), toggleButtonsExample.getVariables2(), offset);
+            this.controller.handlefilter(ingredients, this.toggleButtonsExample.getVariables(), this.toggleButtonsExample.getVariables2(), offset);
+            List<Recipe> result = filterviewmodel.getRecipeList();
             //inputPanel.remove();
             for (int i = 11; i >= 1; i--) {
                 inputPanel.remove(i);

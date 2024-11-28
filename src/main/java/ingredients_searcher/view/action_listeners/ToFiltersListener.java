@@ -1,10 +1,12 @@
 package ingredients_searcher.view.action_listeners;
 
-import data_access.FilterDataAccess;
+import filter.data_access.FilterDataAccess;
+import filter.interface_adapter.FilterPresenter;
+import filter.interface_adapter.FilterViewModel;
 import ingredients_searcher.view.IngredientSearchView;
-import interface_adapter.filter.FilterController;
-import use_case.filter.FilterInteractor;
-import view.ToggleButtonsView;
+import filter.interface_adapter.FilterController;
+import filter.use_case.FilterInteractor;
+import filter.view.ToggleButtonsView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,9 +26,11 @@ public class ToFiltersListener extends Frame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         SwingUtilities.invokeLater(() -> {
             FilterDataAccess dataAccess = new FilterDataAccess();
-            FilterInteractor interactor = new FilterInteractor(dataAccess);
+            FilterViewModel filterViewModel = new FilterViewModel();
+            FilterPresenter presenter = new FilterPresenter(filterViewModel);
+            FilterInteractor interactor = new FilterInteractor(dataAccess, presenter);
             FilterController controller = new FilterController(interactor);
-            ToggleButtonsView example = new ToggleButtonsView(ingredientsList, controller);
+            ToggleButtonsView example = new ToggleButtonsView(ingredientsList);
             example.setVisible(true);
         });
 

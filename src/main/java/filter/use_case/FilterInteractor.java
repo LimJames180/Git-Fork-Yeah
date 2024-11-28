@@ -10,16 +10,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Filter;
 
 
 public class FilterInteractor implements FilterInputBoundary {
     private final FilterDataAccessInterface filterDataAccess;
+    private FilterOutputBoundary FilterOutputBoundary;
     private List<Recipe> recipeList;
 
 
 
-    public FilterInteractor(FilterDataAccess filterDataAccess) {
+    public FilterInteractor(FilterDataAccess filterDataAccess, FilterOutputBoundary FilterOutputBoundary) {
         this.filterDataAccess = filterDataAccess;
+        this.FilterOutputBoundary = FilterOutputBoundary;
     }
 
 
@@ -68,10 +71,13 @@ public class FilterInteractor implements FilterInputBoundary {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        FilterOutput filterOutput = new FilterOutput(recipeList);
+        FilterOutputBoundary.setFilterViewModel(filterOutput);
     }
 
-    public List<Recipe> getRecipeList() {
-        return recipeList;
-    }
+//    public List<Recipe> getRecipeList() {
+//        return recipeList;
+//    }
 
 }

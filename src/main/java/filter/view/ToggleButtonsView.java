@@ -3,7 +3,10 @@ package filter.view;
 
 import filter.data_access.FilterDataAccess;
 import filter.interface_adapter.FilterController;
+import filter.interface_adapter.FilterPresenter;
+import filter.interface_adapter.FilterViewModel;
 import filter.use_case.FilterInteractor;
+import filter.use_case.FilterOutputBoundary;
 import ingredients_searcher.view.IngredientSearchView;
 
 import javax.swing.*;
@@ -19,7 +22,7 @@ public class ToggleButtonsView extends JFrame {
     private JButton backButton;
 
 
-    public ToggleButtonsView(List<String> ingredients, FilterController controller) {
+    public ToggleButtonsView(List<String> ingredients) {
         setTitle("Multiple Toggle Buttons Example");
         setSize(400, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -54,7 +57,7 @@ public class ToggleButtonsView extends JFrame {
         JButton switchButton = new JButton("Done");
         switchButton.addActionListener(e -> {
             dispose();
-            FilterView filterSwing = new FilterView(ingredients, controller,ToggleButtonsView.this);
+            FilterView filterSwing = new FilterView(ingredients,ToggleButtonsView.this);
             filterSwing.setVisible(true);
         });
         add(switchButton);
@@ -83,10 +86,12 @@ public class ToggleButtonsView extends JFrame {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             List<String> ingredients = List.of("chicken");
-            FilterDataAccess dataAccess = new FilterDataAccess();
-            FilterInteractor interactor = new FilterInteractor(dataAccess);
-            FilterController controller = new FilterController(interactor);
-            ToggleButtonsView example = new ToggleButtonsView(ingredients, controller);
+//            FilterDataAccess dataAccess = new FilterDataAccess();
+//            FilterViewModel filterViewModel = new FilterViewModel();
+//            FilterPresenter filterPresenter = new FilterPresenter(filterViewModel);
+//            FilterInteractor interactor = new FilterInteractor(dataAccess, filterPresenter);
+//            FilterController controller = new FilterController(interactor);
+            ToggleButtonsView example = new ToggleButtonsView(ingredients);
             example.setVisible(true);
         });
     }

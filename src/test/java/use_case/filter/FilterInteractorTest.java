@@ -2,6 +2,7 @@ package use_case.filter;
 
 import filter.data_access.FilterDataAccess;
 import entity.Recipe;
+import filter.interface_adapter.FilterPresenter;
 import filter.use_case.FilterInput;
 import filter.use_case.FilterInteractor;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +21,8 @@ public class FilterInteractorTest {
     @BeforeEach
     void setUp() {
         FilterDataAccess dataAccess = new FilterDataAccess();
-        filterInteractor = new FilterInteractor(dataAccess);
+        FilterPresenter presenter = new FilterPresenter();
+        filterInteractor = new FilterInteractor(dataAccess, presenter);
     }
 
     // Test for a normal case of ingredients list
@@ -35,7 +37,6 @@ public class FilterInteractorTest {
 
         List<Recipe> recipes = filterInteractor.getRecipeList();
         assertNotNull(recipes);
-        // Add more assertions based on expected behavior
     }
 
     // Test for empty ingredients list
@@ -50,7 +51,6 @@ public class FilterInteractorTest {
 
         List<Recipe> recipes = filterInteractor.getRecipeList();
         assertNotNull(recipes);
-        // Add more assertions based on expected behavior
     }
 
     //Test for Long ingredients list
@@ -65,7 +65,6 @@ public class FilterInteractorTest {
 
         List<Recipe> recipes = filterInteractor.getRecipeList();
         assertNotNull(recipes);
-        // Add more assertions based on expected behavior
     }
 
     // Test for restictions and intolerances all true
@@ -80,7 +79,6 @@ public class FilterInteractorTest {
 
         List<Recipe> recipes = filterInteractor.getRecipeList();
         assertNotNull(recipes);
-        // Add more assertions based on expected behavior
     }
 
 }
