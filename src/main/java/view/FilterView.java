@@ -7,18 +7,24 @@ import java.io.IOException;
 import java.net.URL;
 
 import entity.Recipe;
+import instructions.view.BaseView;
 import instructions.view.InstructionsView;
 import interface_adapter.filter.FilterController;
+import login.app.SessionService;
+
 import java.util.List;
 
 
-public class FilterView extends JFrame{
+public class FilterView extends JFrame implements BaseView {
     private JButton filterbutton;
     private JButton backButton;
     private JPanel inputPanel = new JPanel();
+    private SessionService currentSession;
 
 
-    public FilterView(List<String> ingredients, FilterController controller, ToggleButtonsView toggleButtonsExample) {
+    public FilterView(List<String> ingredients, FilterController controller, ToggleButtonsView toggleButtonsExample, SessionService currentSession) {
+        this.currentSession = currentSession;
+
         setTitle("Filters");
         setSize(600, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -76,7 +82,7 @@ public class FilterView extends JFrame{
             recipeButton.addActionListener(e -> {
                 InstructionsView instructionsView = null;
                 try {
-                    instructionsView = new InstructionsView(r.getId(), FilterView.this);
+                    instructionsView = new InstructionsView(r.getId(), FilterView.this, currentSession);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
