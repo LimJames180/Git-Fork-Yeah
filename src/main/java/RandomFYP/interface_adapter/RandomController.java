@@ -10,6 +10,6 @@ public class RandomController {
 
     RandomInteractor interactor = new RandomInteractor();;
     public List<Recipe> Random_recipe() throws IOException {
-        return interactor.getRecipeList();
+        return interactor.getRecipeList().getRecipeList();
     }
 }

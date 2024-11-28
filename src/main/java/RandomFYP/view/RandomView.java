@@ -1,6 +1,5 @@
 package RandomFYP.view;
 
-import RandomFYP.interface_adapter.RandomController;
 import entity.Ingredient;
 import entity.Recipe;
 import interface_adapter.RecipeController.*;
@@ -23,8 +22,7 @@ public class RandomView {
 
     public static void main(String[] args) throws IOException {
         // Load the first batch of recipes
-        RandomController controller = new RandomController();
-        currentRecipes = controller.Random_recipe();
+        currentRecipes = Random_recipe();
         if (currentRecipes == null || currentRecipes.isEmpty()) {
             throw new RuntimeException("No recipes found from Random_recipe!");
         }

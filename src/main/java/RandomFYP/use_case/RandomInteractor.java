@@ -9,8 +9,9 @@ import java.util.List;
 public class RandomInteractor {
 
     RandomDataAccess Access = new RandomDataAccess();
-    public List<Recipe> getRecipeList() throws IOException {
-        return Access.fetchrandom();
+    public RandomOutput getRecipeList() throws IOException {
+        RandomOutput output = new RandomOutput(Access.fetchrandom());
+        return output;
     }
 
 
