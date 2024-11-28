@@ -6,19 +6,14 @@ import instructions.interface_adapter.InstructionsController;
 import instructions.interface_adapter.InstructionsPresenter;
 import instructions.interface_adapter.InstructionsViewModel;
 import instructions.use_case.InstructionsInteractor;
-import filter.view.FilterView;
-import interface_adapter.RecipeController;
 import interface_adapter.SavedRecipeController;
 import login.app.SessionService;
 import login.data_access.MongoUserDataAccessImpl;
 import login.data_access.UserDataAccess;
-import login.entities.User;
 import view.LoggedInPageView;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
 import java.io.IOException;
 import java.net.URL;
 
@@ -31,7 +26,6 @@ public class InstructionsView extends JFrame {
     private SessionService currentSession;
     private SavedRecipeController savedRecipeController;
     private UserDataAccess userDataAccess;
-
 
     public InstructionsView(int id, BaseView filterView, SessionService currentSession) throws IOException {
         this.id = id;
@@ -159,8 +153,6 @@ public class InstructionsView extends JFrame {
         JPanel buttonPanel = new JPanel(new BorderLayout());
         buttonPanel.add(backButton, BorderLayout.WEST);
         buttonPanel.add(saveButton, BorderLayout.EAST);
-
-
 
         // Add everything to one panel
         JPanel mainPanel = new JPanel();

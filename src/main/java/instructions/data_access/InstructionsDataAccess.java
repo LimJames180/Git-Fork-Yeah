@@ -48,13 +48,10 @@ public class InstructionsDataAccess implements InstructionsDataAccessInterface {
                         firstStep = false;
                     }
                 }
-
                 return resultBuilder.toString();
-
             } else {
                 throw new IOException("Request failed: " + response.code() + " " + response.message());
             }
-
         } catch (IOException ex) {
             return "An I/O error occurred: " + ex.getMessage();
         }

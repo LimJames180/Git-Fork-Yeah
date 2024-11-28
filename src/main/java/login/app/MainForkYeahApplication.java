@@ -6,10 +6,6 @@ import login.use_case.SignupInteractor;
 import login.view.LoginPageView;
 import login.use_case.LoginInteractor;
 import login.data_access.MongoUserDataAccessImpl;
-import login.entities.User;
-import view.LoggedInPageView;
-
-import java.util.List;
 
 public class MainForkYeahApplication {
     public static void main(String[] args) {

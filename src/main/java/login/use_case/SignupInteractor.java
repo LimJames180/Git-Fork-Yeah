@@ -1,6 +1,5 @@
 package login.use_case;
 
-
 import login.entities.User;
 import login.data_access.UserDataAccess;
 

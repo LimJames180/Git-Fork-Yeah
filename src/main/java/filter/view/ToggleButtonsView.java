@@ -1,31 +1,16 @@
 package filter.view;
 
-
-import filter.data_access.FilterDataAccess;
-import filter.interface_adapter.FilterController;
-import filter.interface_adapter.FilterPresenter;
-import filter.interface_adapter.FilterViewModel;
-import filter.use_case.FilterInteractor;
-import filter.use_case.FilterOutputBoundary;
 import ingredients_searcher.view.IngredientSearchView;
-import filter.data_access.FilterDataAccess;
-import filter.interface_adapter.FilterController;
 import login.app.SessionService;
-import filter.use_case.FilterInteractor;
-
-
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 
-
 public class ToggleButtonsView extends JFrame {
     private Map<String, Boolean> variables = new HashMap<>();
     private Map<String, Boolean> variables2 = new HashMap<>();
-    private JButton backButton;
     private SessionService currentSession;
 
 
@@ -61,7 +46,6 @@ public class ToggleButtonsView extends JFrame {
             add(toggleButton);
         }
 
-
         JButton switchButton = new JButton("Done");
         switchButton.addActionListener(e -> {
             dispose();
@@ -70,7 +54,6 @@ public class ToggleButtonsView extends JFrame {
         });
         add(switchButton);
 
-
         JButton backButton = new JButton("Back");
         backButton.addActionListener(e -> {
             dispose();
@@ -78,9 +61,7 @@ public class ToggleButtonsView extends JFrame {
             ingredientSearchView.setVisible(true);
         });
         add(backButton);
-
     }
-
 
     public Map<String, Boolean> getVariables() {
         return variables;
@@ -89,7 +70,6 @@ public class ToggleButtonsView extends JFrame {
     public Map<String, Boolean> getVariables2() {
         return variables2;
     }
-
 
     public static void main(String[] args) {
 //        SwingUtilities.invokeLater(() -> {

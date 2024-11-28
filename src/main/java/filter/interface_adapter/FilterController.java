@@ -1,6 +1,5 @@
 package filter.interface_adapter;
 
-import entity.Recipe;
 import filter.use_case.FilterInput;
 import filter.use_case.FilterInteractor;
 
