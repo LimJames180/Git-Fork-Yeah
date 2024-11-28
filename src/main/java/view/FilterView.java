@@ -7,9 +7,10 @@ import java.io.IOException;
 import java.net.URL;
 
 import entity.Recipe;
+import filter.view.ToggleButtonsView;
 import instructions.view.BaseView;
 import instructions.view.InstructionsView;
-import interface_adapter.filter.FilterController;
+import filter.interface_adapter.FilterController;
 import login.app.SessionService;
 
 import java.util.List;
@@ -51,7 +52,12 @@ public class FilterView extends JFrame implements BaseView {
 
         // Button action
         filterbutton.addActionListener(e -> {
-            List<Recipe> results = controller.handlefilter(ingredients, toggleButtonsExample.getVariables(), toggleButtonsExample.getVariables2());
+            List<Recipe> results = null;
+            try {
+                controller.handlefilter(ingredients, toggleButtonsExample.getVariables(), toggleButtonsExample.getVariables2(), 0);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
             displayResults(results);
         });
     }

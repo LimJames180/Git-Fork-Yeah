@@ -13,6 +13,7 @@ import java.util.Objects;
 import ingredients_searcher.view.action_listeners.AddIngredientListener;
 import ingredients_searcher.view.action_listeners.IngredientsListener;
 import ingredients_searcher.view.action_listeners.ToFiltersListener;
+import login.app.SessionService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -35,7 +36,7 @@ public class IngredientSearchView extends JFrame {
      * This class sets up the window.
      * @param ingredients the list of ingredients, empty if from previous screen.
      */
-    public IngredientSearchView(List<String> ingredients) {
+    public IngredientSearchView(List<String> ingredients, SessionService currentUser) {
         List<String> ingredientsList = Objects.requireNonNullElseGet(ingredients, ArrayList::new);
         // list of ingredients
 
@@ -142,7 +143,8 @@ public class IngredientSearchView extends JFrame {
     }
 
     public static void main(String[] args) {
-        IngredientSearchView isv = new IngredientSearchView(null);
+        SessionService test = new SessionService();
+        IngredientSearchView isv = new IngredientSearchView(null, test);
         // SwingUtilities.invokeLater((Runnable) isv);
         SwingUtilities.invokeLater(() -> isv.setVisible(true));
     }

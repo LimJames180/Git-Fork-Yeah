@@ -11,8 +11,10 @@ import filter.data_access.FilterDataAccess;
 import filter.interface_adapter.FilterPresenter;
 import filter.interface_adapter.FilterViewModel;
 import filter.use_case.FilterInteractor;
+import instructions.view.BaseView;
 import instructions.view.InstructionsView;
 import filter.interface_adapter.FilterController;
+import login.app.SessionService;
 
 import java.util.List;
 
@@ -28,11 +30,13 @@ public class FilterView extends JFrame{
     private List<String> ingredients;
     private ToggleButtonsView toggleButtonsExample;
     private FilterViewModel filterviewmodel;
+    private SessionService currentSession;
 
 
-    public FilterView(List<String> ingredients, ToggleButtonsView toggleButtonsExample) {
+    public FilterView(List<String> ingredients, ToggleButtonsView toggleButtonsExample, SessionService currentSession) {
         this.ingredients = ingredients;
         this.toggleButtonsExample = toggleButtonsExample;
+        this.currentSession = currentSession;
 
         FilterDataAccess dataAccess = new FilterDataAccess();
         this.filterviewmodel = new FilterViewModel();
@@ -112,7 +116,7 @@ public class FilterView extends JFrame{
             recipeButton.addActionListener(e -> {
                 InstructionsView instructionsView = null;
                 try {
-                    instructionsView = new InstructionsView(r.getId(), FilterView.this);
+                    instructionsView = new InstructionsView(r.getId(), (BaseView) FilterView.this, currentSession);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
