@@ -27,7 +27,7 @@ public class FilterInteractor implements FilterInputBoundary {
 
 
     @Override
-    public void filterRecipes(FilterInput input) {
+    public void filterRecipes(FilterInput input) throws IOException {
         List<String> complexsearch = new ArrayList<>();
         List<String> ingredients = input.getIngredients();
         Map<String, Boolean> restrictions = input.getRestrictions();
@@ -57,27 +57,23 @@ public class FilterInteractor implements FilterInputBoundary {
         if (offset > 0) {
             complexsearch.add("offset=" + offset);
         }
+
         if (!intolerancesString.equals("")) {
             complexsearch.add("intolerances="+intolerancesString);
         }
+
         if (!restrictionsString.equals("")) {
             complexsearch.add("diet="+restrictionsString);
         }
+
         if (!ingredientsString.equals("")) {
             complexsearch.add("includeIngredients=" + ingredientsString);
         }
-        try {
-            recipeList = filterDataAccess.fetchComplexSearch(complexsearch);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+
+
+        recipeList = filterDataAccess.fetchComplexSearch(complexsearch);
 
         FilterOutput filterOutput = new FilterOutput(recipeList);
         FilterOutputBoundary.setFilterViewModel(filterOutput);
     }
-
-//    public List<Recipe> getRecipeList() {
-//        return recipeList;
-//    }
-
 }

@@ -72,7 +72,11 @@ public class FilterView extends JFrame{
 
         // Button action
         filterbutton.addActionListener(e -> {
-            this.controller.handlefilter(ingredients, this.toggleButtonsExample.getVariables(), this.toggleButtonsExample.getVariables2(),0);
+            try {
+                this.controller.handlefilter(ingredients, this.toggleButtonsExample.getVariables(), this.toggleButtonsExample.getVariables2(),0);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
             List<Recipe> results = filterviewmodel.getRecipeList();
 
             displayResults(results);
@@ -135,10 +139,11 @@ public class FilterView extends JFrame{
             for (int i = 11; i >= 1; i--) {
                 inputPanel.remove(i);
             }
-//            for (int i = 1; i >= 10; i++) {
-//                inputPanel.remove(i);
-//            }
-            this.controller.handlefilter(ingredients, this.toggleButtonsExample.getVariables(), this.toggleButtonsExample.getVariables2(), offset);
+            try {
+                this.controller.handlefilter(ingredients, this.toggleButtonsExample.getVariables(), this.toggleButtonsExample.getVariables2(), offset);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
             List<Recipe> result = filterviewmodel.getRecipeList();
 
             displayResults(result);
@@ -146,13 +151,15 @@ public class FilterView extends JFrame{
 
         nextButton.addActionListener(e -> {
             offset += 10;
-            this.controller.handlefilter(ingredients, this.toggleButtonsExample.getVariables(), this.toggleButtonsExample.getVariables2(), offset);
+            try {
+                this.controller.handlefilter(ingredients, this.toggleButtonsExample.getVariables(), this.toggleButtonsExample.getVariables2(), offset);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
             List<Recipe> result = filterviewmodel.getRecipeList();
-            //inputPanel.remove();
             for (int i = 11; i >= 1; i--) {
                 inputPanel.remove(i);
             }
-
             displayResults(result);
         });
     }

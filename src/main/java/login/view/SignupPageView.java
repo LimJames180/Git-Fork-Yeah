@@ -2,8 +2,11 @@ package login.view;
 
 import javax.swing.*;
 import java.awt.*;
-import login.interface_adapter.SignupController;
-import login.interface_adapter.SignupViewModel;
+
+import login.data_access.MongoUserDataAccessImpl;
+import login.data_access.UserDataAccess;
+import login.interface_adapter.*;
+import login.use_case.LoginInteractor;
 
 public class SignupPageView extends JFrame {
     private JTextField usernameField;
@@ -11,10 +14,14 @@ public class SignupPageView extends JFrame {
     private JButton signupButton;
     private SignupController controller;
     private SignupViewModel viewModel;
+    private LoginController loginController;
+    private LoginViewModel loginViewModel;
 
-    public SignupPageView(SignupController controller, SignupViewModel viewModel) {
+    public SignupPageView(SignupController controller, SignupViewModel viewModel, LoginController loginController, LoginViewModel loginViewModel) {
         this.controller = controller;
         this.viewModel = viewModel;
+        this.loginController = loginController;
+        this.loginViewModel = loginViewModel;
 
         setupUI();
         setupListeners();
@@ -55,6 +62,7 @@ public class SignupPageView extends JFrame {
         setVisible(true);
     }
 
+
     private void setupListeners() {
         signupButton.addActionListener(e -> {
             String username = usernameField.getText();
@@ -65,17 +73,23 @@ public class SignupPageView extends JFrame {
                 return;
             }
 
+            // Ensure this method updates the viewModel with a message or error
             controller.handleSignup(username, password);
+
         });
     }
 
     private void setupViewModel() {
         viewModel.addPropertyChangeListener(evt -> {
             if ("message".equals(evt.getPropertyName())) {
+                // Check if this block is being executed
                 JOptionPane.showMessageDialog(this, viewModel.getMessage(), "Success", JOptionPane.INFORMATION_MESSAGE);
                 dispose();
+                LoginPageView loginPageView = new LoginPageView(loginController, loginViewModel);
+                loginPageView.setVisible(true);
                 // Optionally navigate to login or another view
             } else if ("error".equals(evt.getPropertyName())) {
+                // Check if this block is being executed
                 JOptionPane.showMessageDialog(this, viewModel.getError(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         });

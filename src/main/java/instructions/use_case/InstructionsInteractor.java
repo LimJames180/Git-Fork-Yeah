@@ -1,10 +1,6 @@
 package instructions.use_case;
 
-import entity.Ingredient;
 import instructions.data_access.InstructionsDataAccessInterface;
-
-import java.io.IOException;
-import java.util.List;
 
 public class InstructionsInteractor implements InstructionsInputBoundary {
     private final InstructionsDataAccessInterface instructionsDataAccess;
@@ -26,6 +22,8 @@ public class InstructionsInteractor implements InstructionsInputBoundary {
         instructionsOutputBoundary.setInstructionsViewModel(instructionsOutputData);
 
 
-        }
     }
+
+
+}
 
