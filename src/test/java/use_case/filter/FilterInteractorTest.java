@@ -1,7 +1,9 @@
 package use_case.filter;
 
-import data_access.FilterDataAccess;
+import filter.data_access.FilterDataAccess;
 import entity.Recipe;
+import filter.use_case.FilterInput;
+import filter.use_case.FilterInteractor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

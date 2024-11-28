@@ -1,8 +1,8 @@
-package interface_adapter.filter;
+package filter.interface_adapter;
 
 import entity.Recipe;
-import use_case.filter.FilterInput;
-import use_case.filter.FilterInteractor;
+import filter.use_case.FilterInput;
+import filter.use_case.FilterInteractor;
 
 import java.util.List;
 import java.util.Map;

@@ -1,10 +1,10 @@
-package view;
+package filter.view;
 
 
-import data_access.FilterDataAccess;
-import interface_adapter.filter.FilterController;
-import use_case.filter.FilterInteractor;
-
+import filter.data_access.FilterDataAccess;
+import filter.interface_adapter.FilterController;
+import filter.use_case.FilterInteractor;
+import ingredients_searcher.view.IngredientSearchView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -59,16 +59,14 @@ public class ToggleButtonsView extends JFrame {
         });
         add(switchButton);
 
-//        // Back button
-//        JPanel buttonPanel = new JPanel(new FlowLayout());
-//        backButton = new JButton("Back");
-//        buttonPanel.add(backButton);
-//        add(buttonPanel);
-//
-//        backButton.addActionListener(e -> {
-//            dispose();
-//            .setVisible(true);
-//        });
+
+        JButton backButton = new JButton("Back");
+        backButton.addActionListener(e -> {
+            dispose();
+            IngredientSearchView ingredientSearchView = new IngredientSearchView(null);
+            ingredientSearchView.setVisible(true);
+        });
+        add(backButton);
 
     }
 

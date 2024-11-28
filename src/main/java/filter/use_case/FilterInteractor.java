@@ -1,8 +1,8 @@
-package use_case.filter;
+package filter.use_case;
 
 
-import data_access.FilterDataAccess;
-import data_access.FilterDataAccessInterface;
+import filter.data_access.FilterDataAccess;
+import filter.data_access.FilterDataAccessInterface;
 import entity.Recipe;
 
 

@@ -1,4 +1,4 @@
-package view;
+package filter.view;
 
 
 import javax.swing.*;
@@ -8,9 +8,9 @@ import java.net.URL;
 
 import entity.Recipe;
 import instructions.view.InstructionsView;
-import interface_adapter.filter.FilterController;
+import filter.interface_adapter.FilterController;
+
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class FilterView extends JFrame{
@@ -31,7 +31,7 @@ public class FilterView extends JFrame{
         this.ingredients = ingredients;
         this.toggleButtonsExample = toggleButtonsExample;
         setTitle("Filters");
-        setSize(600, 700);
+        setSize(600, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 

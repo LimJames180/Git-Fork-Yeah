@@ -1,4 +1,4 @@
-package data_access;
+package filter.data_access;
 
 import entity.Recipe;
 import interface_adapter.RecipeController;
