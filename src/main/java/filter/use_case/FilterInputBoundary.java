@@ -9,6 +9,4 @@ public interface FilterInputBoundary {
     void filterRecipes(FilterInput input);
 
 
-    List<Recipe> getRecipeList();
-
 }
