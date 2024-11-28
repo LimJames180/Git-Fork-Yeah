@@ -1,4 +1,4 @@
-package view.ActionListeners;
+package ingredients_searcher.view.action_listeners;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

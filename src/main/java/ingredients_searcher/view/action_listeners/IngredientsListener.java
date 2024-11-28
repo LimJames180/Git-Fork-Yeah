@@ -1,6 +1,6 @@
-package view.ActionListeners;
+package ingredients_searcher.view.action_listeners;
 
-import view.IngredientSearchView;
+import ingredients_searcher.view.IngredientSearchView;
 
 import javax.swing.*;
 import java.awt.*;
