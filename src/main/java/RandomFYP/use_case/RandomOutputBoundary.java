@@ -1,4 +1,7 @@
 package RandomFYP.use_case;
 
-public class RandomOutputBoundary {
+public interface RandomOutputBoundary {
+
+    void setRandomViewModel(RandomOutput randomOutput);
+
 }
