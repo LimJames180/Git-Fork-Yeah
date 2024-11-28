@@ -1,5 +1,6 @@
 package view;
 
+import ingredients_searcher.view.IngredientSearchView;
 import entity.Recipe;
 import instructions.view.BaseView;
 import instructions.view.InstructionsView;
