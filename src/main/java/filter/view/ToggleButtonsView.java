@@ -1,6 +1,13 @@
-package view;
+package filter.view;
 
 
+import filter.data_access.FilterDataAccess;
+import filter.interface_adapter.FilterController;
+import filter.interface_adapter.FilterPresenter;
+import filter.interface_adapter.FilterViewModel;
+import filter.use_case.FilterInteractor;
+import filter.use_case.FilterOutputBoundary;
+import ingredients_searcher.view.IngredientSearchView;
 import data_access.FilterDataAccess;
 import interface_adapter.filter.FilterController;
 import login.app.SessionService;
@@ -20,7 +27,7 @@ public class ToggleButtonsView extends JFrame {
     private JButton backButton;
 
 
-    public ToggleButtonsView(List<String> ingredients, FilterController controller, SessionService currentSession) {
+    public ToggleButtonsView(List<String> ingredients, SessionService currentSession) {
         setTitle("Multiple Toggle Buttons Example");
         setSize(400, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -55,21 +62,19 @@ public class ToggleButtonsView extends JFrame {
         JButton switchButton = new JButton("Done");
         switchButton.addActionListener(e -> {
             dispose();
-            FilterView filterSwing = new FilterView(ingredients, controller,ToggleButtonsView.this, currentSession);
+            FilterView filterSwing = new FilterView(ingredients,ToggleButtonsView.this, currentSession);
             filterSwing.setVisible(true);
         });
         add(switchButton);
 
-//        // Back button
-//        JPanel buttonPanel = new JPanel(new FlowLayout());
-//        backButton = new JButton("Back");
-//        buttonPanel.add(backButton);
-//        add(buttonPanel);
-//
-//        backButton.addActionListener(e -> {
-//            dispose();
-//            .setVisible(true);
-//        });
+
+        JButton backButton = new JButton("Back");
+        backButton.addActionListener(e -> {
+            dispose();
+            IngredientSearchView ingredientSearchView = new IngredientSearchView(null);
+            ingredientSearchView.setVisible(true);
+        });
+        add(backButton);
 
     }
 
@@ -86,6 +91,12 @@ public class ToggleButtonsView extends JFrame {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             List<String> ingredients = List.of("chicken");
+//            FilterDataAccess dataAccess = new FilterDataAccess();
+//            FilterViewModel filterViewModel = new FilterViewModel();
+//            FilterPresenter filterPresenter = new FilterPresenter(filterViewModel);
+//            FilterInteractor interactor = new FilterInteractor(dataAccess, filterPresenter);
+//            FilterController controller = new FilterController(interactor);
+            ToggleButtonsView example = new ToggleButtonsView(ingredients);
             FilterDataAccess dataAccess = new FilterDataAccess();
             FilterInteractor interactor = new FilterInteractor(dataAccess);
             FilterController controller = new FilterController(interactor);

@@ -157,5 +157,28 @@ public class RecipeController {
             return "Unexpected error";
         }
     }
+
+    public static String get_recipe_instructions(String id) throws IOException {
+        String apiKey = ApiKey.getApiKeys();
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url("https://api.spoonacular.com/recipes/" + id + "/analyzedInstructions?apiKey=" + apiKey)
+                .get()
+                .build();
+
+        Response response = client.newCall(request).execute();
+        String jsonData = response.body().string();
+        JsonElement root = new JsonParser().parse(jsonData);
+        JsonArray instructions = root.getAsJsonArray();
+        StringBuilder instruction = new StringBuilder();
+        for (JsonElement step : instructions) {
+            JsonArray steps = step.getAsJsonObject().get("steps").getAsJsonArray();
+            for (JsonElement s : steps) {
+                instruction.append(s.getAsJsonObject().get("step").getAsString()).append("\n");
+            }
+        }
+        return instruction.toString();
+    }
 }
 

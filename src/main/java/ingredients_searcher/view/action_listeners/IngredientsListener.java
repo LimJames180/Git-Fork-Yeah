@@ -1,15 +1,16 @@
-package view.ActionListeners;
+package ingredients_searcher.view.action_listeners;
 
-import view.IngredientSearchView;
+import ingredients_searcher.view.IngredientSearchView;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
  * This ActionListener takes the input and checks if it is valid.
  */
-public class IngredientsListener implements ActionListener {
+public class IngredientsListener extends Frame implements ActionListener {
     private String query;
     private final IngredientSearchView isv;
     private JTextField searchField;

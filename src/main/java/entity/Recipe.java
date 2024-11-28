@@ -13,8 +13,9 @@ public class Recipe {
     private String id;
     private String title;
     private String image;
-
     private List<Ingredient> ingredients;
+    private List<Nutrients> nutrients;
+    private String instructions;
 
     private RecipeController recipeController;
 
@@ -32,9 +33,6 @@ public class Recipe {
 
     public List<Ingredient> get_ingredients() throws IOException {
         if (!loadedIngredient) {
-            // load recipe
-            RecipeController.get_ingredients(id);
-            // load ingredients
             ingredients = RecipeController.get_ingredients(id);
             loadedIngredient = true;
         }
@@ -66,6 +64,13 @@ public class Recipe {
 
     public String getRecipeName(Recipe recipe) {
         return recipeController.get_Name(recipe);
+    }
+
+    public String getInstructions() throws IOException {
+        if (instructions == null) {
+            instructions = RecipeController.get_recipe_instructions(id);
+        }
+        return instructions;
     }
 
 }

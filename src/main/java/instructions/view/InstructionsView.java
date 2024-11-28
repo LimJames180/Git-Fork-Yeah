@@ -6,6 +6,7 @@ import instructions.interface_adapter.InstructionsController;
 import instructions.interface_adapter.InstructionsPresenter;
 import instructions.interface_adapter.InstructionsViewModel;
 import instructions.use_case.InstructionsInteractor;
+import filter.view.FilterView;
 import interface_adapter.RecipeController;
 import interface_adapter.SavedRecipeController;
 import login.app.SessionService;
@@ -16,7 +17,6 @@ import view.FilterView;
 import view.LoggedInPageView;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
@@ -37,6 +37,7 @@ public class InstructionsView extends JFrame {
         this.currentSession = currentSession;
         initializeView();
         setupUI(filterView);
+
     }
 
     public InstructionsView(int id, LoggedInPageView loggedInPageView, SessionService currentSession) {
