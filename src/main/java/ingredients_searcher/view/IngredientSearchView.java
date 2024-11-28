@@ -105,8 +105,10 @@ public class IngredientSearchView extends JFrame {
      */
     public void fetchIngredientData(String query) {
         try {
+            System.out.println(query + "overharereare"); //onion
             // Construct the API URL
             String urlString = String.format(SPOONACULAR_SEARCH_URL, query, SPOONACULAR_API_KEY);
+            System.out.println(urlString);
             URL url = new URL(urlString);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
