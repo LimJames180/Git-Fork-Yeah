@@ -94,11 +94,11 @@ public class ToggleButtonsView extends JFrame {
     public static void main(String[] args) {
 //        SwingUtilities.invokeLater(() -> {
 //            List<String> ingredients = List.of("chicken");
-////            FilterDataAccess dataAccess = new FilterDataAccess();
-////            FilterViewModel filterViewModel = new FilterViewModel();
-////            FilterPresenter filterPresenter = new FilterPresenter(filterViewModel);
-////            FilterInteractor interactor = new FilterInteractor(dataAccess, filterPresenter);
-////            FilterController controller = new FilterController(interactor);
+//            FilterDataAccess dataAccess = new FilterDataAccess();
+//            FilterViewModel filterViewModel = new FilterViewModel();
+//            FilterPresenter filterPresenter = new FilterPresenter(filterViewModel);
+//            FilterInteractor interactor = new FilterInteractor(dataAccess, filterPresenter);
+//            FilterController controller = new FilterController(interactor);
 //            ToggleButtonsView example = new ToggleButtonsView(ingredients);
 //            FilterDataAccess dataAccess = new FilterDataAccess();
 //            FilterInteractor interactor = new FilterInteractor(dataAccess);

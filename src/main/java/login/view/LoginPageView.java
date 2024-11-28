@@ -118,9 +118,7 @@ public class LoginPageView extends JFrame {
             if ("message".equals(evt.getPropertyName())) {
                 JOptionPane.showMessageDialog(this, viewModel.getMessage(), "Success", JOptionPane.INFORMATION_MESSAGE);
                 dispose();
-                Recipe test = new Recipe("324694");
-                List<Recipe> testy = List.of(test, test);
-
+//
 //                new LoggedInPageView(viewModel.getMessage(), viewModel.getSavedRecipes()); // Pass saved recipes if available
                 new LoggedInPageView(viewModel.getMessage(), viewModel.getSavedRecipes(currentSession.getUsername()), currentSession); // Pass saved recipes if available
 
