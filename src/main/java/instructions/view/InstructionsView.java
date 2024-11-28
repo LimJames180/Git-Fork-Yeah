@@ -17,6 +17,8 @@ import view.LoggedInPageView;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.io.IOException;
 import java.net.URL;
 
@@ -142,16 +144,23 @@ public class InstructionsView extends JFrame {
 
         // Save button logic
         saveButton.addActionListener(e -> {
+            //System.out.println("savinggggg");
             userDataAccess.saveRecipeForUser(currentSession.getUsername(), new Recipe(Integer.toString(id)));
+            System.out.println(currentSession.getUsername());
+            System.out.println((new Recipe(Integer.toString(id)).getId()));
+
             JOptionPane.showMessageDialog(this, "Recipe saved successfully!");
 //            Recipe recipeToSave = new Recipe(String.valueOf(id));
 //            savedRecipeController.saveRecipe(currentSession.getUsername(), recipeToSave);
 //            JOptionPane.showMessageDialog(this, "Recipe saved successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+
         });
 
         JPanel buttonPanel = new JPanel(new BorderLayout());
         buttonPanel.add(backButton, BorderLayout.WEST);
         buttonPanel.add(saveButton, BorderLayout.EAST);
+
+
 
         // Add everything to one panel
         JPanel mainPanel = new JPanel();
