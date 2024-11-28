@@ -1,6 +1,5 @@
 package entity;
 
-import entity.Nutrients;
 import interface_adapter.RecipeController;
 
 import java.io.IOException;
@@ -13,8 +12,9 @@ public class Recipe {
     private String id;
     private String title;
     private String image;
-
     private List<Ingredient> ingredients;
+    private List<Nutrients> nutrients;
+    private String instructions;
 
     public Recipe(String id, String title, String image) {
         this.id = id;
@@ -24,9 +24,6 @@ public class Recipe {
 
     public List<Ingredient> get_ingredients() throws IOException {
         if (!loadedIngredient) {
-            // load recipe
-            RecipeController.get_ingredients(id);
-            // load ingredients
             ingredients = RecipeController.get_ingredients(id);
             loadedIngredient = true;
         }
@@ -54,6 +51,13 @@ public class Recipe {
     public int getId() {
         int num = Integer.parseInt(id);
         return num;
+    }
+
+    public String getInstructions() throws IOException {
+        if (instructions == null) {
+            instructions = RecipeController.get_recipe_instructions(id);
+        }
+        return instructions;
     }
 
 }
