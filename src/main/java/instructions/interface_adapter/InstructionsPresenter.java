@@ -12,5 +12,6 @@ public class InstructionsPresenter implements InstructionsOutputBoundary {
         instructionsViewModel.setInstructions(instructionsOutputData.getInstructions());
         instructionsViewModel.setImage(instructionsOutputData.getImage());
         instructionsViewModel.setIngredients(instructionsOutputData.getIngredients());
+        instructionsViewModel.setNutrients(instructionsOutputData.getNutrients());
     }
 }
