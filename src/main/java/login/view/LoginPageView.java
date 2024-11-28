@@ -9,10 +9,7 @@ import login.app.SessionService;
 import login.interface_adapter.LoginController;
 import login.interface_adapter.LoginViewModel;
 import login.interface_adapter.SignupController;
-import login.interface_adapter.SignupPresenter;
 import login.interface_adapter.*;
-import login.use_case.SignupInteractor;
-import login.data_access.MongoUserDataAccessImpl;
 import view.LoggedInPageView;
 import java.util.List;
 
@@ -121,7 +118,6 @@ public class LoginPageView extends JFrame {
                 Recipe test = new Recipe("324694");
                 List<Recipe> testy = List.of(test, test);
 
-//                new LoggedInPageView(viewModel.getMessage(), viewModel.getSavedRecipes()); // Pass saved recipes if available
                 new LoggedInPageView(viewModel.getMessage(), viewModel.getSavedRecipes(currentSession.getUsername()), currentSession); // Pass saved recipes if available
 
             } else if ("error".equals(evt.getPropertyName())) {

@@ -14,7 +14,6 @@ import okhttp3.Response;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,7 +97,6 @@ public class RecipeController {
             parameter.append("&").append(param);
         }
 
-
         Request request = new Request.Builder()
                 .url(parameter.toString())
                 .get()
@@ -111,8 +109,6 @@ public class RecipeController {
         List<Recipe> recipeList = Recipe_List(root.getAsJsonObject().get("results").getAsJsonArray());
         return recipeList;
     }
-
-
 
     public static List<Recipe> Random_recipe() throws IOException {
         String apiKey = ApiKey.getApiKeys();

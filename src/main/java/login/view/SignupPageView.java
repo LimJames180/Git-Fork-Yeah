@@ -3,10 +3,7 @@ package login.view;
 import javax.swing.*;
 import java.awt.*;
 
-import login.data_access.MongoUserDataAccessImpl;
-import login.data_access.UserDataAccess;
 import login.interface_adapter.*;
-import login.use_case.LoginInteractor;
 
 public class SignupPageView extends JFrame {
     private JTextField usernameField;

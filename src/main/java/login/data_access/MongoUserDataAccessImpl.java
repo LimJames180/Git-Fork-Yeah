@@ -27,12 +27,6 @@ public class MongoUserDataAccessImpl implements UserDataAccess {
         Document userDoc = userCollection.find(Filters.eq("username", username)).first();
         if (userDoc != null) {
             return new User(userDoc.getString("username"), userDoc.getString("password"));
-//            User user = new User(userDoc.getString("username"), userDoc.getString("password"));
-//            List<Recipe> recipes = getUserRecipes(username);
-//            for (Recipe recipe : recipes) {
-//                user.addRecipe(recipe);
-//            }
-//            return user;
         }
         return null;
     }
@@ -54,21 +48,16 @@ public class MongoUserDataAccessImpl implements UserDataAccess {
 
     @Override
     public List<Recipe> getUserRecipes(String username) {
-        System.out.println("Searching for user: " + username); // Debugging output
 
         List<Recipe> recipes = new ArrayList<>();
         Document userDoc = userCollection.find(Filters.eq("username", username)).first();
-        System.out.println(userDoc);
 
         if (userDoc != null) {
             List<String> recipeIds = (List<String>) userDoc.get("savedRecipes");
-            System.out.println(recipeIds);
             for (String recipeId : recipeIds) {
                 recipes.add(new Recipe(recipeId)); // Replace with actual title fetching logic
             }
         }
-        //System.out.println(recipes.get(0).getId());
-        System.out.println(recipes.size() + "here");
         return recipes;
     }
 

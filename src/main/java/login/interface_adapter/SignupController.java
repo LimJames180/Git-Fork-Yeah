@@ -1,6 +1,5 @@
 package login.interface_adapter;
 
-
 import login.use_case.SignupInputBoundary;
 import login.use_case.SignupInput;
 

@@ -2,7 +2,7 @@ package entity;
 
 public class Nutrients {
 
-    private  int amount;
+    private int amount;
 
     private String unit;
     private int percentOfDailyNeeds;

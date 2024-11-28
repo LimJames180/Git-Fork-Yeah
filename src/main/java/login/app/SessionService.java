@@ -11,7 +11,6 @@ public class SessionService {
     }
 
     public SessionService() {
-        
     }
 
     public void setUsername(String username) {
@@ -22,7 +21,4 @@ public class SessionService {
         return username;
     }
 
-
-
-    // You can add more session-related data and methods as needed
 }

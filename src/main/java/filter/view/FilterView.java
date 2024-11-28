@@ -1,6 +1,5 @@
 package filter.view;
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
@@ -18,7 +17,6 @@ import login.app.SessionService;
 
 import java.util.List;
 
-
 public class FilterView extends JFrame implements BaseView{
     private JButton filterbutton;
     private JButton backButton;
@@ -32,7 +30,6 @@ public class FilterView extends JFrame implements BaseView{
     private FilterViewModel filterviewmodel;
     private SessionService currentSession;
 
-
     public FilterView(List<String> ingredients, ToggleButtonsView toggleButtonsExample, SessionService currentSession) {
         this.ingredients = ingredients;
         this.toggleButtonsExample = toggleButtonsExample;
@@ -44,16 +41,11 @@ public class FilterView extends JFrame implements BaseView{
         FilterInteractor interactor = new FilterInteractor(dataAccess, filterPresenter);
         FilterController controller = new FilterController(interactor);
         this.controller = controller;
-       // this.filterviewmodel = new FilterViewModel();
-        //FilterDataAccess filterDataAccess = new FilterDataAccess();
-        //FilterPresenter filterPresenter = new FilterPresenter(filterviewmodel);
-        //FilterInteractor filterInteractor = new FilterInteractor(filterPresenter);
 
         setTitle("Filters");
         setSize(600, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
-
 
         // Input panel
         inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.Y_AXIS));
@@ -73,7 +65,6 @@ public class FilterView extends JFrame implements BaseView{
             toggleButtonsExample.setVisible(true);
         });
 
-
         // Button action
         filterbutton.addActionListener(e -> {
             try {
@@ -85,11 +76,7 @@ public class FilterView extends JFrame implements BaseView{
 
             displayResults(results);
         });
-
-
-
     }
-
 
     public void displayResults(List<Recipe> results) {
         if (results.isEmpty()){

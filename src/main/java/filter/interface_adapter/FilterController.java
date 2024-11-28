@@ -18,7 +18,5 @@ public class FilterController {
     public void handlefilter(List<String> ingrients, Map<String, Boolean> restrictions, Map<String, Boolean> intolerances, int offset) throws IOException {
         FilterInput input = new FilterInput(ingrients, restrictions, intolerances, offset);
         interactor.filterRecipes(input);
-        //return interactor.getRecipeList();
-
     }
 }
