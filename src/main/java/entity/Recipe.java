@@ -1,5 +1,6 @@
 package entity;
 
+import entity.Nutrients;
 import interface_adapter.RecipeController;
 
 import java.io.IOException;
@@ -16,10 +17,18 @@ public class Recipe {
     private List<Nutrients> nutrients;
     private String instructions;
 
+    private RecipeController recipeController;
+
     public Recipe(String id, String title, String image) {
+        this.recipeController = new RecipeController();
         this.id = id;
         this.title = title;
         this.image = image;
+    }
+
+    public Recipe(String id) {
+        this.recipeController = new RecipeController();
+        this.id = id;
     }
 
     public List<Ingredient> get_ingredients() throws IOException {
@@ -51,6 +60,10 @@ public class Recipe {
     public int getId() {
         int num = Integer.parseInt(id);
         return num;
+    }
+
+    public String getRecipeName(Recipe recipe) {
+        return recipeController.get_Name(recipe);
     }
 
     public String getInstructions() throws IOException {
