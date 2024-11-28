@@ -7,6 +7,7 @@ import ingredients_searcher.view.IngredientSearchView;
 import filter.interface_adapter.FilterController;
 import filter.use_case.FilterInteractor;
 import filter.view.ToggleButtonsView;
+import login.app.SessionService;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,7 +31,8 @@ public class ToFiltersListener extends Frame implements ActionListener {
             FilterPresenter presenter = new FilterPresenter(filterViewModel);
             FilterInteractor interactor = new FilterInteractor(dataAccess, presenter);
             FilterController controller = new FilterController(interactor);
-            ToggleButtonsView example = new ToggleButtonsView(ingredientsList);
+            SessionService test = new SessionService();
+            ToggleButtonsView example = new ToggleButtonsView(ingredientsList, test);
             example.setVisible(true);
         });
 

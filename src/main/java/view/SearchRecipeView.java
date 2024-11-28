@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import ingredients_searcher.view.IngredientSearchView;
+import login.app.SessionService;
 
 public class SearchRecipeView extends JFrame {
     // UI Components
@@ -14,8 +16,10 @@ public class SearchRecipeView extends JFrame {
     private JButton myIngredientsButton;
     private JPanel recipesPanel;
     private JScrollPane scrollPane;
+    private SessionService currentSession;
 
-    public SearchRecipeView() {
+    public SearchRecipeView(SessionService currentSession) {
+        this.currentSession = currentSession;
         // Setting up the frame
         setTitle("entity.Recipe Finder - Search Recipes");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -60,7 +64,7 @@ public class SearchRecipeView extends JFrame {
         myIngredientsButton = new JButton("My Ingredients");
         myIngredientsButton.addActionListener(e -> {
             // Logic to navigate to recipe exploration view
-            new IngredientSearchView(null);
+            new IngredientSearchView(null, currentSession);
         });
         add(myIngredientsButton, BorderLayout.SOUTH);
 
@@ -104,9 +108,9 @@ public class SearchRecipeView extends JFrame {
         recipesPanel.add(new JSeparator(SwingConstants.HORIZONTAL));
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(SearchRecipeView::new);
-    }
+    //public static void main(String[] args) {
+    //    SwingUtilities.invokeLater(SearchRecipeView::new);
+    //}
 
     // Inner class to represent a entity.Recipe (replace with your data structure)
     class Recipe {
