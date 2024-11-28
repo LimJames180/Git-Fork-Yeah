@@ -1,4 +1,4 @@
-package use_case.filter;
+package filter.use_case;
 
 import java.util.List;
 import java.util.Map;

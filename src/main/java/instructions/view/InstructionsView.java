@@ -5,10 +5,9 @@ import instructions.interface_adapter.InstructionsController;
 import instructions.interface_adapter.InstructionsPresenter;
 import instructions.interface_adapter.InstructionsViewModel;
 import instructions.use_case.InstructionsInteractor;
-import view.FilterView;
+import filter.view.FilterView;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
