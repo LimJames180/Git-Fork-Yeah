@@ -44,7 +44,7 @@ public class InstructionsView extends JFrame {
         this.id = id;
         this.currentSession = currentSession;
         initializeView();
-        setupUI(loggedInPageView);
+        setupUI((BaseView) loggedInPageView);
     }
 
     private void initializeView() {

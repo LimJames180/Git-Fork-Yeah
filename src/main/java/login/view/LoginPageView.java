@@ -122,7 +122,9 @@ public class LoginPageView extends JFrame {
                 List<Recipe> testy = List.of(test, test);
 
 //                new LoggedInPageView(viewModel.getMessage(), viewModel.getSavedRecipes()); // Pass saved recipes if available
-                new LoggedInPageView(viewModel.getMessage(), viewModel.getSavedRecipes(currentSession.getUsername()), currentSession); // Pass saved recipes if available
+                // new LoggedInPageView(viewModel.getMessage(), viewModel.getSavedRecipes(currentSession.getUsername()), currentSession); // Pass saved recipes if available
+                new LoggedInPageView((currentSession.getUsername()));
+                // TODO I changed this call since it gave me an error otherwise. Please change it if I shouldn't have.
 
             } else if ("error".equals(evt.getPropertyName())) {
                 JOptionPane.showMessageDialog(this, viewModel.getError(), "Error", JOptionPane.ERROR_MESSAGE);

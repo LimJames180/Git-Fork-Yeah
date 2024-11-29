@@ -7,7 +7,7 @@ public class AddIngredientInteractor implements AddIngredientInputBoundary{
     private final IngredientDataAccess dataAccess;
     private final AddIngredientOutputBoundary outputBoundary;
 
-    AddIngredientInteractor(AddIngredientOutputBoundary outputBoundary, IngredientDataAccess dataAccess) {
+    public AddIngredientInteractor(AddIngredientOutputBoundary outputBoundary, IngredientDataAccess dataAccess) {
         this.outputBoundary = outputBoundary;
         this.dataAccess = dataAccess;
     }
