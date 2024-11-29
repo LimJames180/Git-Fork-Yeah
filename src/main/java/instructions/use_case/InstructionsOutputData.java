@@ -1,9 +1,5 @@
 package instructions.use_case;
 
-import entity.Ingredient;
-
-import java.util.List;
-
 public class InstructionsOutputData {
     private String instructions;
     private String ingredients;

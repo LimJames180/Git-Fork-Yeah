@@ -8,6 +8,11 @@ import filter.interface_adapter.FilterViewModel;
 import filter.use_case.FilterInteractor;
 import filter.use_case.FilterOutputBoundary;
 import ingredients_searcher.view.IngredientSearchView;
+import data_access.FilterDataAccess;
+import interface_adapter.filter.FilterController;
+import login.app.SessionService;
+import use_case.filter.FilterInteractor;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,7 +27,7 @@ public class ToggleButtonsView extends JFrame {
     private JButton backButton;
 
 
-    public ToggleButtonsView(List<String> ingredients) {
+    public ToggleButtonsView(List<String> ingredients, SessionService currentSession) {
         setTitle("Multiple Toggle Buttons Example");
         setSize(400, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -57,7 +62,7 @@ public class ToggleButtonsView extends JFrame {
         JButton switchButton = new JButton("Done");
         switchButton.addActionListener(e -> {
             dispose();
-            FilterView filterSwing = new FilterView(ingredients,ToggleButtonsView.this);
+            FilterView filterSwing = new FilterView(ingredients,ToggleButtonsView.this, currentSession);
             filterSwing.setVisible(true);
         });
         add(switchButton);
@@ -92,6 +97,12 @@ public class ToggleButtonsView extends JFrame {
 //            FilterInteractor interactor = new FilterInteractor(dataAccess, filterPresenter);
 //            FilterController controller = new FilterController(interactor);
             ToggleButtonsView example = new ToggleButtonsView(ingredients);
+            FilterDataAccess dataAccess = new FilterDataAccess();
+            FilterInteractor interactor = new FilterInteractor(dataAccess);
+            FilterController controller = new FilterController(interactor);
+            SessionService test = new SessionService();
+            test.setUsername("callon");
+            ToggleButtonsView example = new ToggleButtonsView(ingredients, controller, test);
             example.setVisible(true);
         });
     }

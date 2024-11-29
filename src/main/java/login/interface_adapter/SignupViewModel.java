@@ -4,12 +4,20 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class SignupViewModel {
-    private final PropertyChangeSupport support = new PropertyChangeSupport(this);
+    private final PropertyChangeSupport support;
     private String message;
     private String error;
 
+    public SignupViewModel() {
+        support = new PropertyChangeSupport(this);
+    }
+
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        support.removePropertyChangeListener(listener);
     }
 
     public String getMessage() {
