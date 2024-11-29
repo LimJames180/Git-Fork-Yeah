@@ -36,7 +36,6 @@ public class IngredientSearchView extends JFrame {
      * @param ingredients the list of ingredients, empty if from previous screen.
      */
     public IngredientSearchView(List<String> ingredients) {
-        // refer to togglebuttons, i need to take an additional parameter "currentSession" and pass it to the filter
         List<String> ingredientsList = Objects.requireNonNullElseGet(ingredients, ArrayList::new);
         // list of ingredients
 
@@ -95,65 +94,6 @@ public class IngredientSearchView extends JFrame {
                 ingredientImageLabel, addButton));
 
         setVisible(true);
-    }
-
-    public void UIsetup() {
-        setTitle("entity.Ingredient Search");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(650, 700);
-        setLayout(new BorderLayout());
-
-        // Top Panel for entity.Ingredient Input
-        JPanel inputPanel = new JPanel(new FlowLayout());
-        ingredientInputField = new JTextField(15);
-        searchButton = new JButton("Search");
-        inputPanel.add(new JLabel("Give us what you have:"));
-        inputPanel.add(ingredientInputField);
-        inputPanel.add(searchButton);
-        add(inputPanel, BorderLayout.NORTH);
-
-        // Display Panel for Search Results
-        JPanel displayPanel = new JPanel(new BorderLayout());
-        ingredientImageLabel = new JLabel("", SwingConstants.CENTER);
-        ingredientNameLabel = new JLabel("", SwingConstants.CENTER);
-        displayPanel.add(ingredientImageLabel, BorderLayout.CENTER);
-        displayPanel.add(ingredientNameLabel, BorderLayout.SOUTH);
-        add(displayPanel, BorderLayout.CENTER);
-
-        // Add Button
-        addButton = new JButton("Add");
-        addButton.setEnabled(false); // Initially disabled
-        add(addButton, BorderLayout.SOUTH);
-
-        // List Panel for Current Ingredients
-        JPanel listPanel = new JPanel(new BorderLayout());
-        ingredientListModel = new DefaultListModel<>();
-        ingredientList = new JList<>(ingredientListModel);
-        JScrollPane listScrollPane = new JScrollPane(ingredientList);
-        listPanel.add(new JLabel("Current Ingredients:"), BorderLayout.NORTH);
-        listPanel.add(listScrollPane, BorderLayout.CENTER);
-
-        // Buttons for Searching Recipes and Exploring All Recipes
-        JPanel buttonPanel = new JPanel(new FlowLayout());
-        toFiltersButton = new JButton("Set Filters");
-
-        buttonPanel.add(toFiltersButton);
-
-        // Combine Panels
-        JPanel mainPanel = new JPanel(new BorderLayout());
-        mainPanel.add(listPanel, BorderLayout.CENTER);
-        mainPanel.add(buttonPanel, BorderLayout.SOUTH);
-        add(mainPanel, BorderLayout.EAST);
-
-        setVisible(true);
-    }
-
-    public void listernersSetup(List<String> ingredients) {
-        // need to revise the things here
-        toFiltersButton.addActionListener(new ToFiltersListener(ingredients, this));
-        searchButton.addActionListener(new IngredientsListener(ingredientInputField, this));
-        addButton.addActionListener(new AddIngredientListener(ingredientListModel, ingredients, ingredientNameLabel,
-                ingredientImageLabel, addButton));
     }
 
     /**

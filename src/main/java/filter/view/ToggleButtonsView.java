@@ -8,6 +8,12 @@ import filter.interface_adapter.FilterViewModel;
 import filter.use_case.FilterInteractor;
 import filter.use_case.FilterOutputBoundary;
 import ingredients_searcher.view.IngredientSearchView;
+import filter.data_access.FilterDataAccess;
+import filter.interface_adapter.FilterController;
+import login.app.SessionService;
+import filter.use_case.FilterInteractor;
+
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,9 +26,11 @@ public class ToggleButtonsView extends JFrame {
     private Map<String, Boolean> variables = new HashMap<>();
     private Map<String, Boolean> variables2 = new HashMap<>();
     private JButton backButton;
+    private SessionService currentSession;
 
 
-    public ToggleButtonsView(List<String> ingredients) {
+    public ToggleButtonsView(List<String> ingredients, SessionService currentSession) {
+        this.currentSession = currentSession;
         setTitle("Multiple Toggle Buttons Example");
         setSize(400, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -57,7 +65,7 @@ public class ToggleButtonsView extends JFrame {
         JButton switchButton = new JButton("Done");
         switchButton.addActionListener(e -> {
             dispose();
-            FilterView filterSwing = new FilterView(ingredients,ToggleButtonsView.this);
+            FilterView filterSwing = new FilterView(ingredients,ToggleButtonsView.this, currentSession);
             filterSwing.setVisible(true);
         });
         add(switchButton);
@@ -66,7 +74,7 @@ public class ToggleButtonsView extends JFrame {
         JButton backButton = new JButton("Back");
         backButton.addActionListener(e -> {
             dispose();
-            IngredientSearchView ingredientSearchView = new IngredientSearchView(null);
+            IngredientSearchView ingredientSearchView = new IngredientSearchView(null, currentSession);
             ingredientSearchView.setVisible(true);
         });
         add(backButton);
@@ -84,15 +92,21 @@ public class ToggleButtonsView extends JFrame {
 
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            List<String> ingredients = List.of("chicken");
+//        SwingUtilities.invokeLater(() -> {
+//            List<String> ingredients = List.of("chicken");
+////            FilterDataAccess dataAccess = new FilterDataAccess();
+////            FilterViewModel filterViewModel = new FilterViewModel();
+////            FilterPresenter filterPresenter = new FilterPresenter(filterViewModel);
+////            FilterInteractor interactor = new FilterInteractor(dataAccess, filterPresenter);
+////            FilterController controller = new FilterController(interactor);
+//            ToggleButtonsView example = new ToggleButtonsView(ingredients);
 //            FilterDataAccess dataAccess = new FilterDataAccess();
-//            FilterViewModel filterViewModel = new FilterViewModel();
-//            FilterPresenter filterPresenter = new FilterPresenter(filterViewModel);
-//            FilterInteractor interactor = new FilterInteractor(dataAccess, filterPresenter);
+//            FilterInteractor interactor = new FilterInteractor(dataAccess);
 //            FilterController controller = new FilterController(interactor);
-            ToggleButtonsView example = new ToggleButtonsView(ingredients);
-            example.setVisible(true);
-        });
+//            SessionService test = new SessionService();
+//            test.setUsername("callon");
+//            ToggleButtonsView example = new ToggleButtonsView(ingredients, controller, test);
+//            example.setVisible(true);
+//        });
     }
 }

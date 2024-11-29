@@ -7,4 +7,6 @@ public interface InstructionsDataAccessInterface {
     String getIngredients(int id);
 
     String getImage(int id);
+
+    String getNutrients(int id);
 }

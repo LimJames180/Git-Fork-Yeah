@@ -3,6 +3,9 @@ package login.view;
 
 import javax.swing.*;
 import java.awt.*;
+
+import entity.Recipe;
+import login.app.SessionService;
 import login.interface_adapter.LoginController;
 import login.interface_adapter.LoginViewModel;
 import login.interface_adapter.SignupController;
@@ -10,7 +13,8 @@ import login.interface_adapter.SignupPresenter;
 import login.interface_adapter.*;
 import login.use_case.SignupInteractor;
 import login.data_access.MongoUserDataAccessImpl;
-
+import view.LoggedInPageView;
+import java.util.List;
 
 public class LoginPageView extends JFrame {
     private JTextField usernameField;
@@ -19,10 +23,26 @@ public class LoginPageView extends JFrame {
     private JButton signupButton;
     private LoginController controller;
     private LoginViewModel viewModel;
+    private SessionService currentSession;
+    private SignupController signupController;
+    private SignupViewModel signupViewModel;
+
+    public LoginPageView(LoginController controller, LoginViewModel viewModel, SignupController signupController, SignupViewModel signupViewModel, SessionService currentSession) {
+        this.controller = controller;
+        this.viewModel = viewModel;
+        this.currentSession = currentSession;
+        this.signupController = signupController;
+        this.signupViewModel = signupViewModel;
+
+        setupUI();
+        setupListeners();
+        setupViewModel();
+    }
 
     public LoginPageView(LoginController controller, LoginViewModel viewModel) {
         this.controller = controller;
         this.viewModel = viewModel;
+        this.currentSession = new SessionService();
 
         setupUI();
         setupListeners();
@@ -79,12 +99,15 @@ public class LoginPageView extends JFrame {
             }
 
             // Handle login
+            currentSession.setUsername(username);
+
             controller.handleLogin(username, password);
+
         });
 
         signupButton.addActionListener(e -> {
             // Navigate to signup page
-            SignupPageView signupPageView = new SignupPageView(new SignupController(new SignupInteractor(new MongoUserDataAccessImpl(), new SignupPresenter(new SignupViewModel()))), new SignupViewModel());
+            SignupPageView signupPageView = new SignupPageView(signupController, signupViewModel, controller, viewModel);
             signupPageView.setVisible(true);
             dispose(); // Close the login page
         });
@@ -95,7 +118,12 @@ public class LoginPageView extends JFrame {
             if ("message".equals(evt.getPropertyName())) {
                 JOptionPane.showMessageDialog(this, viewModel.getMessage(), "Success", JOptionPane.INFORMATION_MESSAGE);
                 dispose();
-                new LoggedInPageView(viewModel.getMessage());
+                Recipe test = new Recipe("324694");
+                List<Recipe> testy = List.of(test, test);
+
+//                new LoggedInPageView(viewModel.getMessage(), viewModel.getSavedRecipes()); // Pass saved recipes if available
+                new LoggedInPageView(viewModel.getMessage(), viewModel.getSavedRecipes(currentSession.getUsername()), currentSession); // Pass saved recipes if available
+
             } else if ("error".equals(evt.getPropertyName())) {
                 JOptionPane.showMessageDialog(this, viewModel.getError(), "Error", JOptionPane.ERROR_MESSAGE);
             }
