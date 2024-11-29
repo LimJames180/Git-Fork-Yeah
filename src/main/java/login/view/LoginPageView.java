@@ -10,8 +10,6 @@ import login.interface_adapter.SignupPresenter;
 import login.interface_adapter.*;
 import login.use_case.SignupInteractor;
 import login.data_access.MongoUserDataAccessImpl;
-import view.LoggedInPageView;
-
 
 
 public class LoginPageView extends JFrame {
