@@ -8,13 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AddIngredientController {
-    Ingredient ingredient;
-    List<Ingredient> ingredients;
+    List<String> ingredients;
     private final AddIngredientInputBoundary interactor;
 
     public AddIngredientController(AddIngredientInputBoundary interactor) { this.interactor = interactor; }
 
-    public List<Ingredient> getIngredients() {
+    public List<String> getIngredients() {
         if (ingredients == null){
             return new ArrayList<>();
         }

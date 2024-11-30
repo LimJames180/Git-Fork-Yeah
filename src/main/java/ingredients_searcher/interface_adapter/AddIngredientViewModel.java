@@ -1,12 +1,10 @@
 package ingredients_searcher.interface_adapter;
 
 import entity.Ingredient;
-import entity.Recipe;
 import ingredients_searcher.data_access.IngredientDataAccess;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.util.List;
 
 public class AddIngredientViewModel {
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);

@@ -173,9 +173,6 @@ public class IngredientSearchView extends JFrame {
         AddIngredientController controller = new AddIngredientController(interactor);
 
         IngredientSearchView isv = new IngredientSearchView(ingredients, currentUser, controller, viewModel);
-        // List<String> ingredients, SessionService currentUser,
-        //                                AddIngredientController controller, AddIngredientViewModel viewModel
-        // SwingUtilities.invokeLater((Runnable) isv);
         SwingUtilities.invokeLater(() -> isv.setVisible(true));
     }
 }
