@@ -18,22 +18,30 @@ class LoginInteractorTest {
     }
 
     @Test
-    void testMissingParameter() {
+    void testEmptyPassword() {
         User user = new User("missing", "");
         when(userDataAccess.findUser("missing")).thenReturn(user);
 
         LoginInput input = new LoginInput("missing", "");
         interactor.execute(input);
 
-        verify(outputBoundary).prepareSuccessView("Error: Please input both username and password.");
+        verify(outputBoundary).prepareFailView("Error: Please input both username and password.");
+    }
+
+    @Test
+    void testEmptyUsername() {
+        LoginInput input = new LoginInput("", "Password123");
+        interactor.execute(input);
+
+        verify(outputBoundary).prepareFailView("Error: Please input both username and password.");
     }
 
     @Test
     void testSuccessfulLogin() {
-        User user = new User("testUser", "password123");
+        User user = new User("testUser", "Password123");
         when(userDataAccess.findUser("testUser")).thenReturn(user);
 
-        LoginInput input = new LoginInput("testUser", "password123");
+        LoginInput input = new LoginInput("testUser", "Password123");
         interactor.execute(input);
 
         verify(outputBoundary).prepareSuccessView("Login successful! Welcome testUser!");
@@ -43,7 +51,7 @@ class LoginInteractorTest {
     void testNonExistentUser() {
         when(userDataAccess.findUser("nonExistentUser")).thenReturn(null);
 
-        LoginInput input = new LoginInput("nonExistentUser", "password123");
+        LoginInput input = new LoginInput("nonExistentUser", "Password123");
         interactor.execute(input);
 
         verify(outputBoundary).prepareFailView("Error: Username does not exist.");
@@ -51,7 +59,7 @@ class LoginInteractorTest {
 
     @Test
     void testIncorrectPassword() {
-        User user = new User("testUser", "password123");
+        User user = new User("testUser", "Password123");
         when(userDataAccess.findUser("testUser")).thenReturn(user);
 
         LoginInput input = new LoginInput("testUser", "wrongPassword");
@@ -59,4 +67,6 @@ class LoginInteractorTest {
 
         verify(outputBoundary).prepareFailView("Error: Incorrect password.");
     }
+
+
 }

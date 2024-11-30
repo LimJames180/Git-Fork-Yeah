@@ -55,4 +55,14 @@ class SignupInteractorTest {
 
         verify(outputBoundary).prepareFailView("Error: Please fill in all fields.");
     }
+
+    @Test
+    void testInvalidPassword() {
+        when(userDataAccess.findUser("newUser")).thenReturn(null);
+
+        SignupInput input = new SignupInput("newUser", "invalid");        interactor.execute(input);
+
+        verify(outputBoundary).prepareFailView("Error: Password must be at least 6 characters long, " +
+                "include an uppercase letter, a lowercase letter, and a number.");
+    }
 }
