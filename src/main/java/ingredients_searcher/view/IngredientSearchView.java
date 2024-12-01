@@ -25,13 +25,14 @@ import org.json.JSONObject;
 public class IngredientSearchView extends JFrame {
     // UI Components
     private JTextField ingredientInputField;
-    private JButton searchButton;
     private JLabel ingredientImageLabel;
     private JLabel ingredientNameLabel;
-    private JButton addButton;
     private DefaultListModel<String> ingredientListModel;
     private JList<String> ingredientList;
     private JButton toFiltersButton;
+    private JButton searchButton;
+    private JButton addButton;
+    private JButton randomButton;
 
     //controller and view model
     private AddIngredientController controller;
@@ -98,8 +99,10 @@ public class IngredientSearchView extends JFrame {
         // Buttons for Searching Recipes and Exploring All Recipes
         JPanel buttonPanel = new JPanel(new FlowLayout());
         toFiltersButton = new JButton("Set Filters");
+        randomButton = new JButton("Random Recipe");
 
         buttonPanel.add(toFiltersButton);
+        buttonPanel.add(randomButton);
 
         // Combine Panels
         JPanel mainPanel = new JPanel(new BorderLayout());
