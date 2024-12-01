@@ -14,7 +14,8 @@ public class SignupPageView extends JFrame {
     private LoginController loginController;
     private LoginViewModel loginViewModel;
 
-    public SignupPageView(SignupController controller, SignupViewModel viewModel, LoginController loginController, LoginViewModel loginViewModel) {
+    public SignupPageView(SignupController controller, SignupViewModel viewModel,
+                          LoginController loginController, LoginViewModel loginViewModel) {
         this.controller = controller;
         this.viewModel = viewModel;
         this.loginController = loginController;
@@ -66,28 +67,28 @@ public class SignupPageView extends JFrame {
             String password = new String(passwordField.getPassword());
 
             if (username.isEmpty() || password.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Please input both username and password.", "Input Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Please input both username and password.",
+                        "Input Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            // Ensure this method updates the viewModel with a message or error
             controller.handleSignup(username, password);
-
         });
     }
 
     private void setupViewModel() {
         viewModel.addPropertyChangeListener(evt -> {
             if ("message".equals(evt.getPropertyName())) {
-                // Check if this block is being executed
-                JOptionPane.showMessageDialog(this, viewModel.getMessage(), "Success", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, viewModel.getMessage(),
+                        "Success", JOptionPane.INFORMATION_MESSAGE);
                 dispose();
+
                 LoginPageView loginPageView = new LoginPageView(loginController, loginViewModel);
+
                 loginPageView.setVisible(true);
-                // Optionally navigate to login or another view
             } else if ("error".equals(evt.getPropertyName())) {
-                // Check if this block is being executed
-                JOptionPane.showMessageDialog(this, viewModel.getError(), "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, viewModel.getError(),
+                        "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
     }

@@ -1,35 +1,50 @@
 package RandomFYP.view;
 
+import RandomFYP.interface_adapter.RandomController;
 import entity.Ingredient;
 import entity.Recipe;
+import filter.view.ToggleButtonsView;
+import ingredients_searcher.data_access.IngredientDataAccess;
+import ingredients_searcher.interface_adapter.AddIngredientController;
+import ingredients_searcher.interface_adapter.AddIngredientPresenter;
+import ingredients_searcher.interface_adapter.AddIngredientViewModel;
+import ingredients_searcher.use_case.AddIngredientInteractor;
+import ingredients_searcher.view.IngredientSearchView;
 import interface_adapter.RecipeController.*;
+import login.app.SessionService;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
+
 import java.util.Random;
 
 import static interface_adapter.RecipeController.Random_recipe;
 
 public class RandomView {
+    private JButton backButton, generateButton;
 
     // Placeholder for the current batch of recipes
     private static List<Recipe> currentRecipes;
     private static int currentRecipeIndex = 0;
 
-    public static void main(String[] args) throws IOException {
+    private ToggleButtonsView toggleButtonsExample;
+
+
+
+    public RandomView(SessionService currentSession) throws IOException {
         // Load the first batch of recipes
-        currentRecipes = Random_recipe();
-        if (currentRecipes == null || currentRecipes.isEmpty()) {
-            throw new RuntimeException("No recipes found from Random_recipe!");
-        }
+        load_recipes();
 
         // Frame setup
         JFrame frame = new JFrame("Random Recipe Generator");
-        frame.setSize(600, 500);
+        frame.setSize(650, 700);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
 
@@ -87,6 +102,39 @@ public class RandomView {
         frame.add(buttonPanel, BorderLayout.SOUTH);
 
         // Action listener for the button
+        Listener(generateButton, frame, recipeTitle, recipeIngredients, recipeSteps, imageLabel);
+
+        // Back button
+        backButton = new JButton("Back");
+        buttonPanel.add(backButton);
+        buttonPanel.add(generateButton);
+
+        backButton.addActionListener(e -> {
+            frame.dispose();
+//            toggleButtonsExample.setVisible(true);
+            IngredientDataAccess ingDataAccess = new IngredientDataAccess();
+            AddIngredientViewModel viewModel = new AddIngredientViewModel(ingDataAccess);
+            IngredientDataAccess dataAccess = new IngredientDataAccess();
+            AddIngredientPresenter presenter = new AddIngredientPresenter(viewModel);
+            AddIngredientInteractor interactor = new AddIngredientInteractor(presenter, dataAccess);
+            AddIngredientController controller = new AddIngredientController(interactor);
+            new IngredientSearchView(null, currentSession, controller, viewModel);
+        });
+
+
+        // Make frame visible
+        frame.setVisible(true);
+    }
+
+    private static void load_recipes() throws IOException {
+        RandomController controller = new RandomController();
+        currentRecipes = controller.Random_recipe();
+        if (currentRecipes == null || currentRecipes.isEmpty()) {
+            throw new RuntimeException("No recipes found from Random_recipe!");
+        }
+    }
+
+    private static void Listener(JButton generateButton, JFrame frame, JTextArea recipeTitle, JTextArea recipeIngredients, JTextArea recipeSteps, JLabel imageLabel) {
         generateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -112,8 +160,7 @@ public class RandomView {
                     for (Ingredient ingredient : selectedRecipe.get_ingredients()) {
                         recipeIngredients.append(ingredient.getName() + "\n");
                     }
-                }
-                    catch (IOException ex) {
+                } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
                 try {
@@ -125,18 +172,22 @@ public class RandomView {
                 // Load and set image (placeholder if no image available)
                 ImageIcon imageIcon = new ImageIcon(selectedRecipe.getImage());
                 Image scaledImage = imageIcon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
-                imageLabel.setIcon(new ImageIcon(scaledImage));
+                URL url = null;
+                try {
+                    url = new URL(selectedRecipe.getImage());
+                } catch (MalformedURLException ex) {
+                    throw new RuntimeException(ex);
+                }
+                Image image;
+                try {
+                    image = ImageIO.read(url);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                imageLabel.setIcon(new ImageIcon(image));
+                System.out.println(url);
             }
-        });
 
-        // Make frame visible
-        frame.setVisible(true);
+        });
     }
 }
-
-    // Simulated Random_recipe function to fetch 10 recipes
-//    private static List<Recipe> Random_recipe() {
-//        // Replace this implementation with the actual function call
-//        return List.of(
-//                new Recipe("Spaghetti Bolognese", "Ingredients:\n- Pasta\n- Minced meat\n- Tomato sauce\n- Garlic\n- Onions",
-//                        "Steps:\n1.

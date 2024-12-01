@@ -1,5 +1,10 @@
 package view;
 
+import ingredients_searcher.data_access.IngredientDataAccess;
+import ingredients_searcher.interface_adapter.AddIngredientController;
+import ingredients_searcher.interface_adapter.AddIngredientPresenter;
+import ingredients_searcher.interface_adapter.AddIngredientViewModel;
+import ingredients_searcher.use_case.AddIngredientInteractor;
 import ingredients_searcher.view.IngredientSearchView;
 import entity.Recipe;
 import ingredients_searcher.view.IngredientSearchView;
@@ -14,12 +19,12 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 public class LoggedInPageView extends JFrame implements BaseView {
+    // UI Components
     private JLabel welcomeLabel;
     private JList<String> savedRecipesList;
     private DefaultListModel<String> savedRecipesModel;
     private JButton exploreRecipesButton;
     private JPanel recipesPanel;
-
 
     public LoggedInPageView(String username, List<Recipe> savedRecipes, SessionService currentSession) {
         //System.out.println(savedRecipes.toString());
@@ -58,7 +63,13 @@ public class LoggedInPageView extends JFrame implements BaseView {
         exploreRecipesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new IngredientSearchView(null, currentSession);
+                IngredientDataAccess ingDataAccess = new IngredientDataAccess();
+                AddIngredientViewModel viewModel = new AddIngredientViewModel(ingDataAccess);
+                IngredientDataAccess dataAccess = new IngredientDataAccess();
+                AddIngredientPresenter presenter = new AddIngredientPresenter(viewModel);
+                AddIngredientInteractor interactor = new AddIngredientInteractor(presenter, dataAccess);
+                AddIngredientController controller = new AddIngredientController(interactor);
+                new IngredientSearchView(null, currentSession, controller, viewModel);
             }
         });
         add(exploreRecipesButton, BorderLayout.SOUTH);
@@ -66,3 +77,4 @@ public class LoggedInPageView extends JFrame implements BaseView {
         setVisible(true);
     }
 }
+

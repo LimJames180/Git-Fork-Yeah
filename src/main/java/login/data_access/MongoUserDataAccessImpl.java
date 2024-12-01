@@ -48,37 +48,15 @@ public class MongoUserDataAccessImpl implements UserDataAccess {
 
     @Override
     public List<Recipe> getUserRecipes(String username) {
-
         List<Recipe> recipes = new ArrayList<>();
         Document userDoc = userCollection.find(Filters.eq("username", username)).first();
 
         if (userDoc != null) {
             List<String> recipeIds = (List<String>) userDoc.get("savedRecipes");
             for (String recipeId : recipeIds) {
-                recipes.add(new Recipe(recipeId)); // Replace with actual title fetching logic
+                recipes.add(new Recipe(recipeId));
             }
         }
         return recipes;
     }
-
-//    @Override
-//    public List<Recipe> getUserRecipes(String username) {
-//        Document query = new Document("username", username);
-//        Document userDocument = (Document) userCollection.find(query).first();
-//        List<Recipe> recipeList = new ArrayList<>();
-//
-//        if (userDocument != null) {
-//            // Assuming the recipes are stored in a field called "recipes"
-//            List<Document> recipes = (List<Document>) userDocument.get("recipes");
-//
-//            if (recipes != null) {
-//                for (Document recipeDoc : recipes) {
-//                    // Convert Document to Recipe object (assuming a constructor or method exists)
-//                    Recipe recipe = new Recipe(recipeDoc.getString("id"));
-//                    recipeList.add(recipe);
-//                }
-//            }
-//        }
-//        return recipeList;
-//    }
 }
