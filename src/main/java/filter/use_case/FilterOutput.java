@@ -1,11 +1,14 @@
 package filter.use_case;
 
-import entity.Recipe;
-
 import java.util.List;
 
+import entity.Recipe;
+
+/**
+ * The FilterOutput class represents the output of the filter use case.
+ */
 public class FilterOutput {
-    List<Recipe> recipeList;
+    private final List<Recipe> recipeList;
 
     public FilterOutput(List<Recipe> recipeList) {
         this.recipeList = recipeList;

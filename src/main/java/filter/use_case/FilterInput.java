@@ -3,14 +3,17 @@ package filter.use_case;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The FilterInput class represents the input for filtering recipes.
+ */
 public class FilterInput {
     private List<String> ingredients;
     private Map<String, Boolean> restrictions;
     private Map<String, Boolean> intolerances;
     private int offset;
 
-
-    public FilterInput(List<String> ingredients, Map<String, Boolean> restrictions, Map<String, Boolean> intolerances, int offset) {
+    public FilterInput(List<String> ingredients, Map<String, Boolean> restrictions,
+                       Map<String, Boolean> intolerances, int offset) {
         this.ingredients = ingredients;
         this.restrictions = restrictions;
         this.intolerances = intolerances;
