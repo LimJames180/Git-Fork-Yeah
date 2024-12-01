@@ -10,8 +10,7 @@ public class SessionService {
         this.data = data;
     }
 
-    public SessionService() {
-        
+    public SessionService() { //for signup use
     }
 
     public void setUsername(String username) {
@@ -21,8 +20,4 @@ public class SessionService {
     public String getUsername() {
         return username;
     }
-
-
-
-    // You can add more session-related data and methods as needed
 }

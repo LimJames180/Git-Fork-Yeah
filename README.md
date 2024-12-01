@@ -1,65 +1,161 @@
-Git Fork Yeah! 🍴
+# **Git Fork Yeah!** 🍴
 
-Git Fork Yeah! is a recipe app designed to make cooking fun, organized, and shareable. Whether you’re a novice in the kitchen or a seasoned chef, this app is your perfect companion for discovering, creating, and managing recipes effortlessly.
+## Authors and Contributors
 
-Features
+- **Callon Lee, Jack li, James Lim, Gabriela Park, Terence Yang** – Developers Group 83
+- Special thanks to anyone else involved in the development of this project.
 
-	•	Browse Recipes: Explore a diverse range of recipes from global cuisines.
-	•	Create Your Recipes: Document your culinary masterpieces with ease.
-	•	Edit and Manage: Update and refine your recipes anytime.
-	•	Search Functionality: Find recipes by name, ingredients, or cuisine.
-	•	Favorites List: Bookmark your favorite recipes for quick access.
-	•	Share Recipes: Let others in on your culinary genius with shareable recipes.
+---
 
-Project Structure
+## **Table of Contents**
 
-	•	src/main/java: Contains the main source code for the application.
-	•	LICENSE: Project license information.
-	•	README.md: The file you’re currently reading, summarizing the app.
+1. [Summary](#summary)
+2. [Features](#features)
+3. [Installation](#installation)
+4. [Usage Guide](#usage-guide)
+5. [Examples and Tutorials](#examples-and-tutorials)
+6. [License](#license)
+7. [Feedback](#feedback)
+8. [Contributions](#contributions)
 
-Getting Started
+---
 
-Prerequisites
+## **Summary**
 
-	•	Java: Ensure you have Java installed.
-	•	Maven: Required for dependency management and project building.
+**Git Fork Yeah!** is a recipe management application designed to help users discover recipes based on the ingredients they have and dietary preferences.
 
-Installation
+### **Purpose**
 
-	1.	Clone this repository:
+- **What it does**: Finds recipes using ingredient input, applies dietary filters, and provides user-friendly instructions.
+- **Why it was made**: To simplify meal planning and empower users to create meals with ease.
+- **Who it helps**: Home cooks, individuals with dietary restrictions, and users looking for quick, nutritious recipes.
 
-git clone <repository-url>
+---
+
+## **Features**
+
+- **Recipe Search by Ingredients**: Input available ingredients to find compatible recipes.
+- **Dietary Filters**: Filter recipes by preferences (gluten-free, vegan, high-protein, etc.).
+- **Save Recipes**: Bookmark recipes for easy future access.
+- **Random Recipe Generator**: Get a random recipe for inspiration.
+- **Nutritional Information**: Displays nutritional content and suggests ingredient substitutions.
+- **User Notes**: Add personal notes to saved recipes. [Not Implemented]
+- **Difficulty Ratings**: Recipes include difficulty levels (easy, medium, hard). [Not Implemented]
+
+---
+
+## **Installation**
+
+### **Requirements**
+
+- **Java**: Version 11 or higher
+- **Maven**: Version 3.6 or higher
+- Supported OS: Windows, macOS, Linux
+
+### **Steps to Install**
+
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd git-fork-yeah
+   ```
+3. Install dependencies and build the project:
+   ```bash
+   mvn clean install
+   ```
+4. Run the application:
+   ```bash
+   mvn exec:java -Dexec.mainClass="com.gitforkyeah.Main"
+   ```
+
+### **Common Issues**
+
+- **Issue**: Dependency error during installation  
+  **Solution**: Ensure Maven and Java versions match the requirements.
+
+- **Issue**: App does not start  
+  **Solution**: Check if all required ports are open and available.
+
+---
+
+## **Usage Guide**
+
+1. **Launch the App**  
+   Follow the [Installation](#installation) steps to start the application.
+
+2. **Search Recipes**
+    - Navigate to the recipe search page.
+    - Input ingredients you have on hand.
+    - Apply optional dietary filters (e.g., vegan, low-carb).
+
+3. **View Recipe Details**
+    - Select a recipe from the list to view detailed instructions, difficulty level, and nutritional information.
+
+4. **Save Recipes**
+    - Use the "Save Recipe" button to bookmark your favorites.
+
+5. **Generate a Random Recipe**
+    - Click the "Random Recipe" button for inspiration.
+
+---
+
+## **Examples and Tutorials**
+
+### **Creating a Recipe Search**
+![Search Recipes Screenshot](https://example.com/search-recipes.png)
+
+### **Saving a Recipe**
+![Save Recipe Screenshot](https://example.com/save-recipe.png)
+
+### **Using Filters**
+![Using Filters GIF](https://example.com/filters.gif)
+
+---
+
+## **License**
+
+This project is licensed under the MIT License.  
+View the full license [here](LICENSE).
+
+---
+
+## **Feedback**
+
+We welcome your feedback!
+- Submit feedback via [Google Forms](https://example.com/feedback-form).
+- **Rules for valid feedback**:
+    - Provide constructive and specific comments on functionality or usability.
+    - Suggest features or improvements.
+- Feedback will be reviewed within **7 business days**.
+
+---
+
+## **Contributions**
+
+We appreciate contributions! To contribute:
+
+1. **Fork this repository**:  
+   Click the "Fork" button on GitHub.
+
+2. **Clone your forked repository**:
+   ```bash
+   git clone <your-forked-repository-url>
+   ```
+
+3. **Create a new branch**:
+   ```bash
+   git checkout -b feature/<feature-name>
+   ```
+
+4. **Submit a pull request**:
+    - Follow our [Contribution Guidelines](https://example.com/contribution-guidelines).
+    - Ensure code is thoroughly tested before submitting.
+
+---
 
 
-	2.	Navigate to the project directory:
+Enjoy using **Git Fork Yeah!** and make meal planning a delightful experience! 🎉
 
-cd git-fork-yeah
-
-
-	3.	Build the project:
-
-mvn clean install
-
-Running Git Fork Yeah!
-
-Start the application by executing:
-
-mvn exec:java -Dexec.mainClass="com.gitforkyeah.Main"
-
-Testing
-
-Run the tests with:
-
-mvn test
-
-License
-
-This project is licensed under the terms specified in the LICENSE file.
-
-Why “Git Fork Yeah!”?
-
-The name represents the fun and utility of the app — whether you’re “forking” recipes to make them your own or enjoying every “fork-full” bite!
-
-Enjoy using Git Fork Yeah! to elevate your culinary journey. Fork your way to deliciousness! 🍽️
-
-commit farm7

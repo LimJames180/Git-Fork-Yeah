@@ -14,6 +14,8 @@ import login.interface_adapter.*;
 import login.use_case.SignupInteractor;
 import login.data_access.MongoUserDataAccessImpl;
 import view.LoggedInPageView;
+
+import java.beans.PropertyChangeListener;
 import java.util.List;
 
 public class LoginPageView extends JFrame {
@@ -27,7 +29,9 @@ public class LoginPageView extends JFrame {
     private SignupController signupController;
     private SignupViewModel signupViewModel;
 
-    public LoginPageView(LoginController controller, LoginViewModel viewModel, SignupController signupController, SignupViewModel signupViewModel, SessionService currentSession) {
+    public LoginPageView(LoginController controller, LoginViewModel viewModel,
+                         SignupController signupController, SignupViewModel signupViewModel,
+                         SessionService currentSession) {
         this.controller = controller;
         this.viewModel = viewModel;
         this.currentSession = currentSession;
@@ -39,7 +43,7 @@ public class LoginPageView extends JFrame {
         setupViewModel();
     }
 
-    public LoginPageView(LoginController controller, LoginViewModel viewModel) {
+    public LoginPageView(LoginController controller, LoginViewModel viewModel) { //constructor for Signup Use
         this.controller = controller;
         this.viewModel = viewModel;
         this.currentSession = new SessionService();
@@ -92,42 +96,34 @@ public class LoginPageView extends JFrame {
             String username = usernameField.getText();
             String password = new String(passwordField.getPassword());
 
-            // Validate inputs
-            if (username.isEmpty() || password.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Please input both username and password.", "Input Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            // Handle login
-            currentSession.setUsername(username);
-
             controller.handleLogin(username, password);
 
+            currentSession.setUsername(username);
         });
 
         signupButton.addActionListener(e -> {
-            // Navigate to signup page
             SignupPageView signupPageView = new SignupPageView(signupController, signupViewModel, controller, viewModel);
             signupPageView.setVisible(true);
-            dispose(); // Close the login page
+            dispose();
         });
     }
 
+
     private void setupViewModel() {
+        for (PropertyChangeListener listener : viewModel.getPropertyChangeListeners()) {
+            viewModel.removePropertyChangeListener(listener);
+        }
+
         viewModel.addPropertyChangeListener(evt -> {
             if ("message".equals(evt.getPropertyName())) {
-                JOptionPane.showMessageDialog(this, viewModel.getMessage(), "Success", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, viewModel.getMessage(),
+                        "Success", JOptionPane.INFORMATION_MESSAGE);
                 dispose();
-                Recipe test = new Recipe("324694");
-                List<Recipe> testy = List.of(test, test);
-
-//                new LoggedInPageView(viewModel.getMessage(), viewModel.getSavedRecipes()); // Pass saved recipes if available
-                // new LoggedInPageView(viewModel.getMessage(), viewModel.getSavedRecipes(currentSession.getUsername()), currentSession); // Pass saved recipes if available
-                new LoggedInPageView((currentSession.getUsername()));
-                // TODO I changed this call since it gave me an error otherwise. Please change it if I shouldn't have.
-
+                new LoggedInPageView(viewModel.getMessage(), viewModel.
+                        getSavedRecipes(currentSession.getUsername()), currentSession);
             } else if ("error".equals(evt.getPropertyName())) {
-                JOptionPane.showMessageDialog(this, viewModel.getError(), "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, viewModel.getError(),
+                        "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
     }

@@ -11,8 +11,7 @@ public class LoginViewModel {
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
     private String message;
     private String error;
-    private List<Recipe> savedRecipes; // Add this field
-    private final UserDataAccess userDataAccess; // Assuming you have a UserDataAccess interface
+    private final UserDataAccess userDataAccess;
 
     public LoginViewModel(UserDataAccess userDataAccess) {
         this.userDataAccess = userDataAccess;
@@ -45,7 +44,11 @@ public class LoginViewModel {
         return userDataAccess.getUserRecipes(username);
     }
 
-    public void setSavedRecipes(List<Recipe> savedRecipes) { // Add this method
-        this.savedRecipes = savedRecipes;
+    public PropertyChangeListener[] getPropertyChangeListeners() {
+        return support.getPropertyChangeListeners();
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        support.removePropertyChangeListener(listener);
     }
 }

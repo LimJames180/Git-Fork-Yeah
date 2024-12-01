@@ -20,6 +20,10 @@ public class SignupViewModel {
         support.removePropertyChangeListener(listener);
     }
 
+    public PropertyChangeListener[] getPropertyChangeListeners() {
+        return support.getPropertyChangeListeners();
+    }
+
     public String getMessage() {
         return message;
     }
