@@ -1,8 +1,11 @@
 package RandomFYP.view;
 
+import RandomFYP.interface_adapter.RandomController;
 import entity.Ingredient;
 import entity.Recipe;
+import filter.view.ToggleButtonsView;
 import interface_adapter.RecipeController.*;
+import login.app.SessionService;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,19 +13,25 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.List;
+
 import java.util.Random;
 
 import static interface_adapter.RecipeController.Random_recipe;
 
 public class RandomView {
+    private JButton backButton;
+
 
     // Placeholder for the current batch of recipes
     private static List<Recipe> currentRecipes;
     private static int currentRecipeIndex = 0;
 
-    public static void main(String[] args) throws IOException {
+
+
+    public RandomView(SessionService currentSession) throws IOException {
         // Load the first batch of recipes
-        currentRecipes = Random_recipe();
+        RandomController controller = new RandomController();
+        currentRecipes = controller.Random_recipe();
         if (currentRecipes == null || currentRecipes.isEmpty()) {
             throw new RuntimeException("No recipes found from Random_recipe!");
         }
@@ -133,10 +142,3 @@ public class RandomView {
         frame.setVisible(true);
     }
 }
-
-    // Simulated Random_recipe function to fetch 10 recipes
-//    private static List<Recipe> Random_recipe() {
-//        // Replace this implementation with the actual function call
-//        return List.of(
-//                new Recipe("Spaghetti Bolognese", "Ingredients:\n- Pasta\n- Minced meat\n- Tomato sauce\n- Garlic\n- Onions",
-//                        "Steps:\n1.
