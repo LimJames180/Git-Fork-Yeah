@@ -2,6 +2,7 @@ package ingredients_searcher.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.io.BufferedReader;
@@ -10,43 +11,62 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import entity.ApiKey;
+import ingredients_searcher.data_access.IngredientDataAccess;
+import ingredients_searcher.interface_adapter.AddIngredientController;
+import ingredients_searcher.interface_adapter.AddIngredientPresenter;
+import ingredients_searcher.interface_adapter.AddIngredientViewModel;
+import ingredients_searcher.use_case.AddIngredientInteractor;
 import ingredients_searcher.view.action_listeners.AddIngredientListener;
 import ingredients_searcher.view.action_listeners.IngredientsListener;
 import ingredients_searcher.view.action_listeners.ToFiltersListener;
 import login.app.SessionService;
-import login.data_access.MongoUserDataAccessImpl;
-import login.data_access.UserDataAccess;
+import RandomFYP.view.RandomView;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class IngredientSearchView extends JFrame {
     // UI Components
     private JTextField ingredientInputField;
-    private JButton searchButton;
     private JLabel ingredientImageLabel;
     private JLabel ingredientNameLabel;
-    private JButton addButton;
     private DefaultListModel<String> ingredientListModel;
     private JList<String> ingredientList;
     private JButton toFiltersButton;
+    private JButton searchButton;
+    private JButton addButton;
+    private JButton randomButton;
+
+    //controller and view model
+    private AddIngredientController controller;
+    private AddIngredientViewModel viewModel;
 
     // Spoonacular API Details
-//    private static final String SPOONACULAR_API_KEY = "8c539f487cf6406b908cb2c2a1078285"; // Replace with your actual API key
-    private static final String SPOONACULAR_API_KEY = ApiKey.getApiKeys(); // Replace with your actual API key
+    private static final String SPOONACULAR_API_KEY = "62fb1e66d4be4351b17b5f5043ede6db"; // Replace with your actual API key
     private static final String SPOONACULAR_SEARCH_URL = "https://api.spoonacular.com/food/ingredients/search?query=%s&apiKey=%s";
 
     /**
      * This class sets up the window.
      * @param ingredients the list of ingredients, empty if from previous screen.
      */
-    public IngredientSearchView(List<String> ingredients, SessionService currentUser) {
-        List<String> ingredientsList = Objects.requireNonNullElseGet(ingredients, ArrayList::new);
+    public IngredientSearchView(List<String> ingredients, SessionService currentUser,
+                                AddIngredientController controller, AddIngredientViewModel viewModel) {
         // list of ingredients
+        List<String> ingredientsList = Objects.requireNonNullElseGet(ingredients, ArrayList::new);
 
-        // Setting up the frame
+        // controller and view model
+        this.controller = controller;
+        this.viewModel = viewModel;
+
+        uiSetup();
+        listenersSetup(ingredientsList, currentUser);
+    }
+
+    public void uiSetup() {
+        // add a button for random recipe
         setTitle("entity.Ingredient Search");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setSize(650, 700);
         setLayout(new BorderLayout());
 
@@ -83,8 +103,10 @@ public class IngredientSearchView extends JFrame {
         // Buttons for Searching Recipes and Exploring All Recipes
         JPanel buttonPanel = new JPanel(new FlowLayout());
         toFiltersButton = new JButton("Set Filters");
+        randomButton = new JButton("Random Recipe");
 
         buttonPanel.add(toFiltersButton);
+        buttonPanel.add(randomButton);
 
         // Combine Panels
         JPanel mainPanel = new JPanel(new BorderLayout());
@@ -92,13 +114,25 @@ public class IngredientSearchView extends JFrame {
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
         add(mainPanel, BorderLayout.EAST);
 
-        // Event Listeners
-        toFiltersButton.addActionListener(new ToFiltersListener(ingredientsList, this, currentUser));
-        searchButton.addActionListener(new IngredientsListener(ingredientInputField, this));
-        addButton.addActionListener(new AddIngredientListener(ingredientListModel, ingredientsList, ingredientNameLabel,
-                ingredientImageLabel, addButton));
-
         setVisible(true);
+    }
+
+    public void listenersSetup(List<String> ingredients, SessionService currentUser) {
+        // need to revise the things here
+        toFiltersButton.addActionListener(new ToFiltersListener(ingredients, this, currentUser));
+        searchButton.addActionListener(new IngredientsListener(ingredientInputField, this));
+        addButton.addActionListener(new AddIngredientListener(ingredientListModel, ingredients, ingredientNameLabel,
+                ingredientImageLabel, addButton));
+        randomButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    new RandomView(currentUser);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                dispose();
+            }
+        });
     }
 
     /**
@@ -107,10 +141,8 @@ public class IngredientSearchView extends JFrame {
      */
     public void fetchIngredientData(String query) {
         try {
-            System.out.println(query + "overharereare"); //onion
             // Construct the API URL
             String urlString = String.format(SPOONACULAR_SEARCH_URL, query, SPOONACULAR_API_KEY);
-            System.out.println(urlString);
             URL url = new URL(urlString);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
@@ -149,10 +181,16 @@ public class IngredientSearchView extends JFrame {
     }
 
     public static void main(String[] args) {
-        MongoUserDataAccessImpl testDataAccess = new MongoUserDataAccessImpl();
-        SessionService test = new SessionService(testDataAccess);
-        IngredientSearchView isv = new IngredientSearchView(null, test);
-        // SwingUtilities.invokeLater((Runnable) isv);
+        List<String> ingredients = List.of(new String[]{"carrot", "milk", "bread"});
+        SessionService currentUser = new SessionService();
+        IngredientDataAccess ingDataAccess = new IngredientDataAccess();
+        AddIngredientViewModel viewModel = new AddIngredientViewModel(ingDataAccess);
+        IngredientDataAccess dataAccess = new IngredientDataAccess();
+        AddIngredientPresenter presenter = new AddIngredientPresenter(viewModel);
+        AddIngredientInteractor interactor = new AddIngredientInteractor(presenter, dataAccess);
+        AddIngredientController controller = new AddIngredientController(interactor);
+
+        IngredientSearchView isv = new IngredientSearchView(ingredients, currentUser, controller, viewModel);
         SwingUtilities.invokeLater(() -> isv.setVisible(true));
     }
 }

@@ -7,13 +7,16 @@ import filter.interface_adapter.FilterPresenter;
 import filter.interface_adapter.FilterViewModel;
 import filter.use_case.FilterInteractor;
 import filter.use_case.FilterOutputBoundary;
+import ingredients_searcher.data_access.IngredientDataAccess;
+import ingredients_searcher.interface_adapter.AddIngredientController;
+import ingredients_searcher.interface_adapter.AddIngredientPresenter;
+import ingredients_searcher.interface_adapter.AddIngredientViewModel;
+import ingredients_searcher.use_case.AddIngredientInteractor;
 import ingredients_searcher.view.IngredientSearchView;
 import filter.data_access.FilterDataAccess;
 import filter.interface_adapter.FilterController;
 import login.app.SessionService;
 import filter.use_case.FilterInteractor;
-
-
 
 import javax.swing.*;
 import java.awt.*;
@@ -74,7 +77,13 @@ public class ToggleButtonsView extends JFrame {
         JButton backButton = new JButton("Back");
         backButton.addActionListener(e -> {
             dispose();
-            IngredientSearchView ingredientSearchView = new IngredientSearchView(null, currentSession);
+            IngredientDataAccess ingDataAccess = new IngredientDataAccess();
+            AddIngredientViewModel viewModel = new AddIngredientViewModel(ingDataAccess);
+            IngredientDataAccess dataAccess = new IngredientDataAccess();
+            AddIngredientPresenter presenter = new AddIngredientPresenter(viewModel);
+            AddIngredientInteractor interactor = new AddIngredientInteractor(presenter, dataAccess);
+            AddIngredientController controller = new AddIngredientController(interactor);
+            IngredientSearchView ingredientSearchView = new IngredientSearchView(ingredients, currentSession, controller, viewModel);
             ingredientSearchView.setVisible(true);
         });
         add(backButton);

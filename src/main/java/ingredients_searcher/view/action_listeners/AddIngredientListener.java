@@ -10,7 +10,8 @@ import java.util.List;
  */
 public class AddIngredientListener implements ActionListener {
     String ingredientName;
-    List<String> ingredientsList;
+    List<String> ingredientsList; // instead of this, i should be having a controller
+    // call the interactor which updates the list?
     final private DefaultListModel<String> ingredientListModel;
     final private JLabel ingredientNameLabel;
     final private JLabel ingredientImageLabel;
@@ -30,7 +31,7 @@ public class AddIngredientListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         this.ingredientName = ingredientNameLabel.getText();
         if (!ingredientName.isEmpty()) {
-            ingredientsList.add(ingredientName);
+            ingredientsList.add(ingredientName); // for here, i should be calling the controller(?) and using a method from that to update the list
             ingredientListModel.addElement(ingredientName);
             ingredientNameLabel.setText(""); // Clear displayed ingredient
             ingredientImageLabel.setIcon(null); // Clear displayed image
