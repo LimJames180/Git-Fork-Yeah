@@ -59,6 +59,7 @@ public class IngredientSearchView extends JFrame {
     }
 
     public void uiSetup() {
+        // add a button for random recipe
         setTitle("entity.Ingredient Search");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setSize(650, 700);
