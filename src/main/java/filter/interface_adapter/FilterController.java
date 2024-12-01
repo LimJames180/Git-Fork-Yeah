@@ -1,6 +1,5 @@
 package filter.interface_adapter;
 
-import entity.Recipe;
 import filter.use_case.FilterInput;
 import filter.use_case.FilterInteractor;
 
@@ -18,7 +17,5 @@ public class FilterController {
     public void handlefilter(List<String> ingrients, Map<String, Boolean> restrictions, Map<String, Boolean> intolerances, int offset) throws IOException {
         FilterInput input = new FilterInput(ingrients, restrictions, intolerances, offset);
         interactor.filterRecipes(input);
-        //return interactor.getRecipeList();
-
     }
 }

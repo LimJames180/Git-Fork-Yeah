@@ -21,7 +21,6 @@ public class FilterInput {
         return ingredients;
     }
 
-
     public Map<String, Boolean> getRestrictions() {
         return restrictions;
     }

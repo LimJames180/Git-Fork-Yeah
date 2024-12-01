@@ -1,4 +1,4 @@
-package view;
+package misc_view;
 
 // ingredient search things
 import ingredients_searcher.data_access.IngredientDataAccess;
@@ -10,8 +10,6 @@ import ingredients_searcher.view.IngredientSearchView;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;

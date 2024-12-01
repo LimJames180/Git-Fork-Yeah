@@ -1,4 +1,4 @@
-package view;
+package misc_view;
 
 import ingredients_searcher.data_access.IngredientDataAccess;
 import ingredients_searcher.interface_adapter.AddIngredientController;
@@ -7,7 +7,6 @@ import ingredients_searcher.interface_adapter.AddIngredientViewModel;
 import ingredients_searcher.use_case.AddIngredientInteractor;
 import ingredients_searcher.view.IngredientSearchView;
 import entity.Recipe;
-import ingredients_searcher.view.IngredientSearchView;
 import instructions.view.BaseView;
 import instructions.view.InstructionsView;
 import login.app.SessionService;

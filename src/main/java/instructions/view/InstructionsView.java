@@ -6,19 +6,14 @@ import instructions.interface_adapter.InstructionsController;
 import instructions.interface_adapter.InstructionsPresenter;
 import instructions.interface_adapter.InstructionsViewModel;
 import instructions.use_case.InstructionsInteractor;
-import filter.view.FilterView;
-import interface_adapter.RecipeController;
-import interface_adapter.SavedRecipeController;
+import misc_interface_adapter.SavedRecipeController;
 import login.app.SessionService;
 import login.data_access.MongoUserDataAccessImpl;
 import login.data_access.UserDataAccess;
-import login.entities.User;
-import view.LoggedInPageView;
+import misc_view.LoggedInPageView;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
 import java.io.IOException;
 import java.net.URL;
 

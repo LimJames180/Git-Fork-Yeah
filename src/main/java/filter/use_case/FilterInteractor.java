@@ -1,6 +1,5 @@
 package filter.use_case;
 
-
 import filter.data_access.FilterDataAccess;
 import filter.data_access.FilterDataAccessInterface;
 import entity.Recipe;
@@ -11,19 +10,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-
 public class FilterInteractor implements FilterInputBoundary {
     private final FilterDataAccessInterface filterDataAccess;
     private FilterOutputBoundary FilterOutputBoundary;
     private List<Recipe> recipeList;
 
-
-
     public FilterInteractor(FilterDataAccess filterDataAccess, FilterOutputBoundary FilterOutputBoundary) {
         this.filterDataAccess = filterDataAccess;
         this.FilterOutputBoundary = FilterOutputBoundary;
     }
-
 
     @Override
     public void filterRecipes(FilterInput input) throws IOException {
@@ -38,7 +33,6 @@ public class FilterInteractor implements FilterInputBoundary {
         mapToString(intolerances, complexsearch, "intolerances=");
         ingredientsToString(ingredients, complexsearch, "includeIngredients=");
         offSetToString(offset, complexsearch);
-
 
         recipeList = filterDataAccess.fetchComplexSearch(complexsearch);
 
