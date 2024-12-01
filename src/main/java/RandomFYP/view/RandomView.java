@@ -3,6 +3,7 @@ package RandomFYP.view;
 import RandomFYP.interface_adapter.RandomController;
 import entity.Ingredient;
 import entity.Recipe;
+import filter.view.ToggleButtonsView;
 import interface_adapter.RecipeController.*;
 import login.app.SessionService;
 
@@ -12,11 +13,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.List;
+
 import java.util.Random;
 
 import static interface_adapter.RecipeController.Random_recipe;
 
 public class RandomView {
+    private JButton backButton;
+
 
     // Placeholder for the current batch of recipes
     private static List<Recipe> currentRecipes;
