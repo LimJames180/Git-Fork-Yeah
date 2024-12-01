@@ -96,9 +96,9 @@ public class LoginPageView extends JFrame {
             String username = usernameField.getText();
             String password = new String(passwordField.getPassword());
 
-            controller.handleLogin(username, password);
-
             currentSession.setUsername(username);
+
+            controller.handleLogin(username, password);
         });
 
         signupButton.addActionListener(e -> {
