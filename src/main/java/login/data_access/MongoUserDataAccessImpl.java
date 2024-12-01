@@ -27,12 +27,6 @@ public class MongoUserDataAccessImpl implements UserDataAccess {
         Document userDoc = userCollection.find(Filters.eq("username", username)).first();
         if (userDoc != null) {
             return new User(userDoc.getString("username"), userDoc.getString("password"));
-//            User user = new User(userDoc.getString("username"), userDoc.getString("password"));
-//            List<Recipe> recipes = getUserRecipes(username);
-//            for (Recipe recipe : recipes) {
-//                user.addRecipe(recipe);
-//            }
-//            return user;
         }
         return null;
     }
@@ -54,42 +48,15 @@ public class MongoUserDataAccessImpl implements UserDataAccess {
 
     @Override
     public List<Recipe> getUserRecipes(String username) {
-        System.out.println("Searching for user: " + username); // Debugging output
-
         List<Recipe> recipes = new ArrayList<>();
         Document userDoc = userCollection.find(Filters.eq("username", username)).first();
-        System.out.println(userDoc);
 
         if (userDoc != null) {
             List<String> recipeIds = (List<String>) userDoc.get("savedRecipes");
-            System.out.println(recipeIds);
             for (String recipeId : recipeIds) {
-                recipes.add(new Recipe(recipeId)); // Replace with actual title fetching logic
+                recipes.add(new Recipe(recipeId));
             }
         }
-        //System.out.println(recipes.get(0).getId());
-        System.out.println(recipes.size() + "here");
         return recipes;
     }
-
-//    @Override
-//    public List<Recipe> getUserRecipes(String username) {
-//        Document query = new Document("username", username);
-//        Document userDocument = (Document) userCollection.find(query).first();
-//        List<Recipe> recipeList = new ArrayList<>();
-//
-//        if (userDocument != null) {
-//            // Assuming the recipes are stored in a field called "recipes"
-//            List<Document> recipes = (List<Document>) userDocument.get("recipes");
-//
-//            if (recipes != null) {
-//                for (Document recipeDoc : recipes) {
-//                    // Convert Document to Recipe object (assuming a constructor or method exists)
-//                    Recipe recipe = new Recipe(recipeDoc.getString("id"));
-//                    recipeList.add(recipe);
-//                }
-//            }
-//        }
-//        return recipeList;
-//    }
 }

@@ -18,20 +18,24 @@ public class SignupInteractor implements SignupInputBoundary {
         String username = input.getUsername();
         String password = input.getPassword();
 
-        // Check if username or password is empty
         if (username.isEmpty() || password.isEmpty()) {
             outputBoundary.prepareFailView("Error: Please fill in all fields.");
             return;
         }
 
-        // Check if the user already exists
+        String passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{6,}$";
+        if (!password.matches(passwordPattern)) {
+            outputBoundary.prepareFailView("Error: Password must be at least 6 characters long, " +
+                    "include an uppercase letter, a lowercase letter, and a number.");
+            return;
+        }
+
         User existingUser = userDataAccess.findUser(username);
         if (existingUser != null) {
             outputBoundary.prepareFailView("Error: Username already exists.");
             return;
         }
 
-        // Create new user and save to database
         User newUser = new User(username, password);
         userDataAccess.saveUser(newUser);
         outputBoundary.prepareSuccessView("Registration successful! You can now log in.");
