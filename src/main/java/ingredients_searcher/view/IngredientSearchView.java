@@ -2,6 +2,7 @@ package ingredients_searcher.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.io.BufferedReader;
@@ -19,6 +20,9 @@ import ingredients_searcher.view.action_listeners.AddIngredientListener;
 import ingredients_searcher.view.action_listeners.IngredientsListener;
 import ingredients_searcher.view.action_listeners.ToFiltersListener;
 import login.app.SessionService;
+import RandomFYP.view.RandomView;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -119,6 +123,16 @@ public class IngredientSearchView extends JFrame {
         searchButton.addActionListener(new IngredientsListener(ingredientInputField, this));
         addButton.addActionListener(new AddIngredientListener(ingredientListModel, ingredients, ingredientNameLabel,
                 ingredientImageLabel, addButton));
+        randomButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    new RandomView(currentUser);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                dispose();
+            }
+        });
     }
 
     /**

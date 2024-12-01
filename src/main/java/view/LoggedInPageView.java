@@ -18,7 +18,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-public class LoggedInPageView extends JFrame {
+public class LoggedInPageView extends JFrame implements BaseView {
     // UI Components
     private JLabel welcomeLabel;
     private JList<String> savedRecipesList;
