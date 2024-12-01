@@ -1,7 +1,6 @@
 package entity;
 
-import entity.Nutrients;
-import interface_adapter.RecipeController;
+import misc_interface_adapter.RecipeDataAccess;
 
 import java.io.IOException;
 import java.util.List;
@@ -17,23 +16,23 @@ public class Recipe {
     private List<Nutrients> nutrients;
     private String instructions;
 
-    private RecipeController recipeController;
+    private RecipeDataAccess recipeController;
 
     public Recipe(String id, String title, String image) {
-        this.recipeController = new RecipeController();
+        this.recipeController = new RecipeDataAccess();
         this.id = id;
         this.title = title;
         this.image = image;
     }
 
     public Recipe(String id) {
-        this.recipeController = new RecipeController();
+        this.recipeController = new RecipeDataAccess();
         this.id = id;
     }
 
     public List<Ingredient> get_ingredients() throws IOException {
         if (!loadedIngredient) {
-            ingredients = RecipeController.get_ingredients(id);
+            ingredients = RecipeDataAccess.getIngredients(id);
             loadedIngredient = true;
         }
         return ingredients;
@@ -42,12 +41,12 @@ public class Recipe {
     public List<Nutrients> get_nutrients() throws IOException {
         if (!loadedNutrients) {
             // load recipe
-            RecipeController.get_nutrients(id);
+            RecipeDataAccess.getNutrients(id);
             // load nutrients
-            RecipeController.get_nutrients(id);
+            RecipeDataAccess.getNutrients(id);
             loadedNutrients = true;
         }
-        return RecipeController.get_nutrients(id);
+        return RecipeDataAccess.getNutrients(id);
     }
     public String getTitle() {
         return title;
@@ -63,12 +62,12 @@ public class Recipe {
     }
 
     public String getRecipeName(Recipe recipe) {
-        return recipeController.get_Name(recipe);
+        return recipeController.getName(recipe);
     }
 
     public String getInstructions() throws IOException {
         if (instructions == null) {
-            instructions = RecipeController.get_recipe_instructions(id);
+            instructions = RecipeDataAccess.getRecipeInstructions(id);
         }
         return instructions;
     }

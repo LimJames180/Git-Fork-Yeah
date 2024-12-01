@@ -92,7 +92,7 @@
     - Apply optional dietary filters (e.g., vegan, low-carb).
 
 3. **View Recipe Details**
-    - Select a recipe from the list to view detailed instructions, difficulty level, and nutritional information.
+    - Select a recipe from the list to misc_view detailed instructions, difficulty level, and nutritional information.
 
 4. **Save Recipes**
     - Use the "Save Recipe" button to bookmark your favorites.

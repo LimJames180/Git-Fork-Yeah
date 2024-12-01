@@ -4,19 +4,14 @@ package login.view;
 import javax.swing.*;
 import java.awt.*;
 
-import entity.Recipe;
 import login.app.SessionService;
 import login.interface_adapter.LoginController;
 import login.interface_adapter.LoginViewModel;
 import login.interface_adapter.SignupController;
-import login.interface_adapter.SignupPresenter;
 import login.interface_adapter.*;
-import login.use_case.SignupInteractor;
-import login.data_access.MongoUserDataAccessImpl;
-import view.LoggedInPageView;
+import misc_view.LoggedInPageView;
 
 import java.beans.PropertyChangeListener;
-import java.util.List;
 
 public class LoginPageView extends JFrame {
     private JTextField usernameField;

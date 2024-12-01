@@ -10,7 +10,6 @@ import ingredients_searcher.interface_adapter.AddIngredientPresenter;
 import ingredients_searcher.interface_adapter.AddIngredientViewModel;
 import ingredients_searcher.use_case.AddIngredientInteractor;
 import ingredients_searcher.view.IngredientSearchView;
-import interface_adapter.RecipeController.*;
 import login.app.SessionService;
 
 import javax.imageio.ImageIO;
@@ -23,9 +22,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
-import java.util.Random;
-
-import static interface_adapter.RecipeController.Random_recipe;
+import static misc_interface_adapter.RecipeDataAccess.randomRecipe;
 
 public class RandomView {
     private JButton backButton, generateButton;
@@ -40,7 +37,7 @@ public class RandomView {
 
     public RandomView(SessionService currentSession) throws IOException {
         // Load the first batch of recipes
-        load_recipes();
+        loadRecipes();
 
         // Frame setup
         JFrame frame = new JFrame("Random Recipe Generator");
@@ -102,7 +99,7 @@ public class RandomView {
         frame.add(buttonPanel, BorderLayout.SOUTH);
 
         // Action listener for the button
-        Listener(generateButton, frame, recipeTitle, recipeIngredients, recipeSteps, imageLabel);
+        listener(generateButton, frame, recipeTitle, recipeIngredients, recipeSteps, imageLabel);
 
         // Back button
         backButton = new JButton("Back");
@@ -126,22 +123,22 @@ public class RandomView {
         frame.setVisible(true);
     }
 
-    private static void load_recipes() throws IOException {
+    private static void loadRecipes() throws IOException {
         RandomController controller = new RandomController();
-        currentRecipes = controller.Random_recipe();
+        currentRecipes = controller.randomRecipe();
         if (currentRecipes == null || currentRecipes.isEmpty()) {
-            throw new RuntimeException("No recipes found from Random_recipe!");
+            throw new RuntimeException("No recipes found from randomRecipe!");
         }
     }
 
-    private static void Listener(JButton generateButton, JFrame frame, JTextArea recipeTitle, JTextArea recipeIngredients, JTextArea recipeSteps, JLabel imageLabel) {
+    private static void listener(JButton generateButton, JFrame frame, JTextArea recipeTitle, JTextArea recipeIngredients, JTextArea recipeSteps, JLabel imageLabel) {
         generateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Check if we need to fetch a new batch of recipes
                 if (currentRecipeIndex >= currentRecipes.size()) {
                     try {
-                        currentRecipes = Random_recipe();
+                        currentRecipes = randomRecipe();
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
@@ -187,7 +184,6 @@ public class RandomView {
                 imageLabel.setIcon(new ImageIcon(image));
                 System.out.println(url);
             }
-
         });
     }
 }

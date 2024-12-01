@@ -1,8 +1,7 @@
-package view;
+package misc_view;
 
 import entity.Ingredient;
 import entity.Recipe;
-import interface_adapter.RecipeController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,9 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.List;
-import interface_adapter.RecipeController;
 
-import static interface_adapter.RecipeController.Random_recipe;
+import static misc_interface_adapter.RecipeDataAccess.randomRecipe;
 
 
 public class RandomRecipeFYP {
@@ -72,7 +70,7 @@ public class RandomRecipeFYP {
 
     // Placeholder for getting a random recipe
     private String getRandomRecipe() throws IOException {
-        List<Recipe> recipelist = Random_recipe();
+        List<Recipe> recipelist = randomRecipe();
         Recipe recipe = recipelist.get(0);
 
 

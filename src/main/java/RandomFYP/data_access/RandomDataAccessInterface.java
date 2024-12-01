@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface RandomDataAccessInterface {
 
-    List<Recipe> fetchrandom() throws IOException;
+    List<Recipe> fetchRandom() throws IOException;
 }

@@ -1,4 +1,4 @@
-package interface_adapter;
+package misc_interface_adapter;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -17,9 +17,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecipeController {
+public class RecipeDataAccess {
 
-    private static List<Recipe> Recipe_List(JsonArray recipes) {
+    private static List<Recipe> recipeList(JsonArray recipes) {
         List<Recipe> recipeList = new ArrayList<>();
         for (JsonElement recipe : recipes) {
             String id = recipe.getAsJsonObject().get("id").getAsString();
@@ -31,7 +31,7 @@ public class RecipeController {
         return recipeList;
     }
 
-    public static List<Ingredient> get_ingredients(String id) throws IOException {
+    public static List<Ingredient> getIngredients(String id) throws IOException {
         String apiKey = ApiKey.getApiKeys();
         OkHttpClient client = new OkHttpClient();
 
@@ -63,7 +63,7 @@ public class RecipeController {
         return ingredientList;
     }
 
-    public static List<Nutrients> get_nutrients(String id) throws IOException {
+    public static List<Nutrients> getNutrients(String id) throws IOException {
         String apiKey = ApiKey.getApiKeys();
         OkHttpClient client = new OkHttpClient();
 
@@ -88,7 +88,7 @@ public class RecipeController {
         return nutrientList;
     }
 
-    public static List<Recipe> complex_search(List<String> params) throws IOException {
+    public static List<Recipe> complexSearch(List<String> params) throws IOException {
         String apiKey = ApiKey.getApiKeys();
         OkHttpClient client = new OkHttpClient();
 
@@ -106,11 +106,11 @@ public class RecipeController {
         Response response = client.newCall(request).execute();
         String jsonData = response.body().string();
         JsonElement root = new JsonParser().parse(jsonData);
-        List<Recipe> recipeList = Recipe_List(root.getAsJsonObject().get("results").getAsJsonArray());
+        List<Recipe> recipeList = recipeList(root.getAsJsonObject().get("results").getAsJsonArray());
         return recipeList;
     }
 
-    public static List<Recipe> Random_recipe() throws IOException {
+    public static List<Recipe> randomRecipe() throws IOException {
         String apiKey = ApiKey.getApiKeys();
         OkHttpClient client = new OkHttpClient();
 
@@ -122,11 +122,11 @@ public class RecipeController {
         Response response = client.newCall(request).execute();
         String jsonData = response.body().string();
         JsonElement root = new JsonParser().parse(jsonData);
-        List<Recipe> recipeList = Recipe_List(root.getAsJsonObject().get("recipes").getAsJsonArray());
+        List<Recipe> recipeList = recipeList(root.getAsJsonObject().get("recipes").getAsJsonArray());
         return recipeList;
     }
 
-    public String get_Name(Recipe recipe) {
+    public String getName(Recipe recipe) {
         String apiKey = ApiKey.getApiKeys();
         OkHttpClient client = new OkHttpClient();
 
@@ -154,7 +154,7 @@ public class RecipeController {
         }
     }
 
-    public static String get_recipe_instructions(String id) throws IOException {
+    public static String getRecipeInstructions(String id) throws IOException {
         String apiKey = ApiKey.getApiKeys();
         OkHttpClient client = new OkHttpClient();
 

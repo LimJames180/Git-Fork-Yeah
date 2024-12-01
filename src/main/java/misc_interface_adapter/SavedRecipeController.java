@@ -1,4 +1,4 @@
-package interface_adapter;
+package misc_interface_adapter;
 
 import login.data_access.UserDataAccess;
 import entity.Recipe;

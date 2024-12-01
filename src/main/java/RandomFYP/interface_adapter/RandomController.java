@@ -8,8 +8,8 @@ import java.util.List;
 
 public class RandomController {
 
-    RandomInteractor interactor = new RandomInteractor();;
-    public List<Recipe> Random_recipe() throws IOException {
+    RandomInteractor interactor = new RandomInteractor();
+    public List<Recipe> randomRecipe() throws IOException {
         return interactor.getRecipeList().getRecipeList();
     }
 }
