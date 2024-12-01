@@ -21,6 +21,7 @@ public class AddIngredientInteractor implements AddIngredientInputBoundary{
         if (ingredient == null) {
             outputBoundary.addfailed("Ingredient not found");
         }
+        // add ingredient to list?
 
     }
 }
