@@ -12,16 +12,16 @@ public class InstructionsDataAccess implements InstructionsDataAccessInterface {
 
     @Override
     public String getIngredients(int id) {
-        return Ingredients.get(API_KEY, id);
+        return InstructionsIngredients.get(API_KEY, id);
     }
 
     @Override
     public String getImage(int id) {
-        return Image.get(API_KEY, id);
+        return InstructionsImage.get(API_KEY, id);
     }
 
     @Override
     public String getNutrients(int id) {
-        return Nutrients.get(API_KEY, id);
+        return InstructionsNutrients.get(API_KEY, id);
     }
 }

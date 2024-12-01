@@ -9,7 +9,7 @@ import okhttp3.Response;
 
 import java.io.IOException;
 
-public class Nutrients {
+public class InstructionsNutrients {
     public static String get(String key, int id) {
         OkHttpClient client = new OkHttpClient();
         String url = "https://api.spoonacular.com/recipes/" + id + "/nutritionWidget.json?apiKey=" + key;

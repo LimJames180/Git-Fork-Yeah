@@ -8,7 +8,7 @@ import okhttp3.Response;
 
 import java.io.IOException;
 
-public class Image {
+public class InstructionsImage {
     public static String get(String key, int id) {
         OkHttpClient client = new OkHttpClient();
         String url = "https://api.spoonacular.com/recipes/" + id + "/information?includeNutrition=false&apiKey=" + key;
