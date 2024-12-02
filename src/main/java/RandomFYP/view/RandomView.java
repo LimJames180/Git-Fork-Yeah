@@ -1,9 +1,9 @@
 package RandomFYP.view;
 
+import RandomFYP.Static_Variables;
 import RandomFYP.interface_adapter.RandomController;
 import entity.Ingredient;
 import entity.Recipe;
-import filter.view.ToggleButtonsView;
 import ingredients_searcher.data_access.IngredientDataAccess;
 import ingredients_searcher.interface_adapter.AddIngredientController;
 import ingredients_searcher.interface_adapter.AddIngredientPresenter;
@@ -18,172 +18,158 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
-import static misc_interface_adapter.RecipeDataAccess.randomRecipe;
-
+/**
+ * The RandomView class represents the UI for generating random recipes.
+ */
 public class RandomView {
-    private JButton backButton, generateButton;
-
-    // Placeholder for the current batch of recipes
+    private static final String FONT_ARIAL = "Arial";
     private static List<Recipe> currentRecipes;
-    private static int currentRecipeIndex = 0;
+    private static int currentRecipeIndex;
+    private final JButton backButton;
 
-    private ToggleButtonsView toggleButtonsExample;
-
-
-
-    public RandomView(SessionService currentSession) throws IOException {
-        // Load the first batch of recipes
+    /**
+     * Constructs a RandomView instance.
+     *
+     * @param currentSession the current session service
+     * @throws IOException if an I/O error occurs
+     */
+    public RandomView(final SessionService currentSession) throws IOException {
         loadRecipes();
 
-        // Frame setup
-        JFrame frame = new JFrame("Random Recipe Generator");
-        frame.setSize(650, 700);
+        final JFrame frame = new JFrame("Random Recipe Generator");
+        frame.setSize(Static_Variables.FRAME_WIDTH, Static_Variables.FRAME_HEIGHT);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
 
-        // Title label
-        JLabel titleLabel = new JLabel("Random Recipe Generator", JLabel.CENTER);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        final JLabel titleLabel = new JLabel("Random Recipe Generator", JLabel.CENTER);
+        titleLabel.setFont(new Font(FONT_ARIAL, Font.BOLD, Static_Variables.TITLE_FONT_SIZE));
         frame.add(titleLabel, BorderLayout.NORTH);
 
-        // Recipe display panel
-        JPanel recipePanel = new JPanel();
+        final JPanel recipePanel = new JPanel();
         recipePanel.setLayout(new BoxLayout(recipePanel, BoxLayout.Y_AXIS));
         recipePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         frame.add(recipePanel, BorderLayout.CENTER);
 
-        // Image label
-        JLabel imageLabel = new JLabel("", JLabel.CENTER);
-        imageLabel.setPreferredSize(new Dimension(200, 200));
+        final JLabel imageLabel = new JLabel("", JLabel.CENTER);
+        imageLabel.setPreferredSize(new Dimension(Static_Variables.IMAGE_WIDTH, Static_Variables.IMAGE_HEIGHT));
         recipePanel.add(imageLabel, BorderLayout.NORTH);
 
-        // Text areas for title, ingredients, and steps
-        JTextArea recipeTitle = new JTextArea();
-        recipeTitle.setFont(new Font("Arial", Font.BOLD, 18));
+        final JTextArea recipeTitle = new JTextArea();
+        recipeTitle.setFont(new Font(FONT_ARIAL, Font.BOLD, Static_Variables.RECIPE_TITLE_FONT_SIZE));
         recipeTitle.setEditable(false);
         recipeTitle.setWrapStyleWord(true);
         recipeTitle.setLineWrap(true);
         recipeTitle.setAlignmentX(JTextArea.CENTER_ALIGNMENT);
 
-
-        JTextArea recipeIngredients = new JTextArea();
-        recipeIngredients.setFont(new Font("Arial", Font.PLAIN, 14));
+        final JTextArea recipeIngredients = new JTextArea();
+        recipeIngredients.setFont(new Font(FONT_ARIAL, Font.PLAIN, Static_Variables.RECIPE_INGREDIENTS_FONT_SIZE));
         recipeIngredients.setEditable(false);
         recipeIngredients.setWrapStyleWord(true);
         recipeIngredients.setLineWrap(true);
         recipeIngredients.setAlignmentX(JTextArea.CENTER_ALIGNMENT);
 
-        JTextArea recipeSteps = new JTextArea();
-        recipeSteps.setFont(new Font("Arial", Font.PLAIN, 14));
+        final JTextArea recipeSteps = new JTextArea();
+        recipeSteps.setFont(new Font(FONT_ARIAL, Font.PLAIN, Static_Variables.RECIPE_STEPS_FONT_SIZE));
         recipeSteps.setEditable(false);
         recipeSteps.setWrapStyleWord(true);
         recipeSteps.setLineWrap(true);
         recipeSteps.setAlignmentX(JTextArea.CENTER_ALIGNMENT);
 
-        // Scrollable panel for ingredients and steps
-        JPanel textPanel = new JPanel(new GridLayout(3, 1));
+        final JPanel textPanel = new JPanel(new GridLayout(3, 1));
         textPanel.add(recipeTitle);
         textPanel.add(new JScrollPane(recipeIngredients));
         textPanel.add(new JScrollPane(recipeSteps));
         recipePanel.add(textPanel, BorderLayout.CENTER);
 
-        // Button panel
-        JPanel buttonPanel = new JPanel();
-        JButton generateButton = new JButton("Generate Recipe");
-        generateButton.setFont(new Font("Arial", Font.BOLD, 16));
+        final JPanel buttonPanel = new JPanel();
+        final JButton generateButton = new JButton("Generate Recipe");
+        generateButton.setFont(new Font(FONT_ARIAL, Font.BOLD, Static_Variables.BUTTON_FONT_SIZE));
         buttonPanel.add(generateButton);
         frame.add(buttonPanel, BorderLayout.SOUTH);
 
-        // Action listener for the button
-        listener(generateButton, frame, recipeTitle, recipeIngredients, recipeSteps, imageLabel);
+        addGenerateButtonListener(generateButton, frame, recipeTitle, recipeIngredients, recipeSteps, imageLabel);
 
-        // Back button
         backButton = new JButton("Back");
         buttonPanel.add(backButton);
         buttonPanel.add(generateButton);
 
-        backButton.addActionListener(e -> {
+        backButton.addActionListener(event -> {
             frame.dispose();
-//            toggleButtonsExample.setVisible(true);
-            IngredientDataAccess ingDataAccess = new IngredientDataAccess();
-            AddIngredientViewModel viewModel = new AddIngredientViewModel(ingDataAccess);
-            IngredientDataAccess dataAccess = new IngredientDataAccess();
-            AddIngredientPresenter presenter = new AddIngredientPresenter(viewModel);
-            AddIngredientInteractor interactor = new AddIngredientInteractor(presenter, dataAccess);
-            AddIngredientController controller = new AddIngredientController(interactor);
+            final IngredientDataAccess ingDataAccess = new IngredientDataAccess();
+            final AddIngredientViewModel viewModel = new AddIngredientViewModel(ingDataAccess);
+            final IngredientDataAccess dataAccess = new IngredientDataAccess();
+            final AddIngredientPresenter presenter = new AddIngredientPresenter(viewModel);
+            final AddIngredientInteractor interactor = new AddIngredientInteractor(presenter, dataAccess);
+            final AddIngredientController controller = new AddIngredientController(interactor);
             new IngredientSearchView(null, currentSession, controller, viewModel);
         });
 
-
-        // Make frame visible
         frame.setVisible(true);
     }
 
     private static void loadRecipes() throws IOException {
-        RandomController controller = new RandomController();
+        final RandomController controller = new RandomController();
         currentRecipes = controller.randomRecipe();
         if (currentRecipes == null || currentRecipes.isEmpty()) {
             throw new RuntimeException("No recipes found from randomRecipe!");
         }
     }
 
-    private static void listener(JButton generateButton, JFrame frame, JTextArea recipeTitle, JTextArea recipeIngredients, JTextArea recipeSteps, JLabel imageLabel) {
+    private static void addGenerateButtonListener(final JButton generateButton, final JFrame frame,
+                                                  final JTextArea recipeTitle, final JTextArea recipeIngredients,
+                                                  final JTextArea recipeSteps, final JLabel imageLabel) {
         generateButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                // Check if we need to fetch a new batch of recipes
-                if (currentRecipeIndex >= currentRecipes.size()) {
-                    try {
-                        currentRecipes = randomRecipe();
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                    currentRecipeIndex = 0;
-                    if (currentRecipes == null || currentRecipes.isEmpty()) {
-                        JOptionPane.showMessageDialog(frame, "No more recipes available!", "Error", JOptionPane.ERROR_MESSAGE);
-                        return;
-                    }
-                }
-
-                // Get the next recipe
-                Recipe selectedRecipe = currentRecipes.get(currentRecipeIndex++);
-                recipeTitle.setText(selectedRecipe.getTitle());
+            public void actionPerformed(final ActionEvent event) {
                 try {
-                    recipeIngredients.setText(""); // Clear previous ingredients
-                    for (Ingredient ingredient : selectedRecipe.get_ingredients()) {
-                        recipeIngredients.append(ingredient.getName() + "\n");
-                    }
-                } catch (IOException ex) {
+                    handleGenerateButtonAction(frame, recipeTitle, recipeIngredients, recipeSteps, imageLabel);
+                }
+                catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
-                try {
-                    recipeSteps.setText(selectedRecipe.getInstructions());
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-
-                // Load and set image (placeholder if no image available)
-                ImageIcon imageIcon = new ImageIcon(selectedRecipe.getImage());
-                Image scaledImage = imageIcon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
-                URL url = null;
-                try {
-                    url = new URL(selectedRecipe.getImage());
-                } catch (MalformedURLException ex) {
-                    throw new RuntimeException(ex);
-                }
-                Image image;
-                try {
-                    image = ImageIO.read(url);
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-                imageLabel.setIcon(new ImageIcon(image));
-                System.out.println(url);
             }
         });
+    }
+
+    private static void handleGenerateButtonAction(final JFrame frame, final JTextArea recipeTitle,
+                                                   final JTextArea recipeIngredients, final JTextArea recipeSteps,
+                                                   final JLabel imageLabel) throws IOException {
+        if (currentRecipeIndex >= currentRecipes.size()) {
+            reloadRecipes();
+            if (currentRecipes == null || currentRecipes.isEmpty()) {
+                showErrorDialog(frame, "No more recipes available!");
+            }
+        }
+
+        final Recipe selectedRecipe = currentRecipes.get(currentRecipeIndex++);
+        updateRecipeDetails(recipeTitle, recipeIngredients, recipeSteps, imageLabel, selectedRecipe);
+    }
+
+    private static void reloadRecipes() throws IOException {
+        final RandomController randomcontroller = new RandomController();
+        currentRecipes = randomcontroller.randomRecipe();
+        currentRecipeIndex = 0;
+    }
+
+    private static void showErrorDialog(final JFrame frame, final String message) {
+        JOptionPane.showMessageDialog(frame, message, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    private static void updateRecipeDetails(final JTextArea recipeTitle, final JTextArea recipeIngredients,
+                                            final JTextArea recipeSteps, final JLabel imageLabel,
+                                            final Recipe selectedRecipe) throws IOException {
+        recipeTitle.setText(selectedRecipe.getTitle());
+        recipeIngredients.setText("");
+        for (final Ingredient ingredient : selectedRecipe.getIngredients()) {
+            recipeIngredients.append(ingredient.getName() + "\n");
+        }
+        recipeSteps.setText(selectedRecipe.getInstructions());
+
+        final URL url = new URL(selectedRecipe.getImage());
+        final Image image = ImageIO.read(url);
+        imageLabel.setIcon(new ImageIcon(image));
     }
 }
