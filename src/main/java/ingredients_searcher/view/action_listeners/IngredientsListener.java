@@ -1,5 +1,7 @@
 package ingredients_searcher.view.action_listeners;
 
+import entity.Ingredient;
+import ingredients_searcher.interface_adapter.AddIngredientController;
 import ingredients_searcher.view.IngredientSearchView;
 
 import javax.swing.*;
@@ -14,16 +16,21 @@ public class IngredientsListener extends Frame implements ActionListener {
     private String query;
     private final IngredientSearchView isv;
     private JTextField searchField;
+    private final AddIngredientController controller;
 
-    public IngredientsListener(JTextField ingredient, IngredientSearchView isv) {
+    public IngredientsListener(JTextField ingredient, IngredientSearchView isv, AddIngredientController controller) {
         this.isv = isv;
         this.searchField = ingredient;
+        this.controller = controller;
     }
 
     public void actionPerformed(ActionEvent e) {
         query = searchField.getText().trim();
         if (!query.isEmpty()) {
-            isv.fetchIngredientData(query);
+            // isv.fetchIngredientData(query);
+            Ingredient ing = controller.addIngredient(query); // this method should return an ingredient
+
+
         }
         else {
             JOptionPane.showMessageDialog(isv,

@@ -37,6 +37,6 @@ public class ToFiltersListener extends Frame implements ActionListener {
             example.setVisible(true);
         });
 
-        this.isv.dispose();
+        isv.dispose();
     }
 }

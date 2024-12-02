@@ -14,7 +14,7 @@ public class AddIngredientInteractor implements AddIngredientInputBoundary{
     }
 
     @Override
-    public void execute(AddIngredientInput input) {
+    public Ingredient execute(AddIngredientInput input) {
         // calling API
         Ingredient ingredient = dataAccess.fetchIngredientData(input.getIngredient());
 
@@ -22,7 +22,7 @@ public class AddIngredientInteractor implements AddIngredientInputBoundary{
         if (ingredient == null) {
             outputBoundary.addfailed("Ingredient not found");
         }
-        // add ingredient to list?
+        return ingredient;
 
     }
 }

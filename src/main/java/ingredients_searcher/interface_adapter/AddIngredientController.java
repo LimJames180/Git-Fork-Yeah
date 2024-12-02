@@ -20,9 +20,9 @@ public class AddIngredientController {
         return ingredients;
     }
 
-    public void addIngredient(String query) {
+    public Ingredient addIngredient(String query) {
         AddIngredientInput input = new AddIngredientInput(query);
-        interactor.execute(input);
+        return interactor.execute(input);
     }
 
 
