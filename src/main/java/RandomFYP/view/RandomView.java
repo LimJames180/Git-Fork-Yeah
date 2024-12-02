@@ -2,7 +2,9 @@ package RandomFYP.view;
 
 import RandomFYP.Static_Variables;
 import RandomFYP.interface_adapter.RandomController;
-import entity.Ingredient;
+import RandomFYP.interface_adapter.RandomPresenter;
+import RandomFYP.interface_adapter.RandomViewModel;
+import RandomFYP.use_case.RandomOutput;
 import entity.Recipe;
 import ingredients_searcher.data_access.IngredientDataAccess;
 import ingredients_searcher.interface_adapter.AddIngredientController;
@@ -37,7 +39,7 @@ public class RandomView {
      * @throws IOException if an I/O error occurs
      */
     public RandomView(final SessionService currentSession) throws IOException {
-        loadRecipes();
+//        loadRecipes();
 
         final JFrame frame = new JFrame("Random Recipe Generator");
         frame.setSize(Static_Variables.FRAME_WIDTH, Static_Variables.FRAME_HEIGHT);
@@ -110,13 +112,13 @@ public class RandomView {
         frame.setVisible(true);
     }
 
-    private static void loadRecipes() throws IOException {
-        final RandomController controller = new RandomController();
-        currentRecipes = controller.randomRecipe();
-        if (currentRecipes == null || currentRecipes.isEmpty()) {
-            throw new RuntimeException("No recipes found from randomRecipe!");
-        }
-    }
+//    private static void loadRecipes() throws IOException {
+//        final RandomController controller = new RandomController();
+//        currentRecipes = controller.randomRecipe();
+//        if (currentRecipes == null || currentRecipes.isEmpty()) {
+//            throw new RuntimeException("No recipes found from randomRecipe!");
+//        }
+//    }
 
     private static void addGenerateButtonListener(final JButton generateButton, final JFrame frame,
                                                   final JTextArea recipeTitle, final JTextArea recipeIngredients,
@@ -137,38 +139,34 @@ public class RandomView {
     private static void handleGenerateButtonAction(final JFrame frame, final JTextArea recipeTitle,
                                                    final JTextArea recipeIngredients, final JTextArea recipeSteps,
                                                    final JLabel imageLabel) throws IOException {
-        if (currentRecipeIndex >= currentRecipes.size()) {
-            reloadRecipes();
-            if (currentRecipes == null || currentRecipes.isEmpty()) {
-                showErrorDialog(frame, "No more recipes available!");
-            }
-        }
-
-        final Recipe selectedRecipe = currentRecipes.get(currentRecipeIndex++);
-        updateRecipeDetails(recipeTitle, recipeIngredients, recipeSteps, imageLabel, selectedRecipe);
+//        final Recipe selectedRecipe = currentRecipes.get(currentRecipeIndex++);
+        updateRecipeDetails(recipeTitle, recipeIngredients, recipeSteps, imageLabel);
     }
 
-    private static void reloadRecipes() throws IOException {
-        final RandomController randomcontroller = new RandomController();
-        currentRecipes = randomcontroller.randomRecipe();
-        currentRecipeIndex = 0;
-    }
+//    private static void reloadRecipes() throws IOException {
+//        final RandomController randomcontroller = new RandomController();
+//        currentRecipes = randomcontroller.randomRecipe();
+//        currentRecipeIndex = 0;
+//    }
 
     private static void showErrorDialog(final JFrame frame, final String message) {
         JOptionPane.showMessageDialog(frame, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
     private static void updateRecipeDetails(final JTextArea recipeTitle, final JTextArea recipeIngredients,
-                                            final JTextArea recipeSteps, final JLabel imageLabel,
-                                            final Recipe selectedRecipe) throws IOException {
-        recipeTitle.setText(selectedRecipe.getTitle());
-        recipeIngredients.setText("");
-        for (final Ingredient ingredient : selectedRecipe.getIngredients()) {
-            recipeIngredients.append(ingredient.getName() + "\n");
-        }
-        recipeSteps.setText(selectedRecipe.getInstructions());
+                                            final JTextArea recipeSteps, final JLabel imageLabel) throws IOException {
 
-        final URL url = new URL(selectedRecipe.getImage());
+        final RandomController controller = new RandomController();
+        final RandomOutput output = new RandomOutput(controller.randomRecipe());
+        final RandomPresenter presenter = new RandomPresenter();
+        final RandomViewModel data = presenter.setRandomViewModel(output);
+
+        recipeTitle.setText(data.getTitle());
+        recipeIngredients.setText(data.getIngredients());
+
+        recipeSteps.setText(data.getInstructions());
+
+        final URL url = new URL(data.getImage());
         final Image image = ImageIO.read(url);
         imageLabel.setIcon(new ImageIcon(image));
     }
