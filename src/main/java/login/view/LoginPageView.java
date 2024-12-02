@@ -1,6 +1,5 @@
 package login.view;
 
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -8,11 +7,15 @@ import login.app.SessionService;
 import login.interface_adapter.LoginController;
 import login.interface_adapter.LoginViewModel;
 import login.interface_adapter.SignupController;
-import login.interface_adapter.*;
+import login.interface_adapter.SignupViewModel;
 import misc_view.LoggedInPageView;
 
 import java.beans.PropertyChangeListener;
 
+/**
+ * Represents the login page view of the application.
+ * This class handles the user interface for logging in and signing up.
+ */
 public class LoginPageView extends JFrame {
     private JTextField usernameField;
     private JPasswordField passwordField;
@@ -24,6 +27,15 @@ public class LoginPageView extends JFrame {
     private SignupController signupController;
     private SignupViewModel signupViewModel;
 
+    /**
+     * Constructs a LoginPageView with the specified controllers and session service.
+     *
+     * @param controller the LoginController to handle login actions
+     * @param viewModel the LoginViewModel to manage the view's state
+     * @param signupController the SignupController to handle signup actions
+     * @param signupViewModel the SignupViewModel to manage the signup view's state
+     * @param currentSession the current session service
+     */
     public LoginPageView(LoginController controller, LoginViewModel viewModel,
                          SignupController signupController, SignupViewModel signupViewModel,
                          SessionService currentSession) {
@@ -38,7 +50,14 @@ public class LoginPageView extends JFrame {
         setupViewModel();
     }
 
-    public LoginPageView(LoginController controller, LoginViewModel viewModel) { //constructor for Signup Use
+    /**
+     * Constructs a LoginPageView with the specified controllers and
+     * a new session service (specifically for Signup use).
+     *
+     * @param controller the LoginController to handle login actions
+     * @param viewModel the LoginViewModel to manage the view's state
+     */
+    public LoginPageView(LoginController controller, LoginViewModel viewModel) {
         this.controller = controller;
         this.viewModel = viewModel;
         this.currentSession = new SessionService();
@@ -48,6 +67,9 @@ public class LoginPageView extends JFrame {
         setupViewModel();
     }
 
+    /**
+     * Sets up the user interface components of the login page.
+     */
     private void setupUI() {
         setTitle("entity.Recipe Finder - Login");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -86,6 +108,9 @@ public class LoginPageView extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * Sets up the action listeners for the login and signup buttons.
+     */
     private void setupListeners() {
         loginButton.addActionListener(e -> {
             String username = usernameField.getText();
@@ -103,7 +128,9 @@ public class LoginPageView extends JFrame {
         });
     }
 
-
+    /**
+     * Sets up the view model to listen for property changes and update the UI accordingly.
+     */
     private void setupViewModel() {
         for (PropertyChangeListener listener : viewModel.getPropertyChangeListeners()) {
             viewModel.removePropertyChangeListener(listener);
