@@ -1,7 +1,11 @@
 package RandomFYP.use_case;
 
+import RandomFYP.interface_adapter.RandomViewModel;
+
+import java.io.IOException;
+
 public interface RandomOutputBoundary {
 
-    void setRandomViewModel(RandomOutput randomOutput);
+    RandomViewModel setRandomViewModel(RandomOutput randomOutput) throws IOException;
 
 }
