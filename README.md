@@ -105,13 +105,13 @@
 ## **Examples and Tutorials**
 
 ### **Creating a Recipe Search**
-![Search Recipes Screenshot](https://example.com/search-recipes.png)
+![Search Recipes Screenshot](Screenshot 2024-12-02 at 3.29.11 AM.png)
 
 ### **Saving a Recipe**
-![Save Recipe Screenshot](https://example.com/save-recipe.png)
+![Save Recipe Screenshot](Screenshot 2024-12-02 at 3.29.55 AM.png)
 
 ### **Using Filters**
-![Using Filters GIF](https://example.com/filters.gif)
+![Using Filters GIF](Screenshot 2024-12-02 at 3.30.42 AM.png)
 
 ---
 
@@ -125,7 +125,7 @@ View the full license [here](LICENSE).
 ## **Feedback**
 
 We welcome your feedback!
-- Submit feedback via [Google Forms](https://example.com/feedback-form).
+- Submit feedback via [Google Forms](https://forms.gle/6HFBagkg5rqGGuoN6).
 - **Rules for valid feedback**:
     - Provide constructive and specific comments on functionality or usability.
     - Suggest features or improvements.
@@ -142,7 +142,7 @@ We appreciate contributions! To contribute:
 
 2. **Clone your forked repository**:
    ```bash
-   git clone <your-forked-repository-url>
+   git clone <https://github.com/LimJames180/Git-Fork-Yeah.git>
    ```
 
 3. **Create a new branch**:
@@ -151,7 +151,7 @@ We appreciate contributions! To contribute:
    ```
 
 4. **Submit a pull request**:
-    - Follow our [Contribution Guidelines](https://example.com/contribution-guidelines).
+    - Follow our [Contribution Guidelines]().
     - Ensure code is thoroughly tested before submitting.
 
 ---
