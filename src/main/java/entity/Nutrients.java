@@ -1,5 +1,8 @@
 package entity;
 
+/**
+ * Represents the nutrients of a recipe.
+ */
 public class Nutrients {
 
     private int amount;

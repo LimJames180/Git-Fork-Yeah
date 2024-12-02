@@ -18,7 +18,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
@@ -164,7 +163,7 @@ public class RandomView {
                                             final Recipe selectedRecipe) throws IOException {
         recipeTitle.setText(selectedRecipe.getTitle());
         recipeIngredients.setText("");
-        for (final Ingredient ingredient : selectedRecipe.get_ingredients()) {
+        for (final Ingredient ingredient : selectedRecipe.getIngredients()) {
             recipeIngredients.append(ingredient.getName() + "\n");
         }
         recipeSteps.setText(selectedRecipe.getInstructions());

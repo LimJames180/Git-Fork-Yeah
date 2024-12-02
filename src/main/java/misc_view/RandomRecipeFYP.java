@@ -78,7 +78,7 @@ public class RandomRecipeFYP {
         String recipeDescription = "Desciption";
         StringBuilder ingredients = new StringBuilder();
 
-        for (Ingredient ingredient : recipe.get_ingredients()) {
+        for (Ingredient ingredient : recipe.getIngredients()) {
             ingredients.append(ingredient.getName() + ("\n"));
         }
 
