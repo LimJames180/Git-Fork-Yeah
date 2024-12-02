@@ -5,15 +5,30 @@ import login.data_access.UserDataAccess;
 
 import javax.swing.*;
 
+/**
+ * The LoginInteractor class implements the LoginInputBoundary interface
+ * and handles the login process for users.
+ */
 public class LoginInteractor implements LoginInputBoundary {
     private final UserDataAccess userDataAccess;
     private final LoginOutputBoundary outputBoundary;
 
+    /**
+     * Constructs a LoginInteractor with the specified UserDataAccess and LoginOutputBoundary.
+     *
+     * @param userDataAccess the data access object for user-related operations
+     * @param outputBoundary  the output boundary for presenting login results
+     */
     public LoginInteractor(UserDataAccess userDataAccess, LoginOutputBoundary outputBoundary) {
         this.userDataAccess = userDataAccess;
         this.outputBoundary = outputBoundary;
     }
 
+    /**
+     * Executes the login process using the provided input.
+     *
+     * @param input the login input containing username and password
+     */
     @Override
     public void execute(LoginInput input) {
         String username = input.getUsername();
