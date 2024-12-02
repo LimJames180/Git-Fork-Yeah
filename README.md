@@ -105,13 +105,13 @@
 ## **Examples and Tutorials**
 
 ### **Creating a Recipe Search**
-![Search Recipes Screenshot](Screenshot 2024-12-02 at 3.29.11 AM.png)
+![Search Recipes Screenshot](https://github.com/LimJames180/Git-Fork-Yeah/blob/main/Screenshot%202024-12-02%20at%203.29.11%E2%80%AFAM.png?raw=true)
 
 ### **Saving a Recipe**
-![Save Recipe Screenshot](Screenshot 2024-12-02 at 3.29.55 AM.png)
+![Save Recipe Screenshot](https://github.com/LimJames180/Git-Fork-Yeah/blob/main/Screenshot%202024-12-02%20at%203.29.55%E2%80%AFAM.png?raw=true)
 
 ### **Using Filters**
-![Using Filters GIF](Screenshot 2024-12-02 at 3.30.42 AM.png)
+![Using Filters GIF](https://github.com/LimJames180/Git-Fork-Yeah/blob/main/Screenshot%202024-12-02%20at%203.30.42%E2%80%AFAM.png?raw=true)
 
 ---
 
