@@ -115,7 +115,7 @@ public class RecipeDataAccess {
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()
-                .url("https://api.spoonacular.com/recipes/random?apiKey=" + apiKey + "&number=1")
+                .url("https://api.spoonacular.com/recipes/random?apiKey=" + apiKey + "&number=10")
                 .get()
                 .build();
 
