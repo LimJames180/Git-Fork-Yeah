@@ -28,12 +28,14 @@ public class RandomView {
     private JButton backButton, generateButton;
 
     // Placeholder for the current batch of recipes
-    private static List<Recipe> currentRecipes;
+
     private static int currentRecipeIndex = 0;
+    private static List<Recipe> currentRecipes;
+
 
     private ToggleButtonsView toggleButtonsExample;
 
-
+    private static int display_size = 200;
 
     public RandomView(SessionService currentSession) throws IOException {
         // Load the first batch of recipes
@@ -109,12 +111,12 @@ public class RandomView {
         backButton.addActionListener(e -> {
             frame.dispose();
 //            toggleButtonsExample.setVisible(true);
-            IngredientDataAccess ingDataAccess = new IngredientDataAccess();
-            AddIngredientViewModel viewModel = new AddIngredientViewModel(ingDataAccess);
-            IngredientDataAccess dataAccess = new IngredientDataAccess();
-            AddIngredientPresenter presenter = new AddIngredientPresenter(viewModel);
-            AddIngredientInteractor interactor = new AddIngredientInteractor(presenter, dataAccess);
-            AddIngredientController controller = new AddIngredientController(interactor);
+            final IngredientDataAccess ingDataAccess = new IngredientDataAccess();
+            final AddIngredientViewModel viewModel = new AddIngredientViewModel(ingDataAccess);
+            final IngredientDataAccess dataAccess = new IngredientDataAccess();
+            final AddIngredientPresenter presenter = new AddIngredientPresenter(viewModel);
+            final AddIngredientInteractor interactor = new AddIngredientInteractor(presenter, dataAccess);
+            final AddIngredientController controller = new AddIngredientController(interactor);
             new IngredientSearchView(null, currentSession, controller, viewModel);
         });
 
@@ -139,46 +141,52 @@ public class RandomView {
                 if (currentRecipeIndex >= currentRecipes.size()) {
                     try {
                         currentRecipes = randomRecipe();
-                    } catch (IOException ex) {
+                    }
+                    catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
                     currentRecipeIndex = 0;
                     if (currentRecipes == null || currentRecipes.isEmpty()) {
-                        JOptionPane.showMessageDialog(frame, "No more recipes available!", "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(frame,
+                                "No more recipes available!", "Error", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
                 }
 
                 // Get the next recipe
-                Recipe selectedRecipe = currentRecipes.get(currentRecipeIndex++);
+                final Recipe selectedRecipe = currentRecipes.get(currentRecipeIndex++);
                 recipeTitle.setText(selectedRecipe.getTitle());
                 try {
-                    recipeIngredients.setText(""); // Clear previous ingredients
+                    recipeIngredients.setText("");
+                    // Clear previous ingredients
                     for (Ingredient ingredient : selectedRecipe.get_ingredients()) {
                         recipeIngredients.append(ingredient.getName() + "\n");
                     }
-                } catch (IOException ex) {
+                }
+                catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
                 try {
                     recipeSteps.setText(selectedRecipe.getInstructions());
-                } catch (IOException ex) {
+                }
+                catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
 
                 // Load and set image (placeholder if no image available)
-                ImageIcon imageIcon = new ImageIcon(selectedRecipe.getImage());
-                Image scaledImage = imageIcon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+                final ImageIcon imageIcon = new ImageIcon(selectedRecipe.getImage());
                 URL url = null;
                 try {
                     url = new URL(selectedRecipe.getImage());
-                } catch (MalformedURLException ex) {
+                }
+                catch (MalformedURLException ex) {
                     throw new RuntimeException(ex);
                 }
-                Image image;
+                final Image image;
                 try {
                     image = ImageIO.read(url);
-                } catch (IOException ex) {
+                }
+                catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
                 imageLabel.setIcon(new ImageIcon(image));
