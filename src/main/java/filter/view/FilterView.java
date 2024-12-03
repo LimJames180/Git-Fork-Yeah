@@ -19,9 +19,11 @@ import filter.interface_adapter.FilterController;
 import filter.interface_adapter.FilterPresenter;
 import filter.interface_adapter.FilterViewModel;
 import filter.use_case.FilterInteractor;
+import instructions.app.InstructionsCaseFactory;
 import instructions.view.BaseView;
 import instructions.view.InstructionsView;
 import login.app.SessionService;
+import misc_view.LoggedInPageView;
 
 /**
  * The FilterView class represents the GUI for filtering recipes.
@@ -119,14 +121,9 @@ public class FilterView extends JFrame implements BaseView {
                 }
             }
             recipeButton.addActionListener(event -> {
-                try {
-                    final InstructionsView instruction = new InstructionsView(r.getId(), FilterView.this, currSession);
-                    instruction.setVisible(true);
-                    setVisible(false);
-                }
-                catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
+                final InstructionsView instruction = InstructionsCaseFactory.create(FilterView.this, r.getId());
+                instruction.setVisible(true);
+                setVisible(false);
             });
 
             inputPanel.add(recipeButton);
@@ -170,5 +167,9 @@ public class FilterView extends JFrame implements BaseView {
         for (int i = size; i >= 1; i--) {
             inputPanel.remove(i);
         }
+    }
+
+    public SessionService getCurrentSession() {
+        return currSession;
     }
 }
