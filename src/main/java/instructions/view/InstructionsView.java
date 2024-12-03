@@ -1,58 +1,36 @@
 package instructions.view;
 
 import entity.Recipe;
-import instructions.data_access.InstructionsDataAccess;
 import instructions.interface_adapter.InstructionsController;
-import instructions.interface_adapter.InstructionsPresenter;
 import instructions.interface_adapter.InstructionsViewModel;
-import instructions.use_case.InstructionsInteractor;
-import misc_interface_adapter.SavedRecipeController;
-import login.app.SessionService;
 import login.data_access.MongoUserDataAccessImpl;
-import login.data_access.UserDataAccess;
-import misc_view.LoggedInPageView;
-
+import login.app.SessionService;
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 import java.net.URL;
 
 public class InstructionsView extends JFrame {
-    private InstructionsController instructionsController;
-    private JButton backButton;
-    private JButton saveButton;
-    private InstructionsViewModel instructionsViewModel;
-    private int id;
+    private final InstructionsController instructionsController;
+    private final InstructionsViewModel instructionsViewModel;
+    private final int id;
     private SessionService currentSession;
-    private SavedRecipeController savedRecipeController;
-    private UserDataAccess userDataAccess;
+    private final MongoUserDataAccessImpl userDataAccess;
 
-
-    public InstructionsView(int id, BaseView filterView, SessionService currentSession) throws IOException {
-        this.id = id;
-        this.currentSession = currentSession;
-        initializeView();
-        setupUI(filterView);
+    public InstructionsView(InstructionsController instructionsController,
+                            InstructionsViewModel instructionsViewModel,
+                            MongoUserDataAccessImpl userDataAccess) {
+        this.instructionsController = instructionsController;
+        this.instructionsViewModel = instructionsViewModel;
+        this.userDataAccess = userDataAccess;
+        this.id = instructionsViewModel.getId();
     }
 
-    public InstructionsView(int id, LoggedInPageView loggedInPageView, SessionService currentSession) {
-        this.id = id;
-        this.currentSession = currentSession;
-        initializeView();
-        setupUI(loggedInPageView);
+    public void setSession(BaseView baseView) {
+        this.currentSession = baseView.getCurrentSession();
+        setup(baseView);
     }
 
-    private void initializeView() {
-        this.instructionsViewModel = new InstructionsViewModel();
-        InstructionsDataAccess instructionsDataAccess = new InstructionsDataAccess();
-        InstructionsPresenter instructionsPresenter = new InstructionsPresenter(instructionsViewModel);
-        InstructionsInteractor instructionsInteractor = new InstructionsInteractor(instructionsDataAccess,instructionsPresenter);
-
-        this.instructionsController = new InstructionsController(instructionsInteractor);
-        this.userDataAccess = new MongoUserDataAccessImpl();
-    }
-
-    private void setupUI(BaseView filterView) {
+    private void setup(BaseView filterView) {
         instructionsController.handleInstructions(id);
         setTitle("Recipe Instructions"); // set as name of recipe
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -104,7 +82,7 @@ public class InstructionsView extends JFrame {
         }
 
         // Panel for back button
-        backButton = new JButton("Back");
+        JButton backButton = new JButton("Back");
         JPanel backButtonPanel = new JPanel();
         backButtonPanel.add(backButton);
 
@@ -133,29 +111,19 @@ public class InstructionsView extends JFrame {
         });
 
         // Panel for save button
-        saveButton = new JButton("Save Recipe!");
+        JButton saveButton = new JButton("Save Recipe!");
         JPanel saveButtonPanel = new JPanel();
         saveButtonPanel.add(saveButton);
 
         // Save button logic
         saveButton.addActionListener(e -> {
-            //System.out.println("savinggggg");
             userDataAccess.saveRecipeForUser(currentSession.getUsername(), new Recipe(Integer.toString(id)));
-            System.out.println(currentSession.getUsername());
-            System.out.println((new Recipe(Integer.toString(id)).getId()));
-
             JOptionPane.showMessageDialog(this, "Recipe saved successfully!");
-//            Recipe recipeToSave = new Recipe(String.valueOf(id));
-//            savedRecipeController.saveRecipe(currentSession.getUsername(), recipeToSave);
-//            JOptionPane.showMessageDialog(this, "Recipe saved successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-
         });
 
         JPanel buttonPanel = new JPanel(new BorderLayout());
         buttonPanel.add(backButton, BorderLayout.WEST);
         buttonPanel.add(saveButton, BorderLayout.EAST);
-
-
 
         // Add everything to one panel
         JPanel mainPanel = new JPanel();

@@ -1,4 +1,4 @@
-package misc_view;
+package login.view;
 
 import ingredients_searcher.data_access.IngredientDataAccess;
 import ingredients_searcher.interface_adapter.AddIngredientController;
@@ -7,8 +7,8 @@ import ingredients_searcher.interface_adapter.AddIngredientViewModel;
 import ingredients_searcher.use_case.AddIngredientInteractor;
 import ingredients_searcher.view.IngredientSearchView;
 import entity.Recipe;
+import instructions.app.InstructionsCaseFactory;
 import instructions.view.BaseView;
-import instructions.view.InstructionsView;
 import login.app.SessionService;
 
 import javax.swing.*;
@@ -24,13 +24,14 @@ public class LoggedInPageView extends JFrame implements BaseView {
     private DefaultListModel<String> savedRecipesModel;
     private JButton exploreRecipesButton;
     private JPanel recipesPanel;
+    private SessionService currentSession;
 
     public LoggedInPageView(String username, List<Recipe> savedRecipes, SessionService currentSession) {
-        //System.out.println(savedRecipes.toString());
         setTitle("Recipe Finder - Welcome");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(500, 300);
         setLayout(new BorderLayout());
+        this.currentSession = currentSession;
 
         welcomeLabel = new JLabel("Welcome Back, " + username + "!", SwingConstants.CENTER);
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 16));
@@ -46,7 +47,7 @@ public class LoggedInPageView extends JFrame implements BaseView {
                 recipeButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        new InstructionsView(recipe.getId(), new LoggedInPageView(username, savedRecipes, currentSession), currentSession);
+                        InstructionsCaseFactory.create(LoggedInPageView.this, recipe.getId());
                     }
                 });
                 recipesPanel.add(recipeButton);
@@ -74,6 +75,10 @@ public class LoggedInPageView extends JFrame implements BaseView {
         add(exploreRecipesButton, BorderLayout.SOUTH);
 
         setVisible(true);
+
+    }
+    public SessionService getCurrentSession() {
+        return currentSession;
     }
 }
 

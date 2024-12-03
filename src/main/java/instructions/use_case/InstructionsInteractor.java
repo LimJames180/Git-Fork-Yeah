@@ -6,7 +6,8 @@ public class InstructionsInteractor implements InstructionsInputBoundary {
     private final InstructionsDataAccessInterface instructionsDataAccess;
     private final InstructionsOutputBoundary instructionsOutputBoundary;
 
-    public InstructionsInteractor(InstructionsDataAccessInterface instructionsDataAccess, InstructionsOutputBoundary instructionsOutputBoundary){
+    public InstructionsInteractor(InstructionsDataAccessInterface instructionsDataAccess,
+                                  InstructionsOutputBoundary instructionsOutputBoundary){
         this.instructionsDataAccess = instructionsDataAccess;
         this.instructionsOutputBoundary = instructionsOutputBoundary;
     }
@@ -19,7 +20,8 @@ public class InstructionsInteractor implements InstructionsInputBoundary {
         String ingredients = instructionsDataAccess.getIngredients(id);
         String image = instructionsDataAccess.getImage(id);
         String nutrients = instructionsDataAccess.getNutrients(id);
-        InstructionsOutputData instructionsOutputData = new InstructionsOutputData(instructionsOutput, ingredients, image, nutrients);
+        InstructionsOutputData instructionsOutputData = new InstructionsOutputData(instructionsOutput, ingredients,
+                image, nutrients, id);
         instructionsOutputBoundary.setInstructionsViewModel(instructionsOutputData);
     }
 }

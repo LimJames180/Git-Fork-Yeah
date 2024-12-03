@@ -1,4 +1,4 @@
-package misc_view;
+package RandomFYP.view;
 
 import entity.Ingredient;
 import entity.Recipe;

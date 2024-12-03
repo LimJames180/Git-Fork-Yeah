@@ -5,6 +5,7 @@ public class InstructionsViewModel {
     private String ingredients;
     private String image;
     private String nutrients;
+    private int id;
 
     public String getInstructions() {
         return instructions;
@@ -20,6 +21,10 @@ public class InstructionsViewModel {
         return nutrients;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public void setInstructions(String instructions) {
         this.instructions = instructions;
     }
@@ -29,4 +34,6 @@ public class InstructionsViewModel {
     public void setImage(String image) {this.image = image;}
 
     public void setNutrients(String nutrients) {this.nutrients = nutrients;}
+
+    public void setId(int id) {this.id = id;}
 }
