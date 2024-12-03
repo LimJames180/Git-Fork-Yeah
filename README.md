@@ -39,8 +39,6 @@
 - **Save Recipes**: Bookmark recipes for easy future access.
 - **Random Recipe Generator**: Get a random recipe for inspiration.
 - **Nutritional Information**: Displays nutritional content and suggests ingredient substitutions.
-- **User Notes**: Add personal notes to saved recipes. [Not Implemented]
-- **Difficulty Ratings**: Recipes include difficulty levels (easy, medium, hard). [Not Implemented]
 
 ---
 
