@@ -23,7 +23,6 @@ import instructions.app.InstructionsCaseFactory;
 import instructions.view.BaseView;
 import instructions.view.InstructionsView;
 import login.app.SessionService;
-import misc_view.LoggedInPageView;
 
 /**
  * The FilterView class represents the GUI for filtering recipes.

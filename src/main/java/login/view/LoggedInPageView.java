@@ -1,4 +1,4 @@
-package misc_view;
+package login.view;
 
 import ingredients_searcher.data_access.IngredientDataAccess;
 import ingredients_searcher.interface_adapter.AddIngredientController;
@@ -8,9 +8,7 @@ import ingredients_searcher.use_case.AddIngredientInteractor;
 import ingredients_searcher.view.IngredientSearchView;
 import entity.Recipe;
 import instructions.app.InstructionsCaseFactory;
-import instructions.data_access.Instructions;
 import instructions.view.BaseView;
-import instructions.view.InstructionsView;
 import login.app.SessionService;
 
 import javax.swing.*;
