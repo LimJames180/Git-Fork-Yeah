@@ -11,11 +11,8 @@ public class LoginViewModel {
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
     private String message;
     private String error;
-    private final UserDataAccess userDataAccess;
+    private List<Recipe> savedRecipes;
 
-    public LoginViewModel(UserDataAccess userDataAccess) {
-        this.userDataAccess = userDataAccess;
-    }
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
     }
@@ -40,8 +37,16 @@ public class LoginViewModel {
         support.firePropertyChange("error", oldError, error);
     }
 
-    public List<Recipe> getSavedRecipes(String username) {
-        return userDataAccess.getUserRecipes(username);
+    public List<Recipe> getSavedRecipes() {
+//        System.out.println(savedRecipes.size());
+        System.out.println("getSavedRecipes");
+        System.out.println(this.message);
+        return savedRecipes;
+    }
+
+    public void setSavedRecipes(List<Recipe> savedRecipes) {
+        this.savedRecipes = savedRecipes;
+        support.firePropertyChange("savedRecipes", null, savedRecipes);
     }
 
     public PropertyChangeListener[] getPropertyChangeListeners() {

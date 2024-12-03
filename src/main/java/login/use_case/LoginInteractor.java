@@ -1,9 +1,10 @@
 package login.use_case;
 
+import entity.Recipe;
 import login.entities.User;
 import login.data_access.UserDataAccess;
 
-import javax.swing.*;
+import java.util.List;
 
 public class LoginInteractor implements LoginInputBoundary {
     private final UserDataAccess userDataAccess;
@@ -37,6 +38,8 @@ public class LoginInteractor implements LoginInputBoundary {
             return;
         }
 
-        outputBoundary.prepareSuccessView("Login successful! Welcome " + username + "!");
+        List<Recipe> savedRecipes = userDataAccess.getUserRecipes(username);
+        LoginOutput output = new LoginOutput("Login successful! Welcome " + username + "!", savedRecipes);
+        outputBoundary.prepareSuccessView(output);
     }
 }

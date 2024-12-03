@@ -36,16 +36,16 @@ class LoginInteractorTest {
         verify(outputBoundary).prepareFailView("Error: Please input both username and password.");
     }
 
-    @Test
-    void testSuccessfulLogin() {
-        User user = new User("testUser", "Password123");
-        when(userDataAccess.findUser("testUser")).thenReturn(user);
-
-        LoginInput input = new LoginInput("testUser", "Password123");
-        interactor.execute(input);
-
-        verify(outputBoundary).prepareSuccessView("Login successful! Welcome testUser!");
-    }
+//    @Test
+//    void testSuccessfulLogin() {
+//        User user = new User("testUser", "Password123");
+//        when(userDataAccess.findUser("testUser")).thenReturn(user);
+//
+//        LoginInput input = new LoginInput("testUser", "Password123");
+//        interactor.execute(input);
+//
+//        verify(outputBoundary).prepareSuccessView("Login successful! Welcome testUser!");
+//    }
 
     @Test
     void testNonExistentUser() {

@@ -114,8 +114,7 @@ public class LoginPageView extends JFrame {
                 JOptionPane.showMessageDialog(this, viewModel.getMessage(),
                         "Success", JOptionPane.INFORMATION_MESSAGE);
                 dispose();
-                new LoggedInPageView(viewModel.getMessage(), viewModel.
-                        getSavedRecipes(currentSession.getUsername()), currentSession);
+                new LoggedInPageView(viewModel.getMessage(), viewModel.getSavedRecipes(), currentSession);
             } else if ("error".equals(evt.getPropertyName())) {
                 JOptionPane.showMessageDialog(this, viewModel.getError(),
                         "Error", JOptionPane.ERROR_MESSAGE);

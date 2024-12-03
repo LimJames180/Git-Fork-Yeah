@@ -12,7 +12,7 @@ public class MainForkYeahApplication {
 
         SessionService currentSession = new SessionService(userDataAccess);
 
-        LoginViewModel loginViewModel = new LoginViewModel(userDataAccess);
+        LoginViewModel loginViewModel = new LoginViewModel();
         LoginPresenter loginPresenter = new LoginPresenter(loginViewModel);
         LoginInteractor loginInteractor = new LoginInteractor(userDataAccess, loginPresenter);
         LoginController loginController = new LoginController(loginInteractor);
