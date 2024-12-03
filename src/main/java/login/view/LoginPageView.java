@@ -8,7 +8,6 @@ import login.interface_adapter.LoginController;
 import login.interface_adapter.LoginViewModel;
 import login.interface_adapter.SignupController;
 import login.interface_adapter.SignupViewModel;
-import misc_view.LoggedInPageView;
 
 import java.beans.PropertyChangeListener;
 

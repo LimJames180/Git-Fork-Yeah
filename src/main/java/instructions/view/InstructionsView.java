@@ -4,38 +4,21 @@ import entity.Recipe;
 import instructions.interface_adapter.InstructionsController;
 import instructions.interface_adapter.InstructionsViewModel;
 import login.data_access.MongoUserDataAccessImpl;
-import misc_interface_adapter.SavedRecipeController;
 import login.app.SessionService;
-import login.data_access.UserDataAccess;
-import misc_view.LoggedInPageView;
-
 import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
 
 public class InstructionsView extends JFrame {
-    private InstructionsController instructionsController;
-    private JButton backButton;
-    private JButton saveButton;
-    private InstructionsViewModel instructionsViewModel;
-    private int id;
+    private final InstructionsController instructionsController;
+    private final InstructionsViewModel instructionsViewModel;
+    private final int id;
     private SessionService currentSession;
-    private MongoUserDataAccessImpl userDataAccess;
+    private final MongoUserDataAccessImpl userDataAccess;
 
-
-//    public InstructionsView(BaseView filterView, SessionService currentSession) throws IOException {
-//        this.currentSession = currentSession;
-//        initializeView();
-//        setup(filterView);
-//    }
-//
-//    public InstructionsView(LoggedInPageView loggedInPageView, SessionService currentSession) {
-//        this.currentSession = currentSession;
-//        initializeView();
-//        setup(loggedInPageView);
-//    }
-
-    public InstructionsView(InstructionsController instructionsController, InstructionsViewModel instructionsViewModel, MongoUserDataAccessImpl userDataAccess) {
+    public InstructionsView(InstructionsController instructionsController,
+                            InstructionsViewModel instructionsViewModel,
+                            MongoUserDataAccessImpl userDataAccess) {
         this.instructionsController = instructionsController;
         this.instructionsViewModel = instructionsViewModel;
         this.userDataAccess = userDataAccess;
@@ -46,16 +29,6 @@ public class InstructionsView extends JFrame {
         this.currentSession = baseView.getCurrentSession();
         setup(baseView);
     }
-
-//    private void initializeView() {
-//        this.instructionsViewModel = new InstructionsViewModel();
-//        InstructionsDataAccess instructionsDataAccess = new InstructionsDataAccess();
-//        InstructionsPresenter instructionsPresenter = new InstructionsPresenter(instructionsViewModel);
-//        InstructionsInteractor instructionsInteractor = new InstructionsInteractor(instructionsDataAccess,instructionsPresenter);
-//
-//        this.instructionsController = new InstructionsController(instructionsInteractor);
-//        this.userDataAccess = new MongoUserDataAccessImpl();
-//    }
 
     private void setup(BaseView filterView) {
         instructionsController.handleInstructions(id);
@@ -109,7 +82,7 @@ public class InstructionsView extends JFrame {
         }
 
         // Panel for back button
-        backButton = new JButton("Back");
+        JButton backButton = new JButton("Back");
         JPanel backButtonPanel = new JPanel();
         backButtonPanel.add(backButton);
 
@@ -138,15 +111,13 @@ public class InstructionsView extends JFrame {
         });
 
         // Panel for save button
-        saveButton = new JButton("Save Recipe!");
+        JButton saveButton = new JButton("Save Recipe!");
         JPanel saveButtonPanel = new JPanel();
         saveButtonPanel.add(saveButton);
 
         // Save button logic
         saveButton.addActionListener(e -> {
             userDataAccess.saveRecipeForUser(currentSession.getUsername(), new Recipe(Integer.toString(id)));
-
-
             JOptionPane.showMessageDialog(this, "Recipe saved successfully!");
         });
 
