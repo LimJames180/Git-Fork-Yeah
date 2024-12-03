@@ -1,14 +1,18 @@
 package ingredients_searcher.view.action_listeners;
 
-import RandomFYP.view.RandomView;
-import ingredients_searcher.view.IngredientSearchView;
-import login.app.SessionService;
-
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+import javax.swing.SwingUtilities;
+
+import RandomFYP.view.RandomView;
+import ingredients_searcher.view.IngredientSearchView;
+import login.app.SessionService;
+
+/**
+ * Listener class for the random recipe button.
+ */
 public class RandomListener implements ActionListener {
     private final SessionService currentSession;
     private final IngredientSearchView isv;
@@ -20,11 +24,11 @@ public class RandomListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        SwingUtilities.invokeLater(() -> { // look into removing the try/catch
-            RandomView next = null;
+        SwingUtilities.invokeLater(() -> {
             try {
-                next = new RandomView(currentSession);
-            } catch (IOException ex) {
+                new RandomView(currentSession);
+            }
+            catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
         });

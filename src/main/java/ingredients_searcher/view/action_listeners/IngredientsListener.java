@@ -1,13 +1,15 @@
 package ingredients_searcher.view.action_listeners;
 
+import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
 import entity.Ingredient;
 import ingredients_searcher.interface_adapter.AddIngredientController;
 import ingredients_searcher.view.IngredientSearchView;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * This ActionListener takes the input and checks if it is valid.
@@ -24,7 +26,11 @@ public class IngredientsListener extends Frame implements ActionListener {
         this.controller = controller;
     }
 
-    public void actionPerformed(ActionEvent e) {
+    /**
+     * Activates the ingredient search.
+     * @param event the event to be processed.
+     */
+    public void actionPerformed(ActionEvent event) {
         query = searchField.getText().trim();
         if (!query.isEmpty()) {
             isv.fetchIngredientData(query);

@@ -1,11 +1,14 @@
 package ingredients_searcher.view.action_listeners;
 
-import ingredients_searcher.interface_adapter.AddIngredientController;
-
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+
+import ingredients_searcher.interface_adapter.AddIngredientController;
 
 /**
  * This class adds the inputted ingredient to the relevant lists.
