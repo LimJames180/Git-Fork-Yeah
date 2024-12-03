@@ -49,7 +49,7 @@ public class IngredientSearchView extends JFrame {
      */
     public IngredientSearchView(List<String> ingredients, SessionService currentUser,
                                 AddIngredientController controller, AddIngredientViewModel viewModel) {
-        // list of ingredients
+        // list of ingredients, given parameter it needs to update the list
         List<String> ingredientsList = Objects.requireNonNullElseGet(ingredients, ArrayList::new);
 
         // controller and view model
@@ -60,11 +60,13 @@ public class IngredientSearchView extends JFrame {
         listenersSetup(ingredientsList, currentUser);
     }
 
-    public void uiSetup() {
+    private void uiSetup() {
         // add a button for random recipe
         setTitle("entity.Ingredient Search");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setExtendedState(Frame.MAXIMIZED_BOTH); // is there a way to add buffers on the sides of windows
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(650, 700);
         setLayout(new BorderLayout());
 
         // Top Panel for entity.Ingredient Input
@@ -119,8 +121,55 @@ public class IngredientSearchView extends JFrame {
         toFiltersButton.addActionListener(new ToFiltersListener(ingredients, this, currentUser));
         searchButton.addActionListener(new IngredientsListener(ingredientInputField, this, controller));
         addButton.addActionListener(new AddIngredientListener(ingredientListModel, ingredients, ingredientNameLabel,
-                ingredientImageLabel, addButton));
+                ingredientImageLabel, addButton, controller));
         randomButton.addActionListener(new RandomListener(currentUser, this));
+    }
+
+    /**
+     * Access the API for the ingredients.
+     * @param query the given ingredient to search.
+     */
+    public void fetchIngredientData(String query) {
+        try {
+            // Construct the API URL
+            String urlString = String.format(SPOONACULAR_SEARCH_URL, query, SPOONACULAR_API_KEY);
+            URL url = new URL(urlString);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+
+            // Read the response
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String inputLine;
+            StringBuilder content = new StringBuilder();
+            while ((inputLine = in.readLine()) != null) {
+                content.append(inputLine);
+            }
+            in.close();
+            connection.disconnect();
+
+            // Parse and display ingredient data
+            JSONObject jsonResponse = new JSONObject(content.toString());
+            JSONArray results = jsonResponse.getJSONArray("results");
+            if (!results.isEmpty()) {
+                JSONObject firstResult = results.getJSONObject(0);
+                String name = firstResult.getString("name");
+                String imageUrl = "https://spoonacular.com/cdn/ingredients_100x100/" + firstResult.getString("image");
+
+                // Display ingredient information
+                ingredientNameLabel.setText(name);
+                ingredientImageLabel.setIcon(new ImageIcon(new URL(imageUrl)));
+                addButton.setEnabled(true);
+            } else {
+                ingredientNameLabel.setText("No results found.");
+                ingredientImageLabel.setIcon(null);
+                addButton.setEnabled(false);
+            }
+        }
+        catch (Exception exception) {
+            exception.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error fetching ingredient data.",
+                    "API Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
 }

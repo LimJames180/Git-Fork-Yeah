@@ -27,9 +27,9 @@ public class IngredientsListener extends Frame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         query = searchField.getText().trim();
         if (!query.isEmpty()) {
-            // isv.fetchIngredientData(query);
-            Ingredient ing = controller.addIngredient(query); // this method should return an ingredient
-
+            isv.fetchIngredientData(query);
+            // Ingredient ing = controller.addIngredient(query); // this method should return an ingredient
+            // got the ingredient so update the displays
 
         }
         else {

@@ -4,7 +4,6 @@ import entity.Ingredient;
 import ingredients_searcher.data_access.IngredientDataAccess;
 
 public class AddIngredientInteractor implements AddIngredientInputBoundary{
-    // i need to make this cleaner
     private final IngredientDataAccess dataAccess;
     private final AddIngredientOutputBoundary outputBoundary;
 

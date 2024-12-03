@@ -11,35 +11,35 @@ import java.util.List;
  * This class adds the inputted ingredient to the relevant lists.
  */
 public class AddIngredientListener implements ActionListener {
-    String ingredientName;
-    List<String> ingredientsList; // instead of this, i should be having a controller
+    private String ingredientName;
+    private List<String> ingredientsList;
+    // instead of this, i should be having a controller
     // call the interactor which updates the list?
     private final DefaultListModel<String> ingredientListModel;
     private final JLabel ingredientNameLabel;
     private final JLabel ingredientImageLabel;
     private final JButton addButton;
 
-
-    public AddIngredientListener(DefaultListModel<String> ingredientListModel, List<String> ingredientList, JLabel ingredientNameLabel,
-                                 JLabel ingredientImageLabel, JButton addButton) {
+    public AddIngredientListener(DefaultListModel<String> ingredientListModel, List<String> ingredientList,
+                                 JLabel ingredientNameLabel, JLabel ingredientImageLabel, JButton addButton,
+                                 AddIngredientController controller) {
         this.ingredientListModel = ingredientListModel;
         this.ingredientsList = ingredientList;
         this.ingredientNameLabel = ingredientNameLabel;
         this.ingredientImageLabel = ingredientImageLabel;
         this.addButton = addButton;
-
-
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         this.ingredientName = ingredientNameLabel.getText();
         if (!ingredientName.isEmpty()) {
-            ingredientsList.add(ingredientName); // for here, i should be calling the controller(?) and using a method from that to update the list
+            ingredientsList.add(ingredientName);
             ingredientListModel.addElement(ingredientName);
-            ingredientNameLabel.setText(""); // Clear displayed ingredient
-            ingredientImageLabel.setIcon(null); // Clear displayed image
-            addButton.setEnabled(false); // Disable add button
+            // Clear displayed ingredient and image, turn off the add button.
+            ingredientNameLabel.setText("");
+            ingredientImageLabel.setIcon(null);
+            addButton.setEnabled(false);
         }
     }
 }
