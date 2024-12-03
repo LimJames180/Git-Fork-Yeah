@@ -36,10 +36,11 @@ public class IngredientDataAccess implements IngredientDataAccessInterface {
             // Parse and display ingredient data
             JSONObject jsonResponse = new JSONObject(content.toString());
             JSONArray results = jsonResponse.getJSONArray("results");
-            if (results.length() > 0) {
+            if (!results.isEmpty()) {
                 JSONObject firstResult = results.getJSONObject(0);
                 String name = firstResult.getString("name");
-                String imageUrl = "https://spoonacular.com/cdn/ingredients_100x100/" + firstResult.getString("image");
+                String imageUrl = "https://spoonacular.com/cdn/ingredients_100x100/" +
+                        firstResult.getString("image");
 
                 // Display ingredient information
                 return new Ingredient(name, imageUrl, 0);

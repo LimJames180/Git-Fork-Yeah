@@ -1,5 +1,7 @@
 package ingredients_searcher.use_case;
 
+import entity.Ingredient;
+
 public interface AddIngredientInputBoundary {
-    void execute(AddIngredientInput input);
+    Ingredient execute(AddIngredientInput input);
 }

@@ -4,7 +4,6 @@ import entity.Ingredient;
 import ingredients_searcher.data_access.IngredientDataAccess;
 
 public class AddIngredientInteractor implements AddIngredientInputBoundary{
-    // i need to make this cleaner
     private final IngredientDataAccess dataAccess;
     private final AddIngredientOutputBoundary outputBoundary;
 
@@ -14,7 +13,7 @@ public class AddIngredientInteractor implements AddIngredientInputBoundary{
     }
 
     @Override
-    public void execute(AddIngredientInput input) {
+    public Ingredient execute(AddIngredientInput input) {
         // calling API
         Ingredient ingredient = dataAccess.fetchIngredientData(input.getIngredient());
 
@@ -22,7 +21,7 @@ public class AddIngredientInteractor implements AddIngredientInputBoundary{
         if (ingredient == null) {
             outputBoundary.addfailed("Ingredient not found");
         }
-        // add ingredient to list?
+        return ingredient;
 
     }
 }

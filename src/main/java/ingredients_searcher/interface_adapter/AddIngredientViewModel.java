@@ -3,19 +3,20 @@ package ingredients_searcher.interface_adapter;
 import entity.Ingredient;
 import ingredients_searcher.data_access.IngredientDataAccess;
 
-import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class AddIngredientViewModel {
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
     private final IngredientDataAccess ingDataAccess;
     private String message;
+    private List<String> ingredientsList;
 
-    public AddIngredientViewModel(IngredientDataAccess ingDataAccess) {
+    public AddIngredientViewModel(List<String> ingredients, IngredientDataAccess ingDataAccess) {
+        this.ingredientsList = Objects.requireNonNullElseGet(ingredients, ArrayList::new);
         this.ingDataAccess = ingDataAccess;
-    }
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        support.addPropertyChangeListener(listener);
     }
 
     public String getMessage() {
@@ -28,8 +29,11 @@ public class AddIngredientViewModel {
         support.firePropertyChange("message", oldMessage, message);
     }
 
-    public Ingredient getIngredients(String query) {
+    public Ingredient getIngredient(String query) {
         return ingDataAccess.fetchIngredientData(query);
     }
-    // TODO add more relevant methods here
+
+    public List<String> getIngredientsList() {
+        return ingredientsList;
+    }
 }

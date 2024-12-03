@@ -11,13 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import ingredients_searcher.data_access.IngredientDataAccess;
 import ingredients_searcher.interface_adapter.AddIngredientController;
-import ingredients_searcher.interface_adapter.AddIngredientPresenter;
 import ingredients_searcher.interface_adapter.AddIngredientViewModel;
-import ingredients_searcher.use_case.AddIngredientInteractor;
 import ingredients_searcher.view.action_listeners.AddIngredientListener;
 import ingredients_searcher.view.action_listeners.IngredientsListener;
+import ingredients_searcher.view.action_listeners.RandomListener;
 import ingredients_searcher.view.action_listeners.ToFiltersListener;
 import login.app.SessionService;
 import RandomFYP.view.RandomView;
@@ -32,7 +30,6 @@ public class IngredientSearchView extends JFrame {
     private JLabel ingredientImageLabel;
     private JLabel ingredientNameLabel;
     private DefaultListModel<String> ingredientListModel;
-    private JList<String> ingredientList;
     private JButton toFiltersButton;
     private JButton searchButton;
     private JButton addButton;
@@ -52,7 +49,7 @@ public class IngredientSearchView extends JFrame {
      */
     public IngredientSearchView(List<String> ingredients, SessionService currentUser,
                                 AddIngredientController controller, AddIngredientViewModel viewModel) {
-        // list of ingredients
+        // list of ingredients, given parameter it needs to update the list
         List<String> ingredientsList = Objects.requireNonNullElseGet(ingredients, ArrayList::new);
 
         // controller and view model
@@ -63,10 +60,12 @@ public class IngredientSearchView extends JFrame {
         listenersSetup(ingredientsList, currentUser);
     }
 
-    public void uiSetup() {
+    private void uiSetup() {
         // add a button for random recipe
         setTitle("entity.Ingredient Search");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(650, 700);
         setLayout(new BorderLayout());
 
@@ -95,7 +94,7 @@ public class IngredientSearchView extends JFrame {
         // List Panel for Current Ingredients
         JPanel listPanel = new JPanel(new BorderLayout());
         ingredientListModel = new DefaultListModel<>();
-        ingredientList = new JList<>(ingredientListModel);
+        JList<String> ingredientList = new JList<>(ingredientListModel);
         JScrollPane listScrollPane = new JScrollPane(ingredientList);
         listPanel.add(new JLabel("Current Ingredients:"), BorderLayout.NORTH);
         listPanel.add(listScrollPane, BorderLayout.CENTER);
@@ -120,19 +119,10 @@ public class IngredientSearchView extends JFrame {
     public void listenersSetup(List<String> ingredients, SessionService currentUser) {
         // need to revise the things here
         toFiltersButton.addActionListener(new ToFiltersListener(ingredients, this, currentUser));
-        searchButton.addActionListener(new IngredientsListener(ingredientInputField, this));
+        searchButton.addActionListener(new IngredientsListener(ingredientInputField, this, controller));
         addButton.addActionListener(new AddIngredientListener(ingredientListModel, ingredients, ingredientNameLabel,
-                ingredientImageLabel, addButton));
-        randomButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    new RandomView(currentUser);
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-                dispose();
-            }
-        });
+                ingredientImageLabel, addButton, controller));
+        randomButton.addActionListener(new RandomListener(currentUser, this));
     }
 
     /**
@@ -160,7 +150,7 @@ public class IngredientSearchView extends JFrame {
             // Parse and display ingredient data
             JSONObject jsonResponse = new JSONObject(content.toString());
             JSONArray results = jsonResponse.getJSONArray("results");
-            if (results.length() > 0) {
+            if (!results.isEmpty()) {
                 JSONObject firstResult = results.getJSONObject(0);
                 String name = firstResult.getString("name");
                 String imageUrl = "https://spoonacular.com/cdn/ingredients_100x100/" + firstResult.getString("image");
@@ -174,23 +164,12 @@ public class IngredientSearchView extends JFrame {
                 ingredientImageLabel.setIcon(null);
                 addButton.setEnabled(false);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error fetching ingredient data.", "API Error", JOptionPane.ERROR_MESSAGE);
+        }
+        catch (Exception exception) {
+            exception.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error fetching ingredient data.",
+                    "API Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    public static void main(String[] args) {
-        List<String> ingredients = List.of(new String[]{"carrot", "milk", "bread"});
-        SessionService currentUser = new SessionService();
-        IngredientDataAccess ingDataAccess = new IngredientDataAccess();
-        AddIngredientViewModel viewModel = new AddIngredientViewModel(ingDataAccess);
-        IngredientDataAccess dataAccess = new IngredientDataAccess();
-        AddIngredientPresenter presenter = new AddIngredientPresenter(viewModel);
-        AddIngredientInteractor interactor = new AddIngredientInteractor(presenter, dataAccess);
-        AddIngredientController controller = new AddIngredientController(interactor);
-
-        IngredientSearchView isv = new IngredientSearchView(ingredients, currentUser, controller, viewModel);
-        SwingUtilities.invokeLater(() -> isv.setVisible(true));
-    }
 }
