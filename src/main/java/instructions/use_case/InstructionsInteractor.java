@@ -19,7 +19,7 @@ public class InstructionsInteractor implements InstructionsInputBoundary {
         String ingredients = instructionsDataAccess.getIngredients(id);
         String image = instructionsDataAccess.getImage(id);
         String nutrients = instructionsDataAccess.getNutrients(id);
-        InstructionsOutputData instructionsOutputData = new InstructionsOutputData(instructionsOutput, ingredients, image, nutrients);
+        InstructionsOutputData instructionsOutputData = new InstructionsOutputData(instructionsOutput, ingredients, image, nutrients, id);
         instructionsOutputBoundary.setInstructionsViewModel(instructionsOutputData);
     }
 }

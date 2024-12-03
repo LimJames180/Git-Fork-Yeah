@@ -1,5 +1,7 @@
 package login.app;
 
+import instructions.app.InstructionsCaseFactory;
+import instructions.view.InstructionsView;
 import login.data_access.MongoUserDataAccessImpl;
 import login.interface_adapter.LoginController;
 import login.interface_adapter.LoginPresenter;

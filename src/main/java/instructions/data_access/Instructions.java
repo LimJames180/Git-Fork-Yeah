@@ -18,7 +18,6 @@ public class Instructions {
         Request request = new Request.Builder()
                 .url(url)
                 .build();
-
         try (Response response = client.newCall(request).execute()) {
             if (response.isSuccessful()) {
                 assert response.body() != null;
@@ -32,17 +31,14 @@ public class Instructions {
                 StringBuilder resultBuilder = new StringBuilder();
                 int n = 1;
                 boolean firstStep = true;
-
                 for (JsonElement recipeElement : recipes) {
                     JsonArray stepsArray = recipeElement.getAsJsonObject().getAsJsonArray("steps");
                     for (JsonElement stepElement : stepsArray) {
                         JsonObject stepObject = stepElement.getAsJsonObject();
                         String stepInstruction = stepObject.get("step").getAsString();
-
                         if (!firstStep) {
                             resultBuilder.append("\n");
                         }
-
                         resultBuilder.append(n).append(". ").append(stepInstruction);
                         n++;
                         firstStep = false;
