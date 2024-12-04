@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import entity.Ingredient;
 import ingredients_searcher.interface_adapter.AddIngredientController;
 import ingredients_searcher.interface_adapter.AddIngredientViewModel;
 import ingredients_searcher.view.action_listeners.AddIngredientListener;
@@ -18,12 +19,12 @@ import ingredients_searcher.view.action_listeners.IngredientsListener;
 import ingredients_searcher.view.action_listeners.RandomListener;
 import ingredients_searcher.view.action_listeners.ToFiltersListener;
 import login.app.SessionService;
-import RandomFYP.view.RandomView;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/**
+ * This class sets up the UI for the ingredient searcher.
+ */
 public class IngredientSearchView extends JFrame {
     // UI Components
     private JTextField ingredientInputField;
@@ -119,7 +120,7 @@ public class IngredientSearchView extends JFrame {
     public void listenersSetup(List<String> ingredients, SessionService currentUser) {
         // need to revise the things here
         toFiltersButton.addActionListener(new ToFiltersListener(ingredients, this, currentUser));
-        searchButton.addActionListener(new IngredientsListener(ingredientInputField, this, controller));
+        searchButton.addActionListener(new IngredientsListener(ingredientInputField, this, viewModel));
         addButton.addActionListener(new AddIngredientListener(ingredientListModel, ingredients, ingredientNameLabel,
                 ingredientImageLabel, addButton, controller));
         randomButton.addActionListener(new RandomListener(currentUser, this));

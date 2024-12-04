@@ -9,12 +9,18 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/**
+ * This class access the Spoonacular database.
+ */
 public class IngredientDataAccess implements IngredientDataAccessInterface {
     // Spoonacular API Details
     private static final String SPOONACULAR_API_KEY = "62fb1e66d4be4351b17b5f5043ede6db"; // Replace with your actual API key
     private static final String SPOONACULAR_SEARCH_URL = "https://api.spoonacular.com/food/ingredients/search?query=%s&apiKey=%s";
 
     @Override
+    /**
+     * The actual API call.
+     */
     public Ingredient fetchIngredientData(String ingredient) {
         try {
             // Construct the API URL
