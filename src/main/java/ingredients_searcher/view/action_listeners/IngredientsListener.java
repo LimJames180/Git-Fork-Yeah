@@ -6,15 +6,16 @@ import java.awt.event.ActionListener;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import javax.swing.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 import entity.Ingredient;
 import ingredients_searcher.interface_adapter.AddIngredientController;
 import ingredients_searcher.interface_adapter.AddIngredientViewModel;
 import ingredients_searcher.view.IngredientSearchView;
-import org.json.JSONObject;
 
 /**
  * This ActionListener takes the input and checks if it is valid.
@@ -29,7 +30,8 @@ public class IngredientsListener extends Frame implements ActionListener {
     private final JButton addButton;
 
     public IngredientsListener(JTextField ingredient, IngredientSearchView isv, AddIngredientViewModel viewModel,
-                               AddIngredientController controller, JLabel nameLabel, JLabel imageLabel, JButton button) {
+                               AddIngredientController controller, JLabel nameLabel, JLabel imageLabel,
+                               JButton button) {
         this.isv = isv;
         this.searchField = ingredient;
         this.controller = controller;
@@ -45,18 +47,20 @@ public class IngredientsListener extends Frame implements ActionListener {
     public void actionPerformed(ActionEvent event) {
         query = searchField.getText().trim();
         if (!query.isEmpty()) {
-            Ingredient ingredient = controller.ingredientSearch(query);
-            System.out.println("ingredient: " + ingredient.getName());
+            final Ingredient ingredient = controller.ingredientSearch(query);
+
             if (ingredient.getName() != null || !ingredient.getName().isEmpty()) {
                 // Display ingredient information
                 ingredientNameLabel.setText(ingredient.getName());
                 try {
                     ingredientImageLabel.setIcon(new ImageIcon(new URL(ingredient.getImage())));
-                } catch (MalformedURLException e) {
-                    throw new RuntimeException(e);
+                }
+                catch (MalformedURLException error) {
+                    throw new RuntimeException(error);
                 }
                 addButton.setEnabled(true);
-            } else {
+            }
+            else {
                 ingredientNameLabel.setText("No results found.");
                 ingredientImageLabel.setIcon(null);
                 addButton.setEnabled(false);

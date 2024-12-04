@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import entity.Ingredient;
 import ingredients_searcher.data_access.IngredientDataAccess;
 
 /**

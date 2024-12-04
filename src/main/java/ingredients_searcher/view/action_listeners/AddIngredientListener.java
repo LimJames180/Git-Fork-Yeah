@@ -8,8 +8,6 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
-import ingredients_searcher.interface_adapter.AddIngredientController;
-
 /**
  * This class adds the inputted ingredient to the relevant lists.
  */
@@ -22,8 +20,7 @@ public class AddIngredientListener implements ActionListener {
     private final JButton addButton;
 
     public AddIngredientListener(DefaultListModel<String> ingredientListModel, List<String> ingredientList,
-                                 JLabel ingredientNameLabel, JLabel ingredientImageLabel, JButton addButton,
-                                 AddIngredientController controller) {
+                                 JLabel ingredientNameLabel, JLabel ingredientImageLabel, JButton addButton) {
         this.ingredientListModel = ingredientListModel;
         this.ingredientsList = ingredientList;
         this.ingredientNameLabel = ingredientNameLabel;

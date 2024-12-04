@@ -1,10 +1,21 @@
 package ingredients_searcher.view;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 
 import ingredients_searcher.interface_adapter.AddIngredientController;
 import ingredients_searcher.interface_adapter.AddIngredientViewModel;
@@ -19,6 +30,9 @@ import login.app.SessionService;
  */
 public class IngredientSearchView extends JFrame {
     // UI Components
+    private static final int FRAME_WIDTH = 650;
+    private static final int FRAME_HEIGHT = 700;
+    private static final int MAX_TEXT = 15;
     private JTextField ingredientInputField;
     private JLabel ingredientImageLabel;
     private JLabel ingredientNameLabel;
@@ -28,18 +42,21 @@ public class IngredientSearchView extends JFrame {
     private JButton addButton;
     private JButton randomButton;
 
-    //controller and view model
+    // controller and view model
     private AddIngredientController controller;
     private AddIngredientViewModel viewModel;
 
     /**
      * This class sets up the window.
-     * @param ingredients the list of ingredients, empty if from previous screen.
+     * @param ingredients The list of ingredients.
+     * @param currentUser The current session.
+     * @param controller The controller for the class.
+     * @param viewModel The view model for the class.
      */
     public IngredientSearchView(List<String> ingredients, SessionService currentUser,
                                 AddIngredientController controller, AddIngredientViewModel viewModel) {
         // list of ingredients, given parameter it needs to update the list
-        List<String> ingredientsList = Objects.requireNonNullElseGet(ingredients, ArrayList::new);
+        final List<String> ingredientsList = Objects.requireNonNullElseGet(ingredients, ArrayList::new);
 
         // controller and view model
         this.controller = controller;
@@ -55,12 +72,12 @@ public class IngredientSearchView extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(650, 700);
+        setSize(FRAME_WIDTH, FRAME_HEIGHT);
         setLayout(new BorderLayout());
 
         // Top Panel for entity.Ingredient Input
-        JPanel inputPanel = new JPanel(new FlowLayout());
-        ingredientInputField = new JTextField(15);
+        final JPanel inputPanel = new JPanel(new FlowLayout());
+        ingredientInputField = new JTextField(MAX_TEXT);
         searchButton = new JButton("Search");
         inputPanel.add(new JLabel("Give us what you have:"));
         inputPanel.add(ingredientInputField);
@@ -68,7 +85,7 @@ public class IngredientSearchView extends JFrame {
         add(inputPanel, BorderLayout.NORTH);
 
         // Display Panel for Search Results
-        JPanel displayPanel = new JPanel(new BorderLayout());
+        final JPanel displayPanel = new JPanel(new BorderLayout());
         ingredientImageLabel = new JLabel("", SwingConstants.CENTER);
         ingredientNameLabel = new JLabel("", SwingConstants.CENTER);
         displayPanel.add(ingredientImageLabel, BorderLayout.CENTER);
@@ -77,19 +94,20 @@ public class IngredientSearchView extends JFrame {
 
         // Add Button
         addButton = new JButton("Add");
-        addButton.setEnabled(false); // Initially disabled
+        // Button is initially disabled
+        addButton.setEnabled(false);
         add(addButton, BorderLayout.SOUTH);
 
         // List Panel for Current Ingredients
-        JPanel listPanel = new JPanel(new BorderLayout());
+        final JPanel listPanel = new JPanel(new BorderLayout());
         ingredientListModel = new DefaultListModel<>();
-        JList<String> ingredientList = new JList<>(ingredientListModel);
-        JScrollPane listScrollPane = new JScrollPane(ingredientList);
+        final JList<String> ingredientList = new JList<>(ingredientListModel);
+        final JScrollPane listScrollPane = new JScrollPane(ingredientList);
         listPanel.add(new JLabel("Current Ingredients:"), BorderLayout.NORTH);
         listPanel.add(listScrollPane, BorderLayout.CENTER);
 
         // Buttons for Searching Recipes and Exploring All Recipes
-        JPanel buttonPanel = new JPanel(new FlowLayout());
+        final JPanel buttonPanel = new JPanel(new FlowLayout());
         toFiltersButton = new JButton("Set Filters");
         randomButton = new JButton("Random Recipe");
 
@@ -97,7 +115,7 @@ public class IngredientSearchView extends JFrame {
         buttonPanel.add(randomButton);
 
         // Combine Panels
-        JPanel mainPanel = new JPanel(new BorderLayout());
+        final JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.add(listPanel, BorderLayout.CENTER);
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
         add(mainPanel, BorderLayout.EAST);
@@ -105,13 +123,18 @@ public class IngredientSearchView extends JFrame {
         setVisible(true);
     }
 
-    public void listenersSetup(List<String> ingredients, SessionService currentUser) {
-        toFiltersButton.addActionListener(new ToFiltersListener(ingredients, this, currentUser));
+    /**
+     * A void function which constructs all the button listeners.
+     * @param ingredients The list of ingredients.
+     * @param currentSession The current session.
+     */
+    public void listenersSetup(List<String> ingredients, SessionService currentSession) {
+        toFiltersButton.addActionListener(new ToFiltersListener(ingredients, this, currentSession));
         searchButton.addActionListener(new IngredientsListener(ingredientInputField, this, viewModel, controller,
                 ingredientNameLabel, ingredientImageLabel, addButton));
         addButton.addActionListener(new AddIngredientListener(ingredientListModel, ingredients, ingredientNameLabel,
-                ingredientImageLabel, addButton, controller));
-        randomButton.addActionListener(new RandomListener(currentUser, this));
+                ingredientImageLabel, addButton));
+        randomButton.addActionListener(new RandomListener(currentSession, this));
     }
 
 }
