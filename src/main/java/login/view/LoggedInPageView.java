@@ -63,8 +63,7 @@ public class LoggedInPageView extends JFrame implements BaseView {
         exploreRecipesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                IngredientDataAccess ingDataAccess = new IngredientDataAccess();
-                AddIngredientViewModel viewModel = new AddIngredientViewModel(ingDataAccess);
+                AddIngredientViewModel viewModel = new AddIngredientViewModel();
                 IngredientDataAccess dataAccess = new IngredientDataAccess();
                 AddIngredientPresenter presenter = new AddIngredientPresenter(viewModel);
                 AddIngredientInteractor interactor = new AddIngredientInteractor(presenter, dataAccess);

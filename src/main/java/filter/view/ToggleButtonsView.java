@@ -88,8 +88,7 @@ public class ToggleButtonsView extends JFrame {
 
     private void backButtonEvent(List<String> ingredients, SessionService currentSession) {
         dispose();
-        final IngredientDataAccess ingDataAccess = new IngredientDataAccess();
-        final AddIngredientViewModel viewModel = new AddIngredientViewModel(ingDataAccess);
+        final AddIngredientViewModel viewModel = new AddIngredientViewModel();
         final IngredientDataAccess dataAccess = new IngredientDataAccess();
         final AddIngredientPresenter presenter = new AddIngredientPresenter(viewModel);
         final AddIngredientInteractor interactor = new AddIngredientInteractor(presenter, dataAccess);

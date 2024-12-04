@@ -49,7 +49,12 @@ public class IngredientsListener extends Frame implements ActionListener {
         if (!query.isEmpty()) {
             final Ingredient ingredient = controller.ingredientSearch(query);
 
-            if (ingredient.getName() != null || !ingredient.getName().isEmpty()) {
+            if (ingredient == null || ingredient.getName() == null) {
+                ingredientNameLabel.setText("No results found.");
+                ingredientImageLabel.setIcon(null);
+                addButton.setEnabled(false);
+            }
+            else {
                 // Display ingredient information
                 ingredientNameLabel.setText(ingredient.getName());
                 try {
@@ -59,11 +64,6 @@ public class IngredientsListener extends Frame implements ActionListener {
                     throw new RuntimeException(error);
                 }
                 addButton.setEnabled(true);
-            }
-            else {
-                ingredientNameLabel.setText("No results found.");
-                ingredientImageLabel.setIcon(null);
-                addButton.setEnabled(false);
             }
 
         }
