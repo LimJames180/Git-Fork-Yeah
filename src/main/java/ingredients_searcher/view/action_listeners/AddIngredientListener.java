@@ -8,24 +8,19 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
-import ingredients_searcher.interface_adapter.AddIngredientController;
-
 /**
  * This class adds the inputted ingredient to the relevant lists.
  */
 public class AddIngredientListener implements ActionListener {
     private String ingredientName;
     private List<String> ingredientsList;
-    // instead of this, i should be having a controller
-    // call the interactor which updates the list?
     private final DefaultListModel<String> ingredientListModel;
     private final JLabel ingredientNameLabel;
     private final JLabel ingredientImageLabel;
     private final JButton addButton;
 
     public AddIngredientListener(DefaultListModel<String> ingredientListModel, List<String> ingredientList,
-                                 JLabel ingredientNameLabel, JLabel ingredientImageLabel, JButton addButton,
-                                 AddIngredientController controller) {
+                                 JLabel ingredientNameLabel, JLabel ingredientImageLabel, JButton addButton) {
         this.ingredientListModel = ingredientListModel;
         this.ingredientsList = ingredientList;
         this.ingredientNameLabel = ingredientNameLabel;
