@@ -7,22 +7,16 @@ import ingredients_searcher.use_case.AddIngredientInputBoundary;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The AddIngredientController class searches for the ingredient using the input.
+ */
 public class AddIngredientController {
-    List<String> ingredients;
     private final AddIngredientInputBoundary interactor;
 
     public AddIngredientController(AddIngredientInputBoundary interactor) { this.interactor = interactor; }
 
-    public List<String> getIngredients() {
-        if (ingredients == null){
-            return new ArrayList<>();
-        }
-        return ingredients;
-    }
-
-    public Ingredient addIngredient(String query) {
-        AddIngredientInput input = new AddIngredientInput(query);
-        return interactor.execute(input);
+    public Ingredient ingredientSearch(String ingredient) {
+        return interactor.execute(new AddIngredientInput(ingredient));
     }
 
 

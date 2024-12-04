@@ -16,8 +16,6 @@ import ingredients_searcher.interface_adapter.AddIngredientController;
 public class AddIngredientListener implements ActionListener {
     private String ingredientName;
     private List<String> ingredientsList;
-    // instead of this, i should be having a controller
-    // call the interactor which updates the list?
     private final DefaultListModel<String> ingredientListModel;
     private final JLabel ingredientNameLabel;
     private final JLabel ingredientImageLabel;

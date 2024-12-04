@@ -15,6 +15,7 @@ public class AddIngredientViewModel {
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
     private final IngredientDataAccess ingDataAccess;
     private String message;
+    private String ingredient;
     private List<String> ingredientsList;
 
     public AddIngredientViewModel(List<String> ingredients, IngredientDataAccess ingDataAccess) {
@@ -41,19 +42,12 @@ public class AddIngredientViewModel {
     }
 
     /**
-     * Ingredient getter.
-     * @param query The ingredient name.
-     * @return Ingredient.
-     */
-    public Ingredient getIngredient(String query) {
-        return ingDataAccess.fetchIngredientData(query);
-    }
-
-    /**
      * Ingredients list getter.
      * @return ingredientsList.
      */
-    public List<String> getIngredientsList() {
-        return ingredientsList;
-    }
+    public List<String> getIngredientsList() { return ingredientsList; }
+
+    public void setOutput(String ingredientName) { this.ingredient = ingredientName; }
+
+    public String getIngredient() { return ingredient; }
 }
